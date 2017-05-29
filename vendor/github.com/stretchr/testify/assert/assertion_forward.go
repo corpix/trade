@@ -43,6 +43,9 @@ func (a *Assertions) Empty(object interface{}, msgAndArgs ...interface{}) bool {
 //    a.Equal(123, 123, "123 and 123 should be equal")
 //
 // Returns whether the assertion was successful (true) or not (false).
+//
+// Pointer variable equality is determined based on the equality of the
+// referenced values (as opposed to the memory addresses).
 func (a *Assertions) Equal(expected interface{}, actual interface{}, msgAndArgs ...interface{}) bool {
 	return Equal(a.t, expected, actual, msgAndArgs...)
 }
@@ -72,7 +75,7 @@ func (a *Assertions) EqualValues(expected interface{}, actual interface{}, msgAn
 //
 //   actualObj, err := SomeFunction()
 //   if a.Error(err, "An error was expected") {
-// 	   assert.Equal(t, err, expectedError)
+// 	   assert.Equal(t, expectedError, err)
 //   }
 //
 // Returns whether the assertion was successful (true) or not (false).
@@ -225,7 +228,7 @@ func (a *Assertions) Nil(object interface{}, msgAndArgs ...interface{}) bool {
 //
 //   actualObj, err := SomeFunction()
 //   if a.NoError(err) {
-// 	   assert.Equal(t, actualObj, expectedObj)
+// 	   assert.Equal(t, expectedObj, actualObj)
 //   }
 //
 // Returns whether the assertion was successful (true) or not (false).
@@ -262,6 +265,9 @@ func (a *Assertions) NotEmpty(object interface{}, msgAndArgs ...interface{}) boo
 //    a.NotEqual(obj1, obj2, "two objects shouldn't be equal")
 //
 // Returns whether the assertion was successful (true) or not (false).
+//
+// Pointer variable equality is determined based on the equality of the
+// referenced values (as opposed to the memory addresses).
 func (a *Assertions) NotEqual(expected interface{}, actual interface{}, msgAndArgs ...interface{}) bool {
 	return NotEqual(a.t, expected, actual, msgAndArgs...)
 }
@@ -296,6 +302,16 @@ func (a *Assertions) NotRegexp(rx interface{}, str interface{}, msgAndArgs ...in
 	return NotRegexp(a.t, rx, str, msgAndArgs...)
 }
 
+// NotSubset asserts that the specified list(array, slice...) contains not all
+// elements given in the specified subset(array, slice...).
+//
+//    a.NotSubset([1, 3, 4], [1, 2], "But [1, 3, 4] does not contain [1, 2]")
+//
+// Returns whether the assertion was successful (true) or not (false).
+func (a *Assertions) NotSubset(list interface{}, subset interface{}, msgAndArgs ...interface{}) bool {
+	return NotSubset(a.t, list, subset, msgAndArgs...)
+}
+
 // NotZero asserts that i is not the zero value for its type and returns the truth.
 func (a *Assertions) NotZero(i interface{}, msgAndArgs ...interface{}) bool {
 	return NotZero(a.t, i, msgAndArgs...)
@@ -320,6 +336,16 @@ func (a *Assertions) Panics(f PanicTestFunc, msgAndArgs ...interface{}) bool {
 // Returns whether the assertion was successful (true) or not (false).
 func (a *Assertions) Regexp(rx interface{}, str interface{}, msgAndArgs ...interface{}) bool {
 	return Regexp(a.t, rx, str, msgAndArgs...)
+}
+
+// Subset asserts that the specified list(array, slice...) contains all
+// elements given in the specified subset(array, slice...).
+//
+//    a.Subset([1, 2, 3], [1, 2], "But [1, 2, 3] does contain [1, 2]")
+//
+// Returns whether the assertion was successful (true) or not (false).
+func (a *Assertions) Subset(list interface{}, subset interface{}, msgAndArgs ...interface{}) bool {
+	return Subset(a.t, list, subset, msgAndArgs...)
 }
 
 // True asserts that the specified value is true.
