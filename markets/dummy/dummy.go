@@ -52,14 +52,10 @@ func (m *Dummy) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticke
 }
 
 func (m *Dummy) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
-	return &market.Ticker{}, nil
-}
-
-func (m *Dummy) CurrencyPair(currencyPair market.CurrencyPair) (string, error) {
-	return currencyPair.Format(
-		CurrencyMapping,
-		CurrencyPairDelimiter,
-	)
+	return market.NewTicker(
+		m,
+		currencyPair,
+	), nil
 }
 
 //

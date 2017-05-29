@@ -23,15 +23,15 @@ package market
 // THE SOFTWARE.
 
 type Ticker struct {
-	High    float64
-	Low     float64
-	Avg     float64
-	Vol     float64
-	VolCur  float64
-	Last    float64
-	Buy     float64
-	Sell    float64
-	Updated int64
+	High      float64
+	Low       float64
+	Avg       float64
+	Vol       float64
+	VolCur    float64
+	Last      float64
+	Buy       float64
+	Sell      float64
+	Timestamp float64
 
 	CurrencyPair CurrencyPair
 	Market       string

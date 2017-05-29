@@ -77,7 +77,10 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 	u.Path += "/ticker"
 
 	for k, v := range currencyPairs {
-		pairs[k], err = m.CurrencyPair(v)
+		pairs[k], err = v.Format(
+			CurrencyMapping,
+			CurrencyPairDelimiter,
+		)
 		if err != nil {
 			return nil, err
 		}
@@ -92,6 +95,15 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 	r, err = m.transport.Client.Get(u.String())
 	if err != nil {
 		return nil, err
+	}
+
+	if r.StatusCode != 200 {
+		return nil, e.NewErrEndpoint(
+			u.String(),
+			http.StatusText(r.StatusCode),
+			r.StatusCode,
+			200,
+		)
 	}
 
 	defer r.Body.Close()
@@ -112,6 +124,7 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 		}
 
 		tickers[n] = market.NewTicker(m, pair)
+		tickers[n].Timestamp = float64(v.Updated)
 		err = copier.Copy(&tickers[n], v)
 		if err != nil {
 			return nil, err
@@ -123,14 +136,14 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 }
 
 func (m *Btce) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
-	return nil, nil
-}
-
-func (m *Btce) CurrencyPair(currencyPair market.CurrencyPair) (string, error) {
-	return currencyPair.Format(
-		CurrencyMapping,
-		CurrencyPairDelimiter,
+	tickers, err := m.GetTickers(
+		[]market.CurrencyPair{currencyPair},
 	)
+	if err != nil {
+		return nil, err
+	}
+
+	return tickers[0], nil
 }
 
 //

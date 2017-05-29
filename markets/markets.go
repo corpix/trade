@@ -23,27 +23,79 @@ package markets
 // THE SOFTWARE.
 
 import (
+	"context"
+	"sync"
+
+	"github.com/corpix/pool"
+
 	"github.com/corpix/trade/market"
 )
 
-func GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+var (
+	Default = New(50, 150)
+)
+
+type Markets struct {
+	*pool.Pool
+}
+
+func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
 	var (
 		tickers = []*market.Ticker{}
-		buf     []*market.Ticker
-		err     error
+		w       = &sync.WaitGroup{}
+		ts      = make(chan *market.Ticker)
+		errs    = make(chan error)
 	)
+	defer close(errs)
 
 	for _, v := range markets {
-		// FIXME: Sequential is slow, run parallel
-		buf, err = v.GetTickers(currencyPairs)
-		if err != nil {
-			return nil, err
-		}
-		tickers = append(
-			tickers,
-			buf...,
+		w.Add(1)
+		m.Pool.Feed <- pool.NewWork(
+			context.TODO(),
+			func(ctx context.Context) {
+				buf, err := v.GetTickers(currencyPairs)
+				// FIXME: This part could be a custom work type in pool package
+				// (with error handling)
+				if err != nil {
+					errs <- err
+					return
+				}
+				for _, v := range buf {
+					ts <- v
+				}
+				w.Done()
+			},
 		)
 	}
 
+loop:
+	for {
+		select {
+		case err := <-errs:
+			// FIXME: Cancel works
+			return nil, err
+		case ticker := <-ts:
+			tickers = append(
+				tickers,
+				ticker,
+			)
+			if len(tickers) == len(markets) {
+				break loop
+			}
+		}
+	}
+
 	return tickers, nil
+}
+
+//
+
+func GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+	return Default.GetTickers(markets, currencyPairs)
+}
+
+//
+
+func New(workers, queueSize int) *Markets {
+	return &Markets{pool.New(workers, queueSize)}
 }
