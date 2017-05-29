@@ -50,10 +50,18 @@ func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.Cur
 
 	for _, v := range markets {
 		w.Add(1)
+		ctx := context.WithValue(
+			context.Background(),
+			"market",
+			v,
+		)
 		m.Pool.Feed <- pool.NewWork(
-			context.TODO(),
+			ctx,
 			func(ctx context.Context) {
-				buf, err := v.GetTickers(currencyPairs)
+				buf, err := ctx.
+					Value("market").(market.Market).
+					GetTickers(currencyPairs)
+
 				// FIXME: This part could be a custom work type in pool package
 				// (with error handling)
 				if err != nil {
