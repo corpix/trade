@@ -24,7 +24,6 @@ package markets
 
 import (
 	"context"
-	"sync"
 
 	"github.com/corpix/pool"
 
@@ -41,56 +40,42 @@ type Markets struct {
 
 func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
 	var (
+		works   = len(markets)
 		tickers = []*market.Ticker{}
-		w       = &sync.WaitGroup{}
-		ts      = make(chan *market.Ticker)
-		errs    = make(chan error)
+		results = make(chan *pool.Result)
 	)
-	defer close(errs)
+	defer close(results)
 
 	for _, v := range markets {
-		w.Add(1)
 		ctx := context.WithValue(
 			context.Background(),
 			"market",
 			v,
 		)
-		m.Pool.Feed <- pool.NewWork(
+		m.Pool.Feed <- pool.NewWorkWithResult(
 			ctx,
-			func(ctx context.Context) {
+			results,
+			func(ctx context.Context) (interface{}, error) {
 				buf, err := ctx.
 					Value("market").(market.Market).
 					GetTickers(currencyPairs)
-
-				// FIXME: This part could be a custom work type in pool package
-				// (with error handling)
 				if err != nil {
-					errs <- err
-					return
+					return nil, err
 				}
-				for _, v := range buf {
-					ts <- v
-				}
-				w.Done()
+				return buf, nil
 			},
 		)
 	}
 
-loop:
-	for {
-		select {
-		case err := <-errs:
-			// FIXME: Cancel works
-			return nil, err
-		case ticker := <-ts:
-			tickers = append(
-				tickers,
-				ticker,
-			)
-			if len(tickers) == len(markets) {
-				break loop
-			}
+	for k := 0; k < works; k++ {
+		result := <-results
+		if result.Err != nil {
+			return nil, result.Err
 		}
+		tickers = append(
+			tickers,
+			result.Value.([]*market.Ticker)...,
+		)
 	}
 
 	return tickers, nil

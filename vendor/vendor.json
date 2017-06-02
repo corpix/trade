@@ -3,6 +3,12 @@
 	"ignore": "",
 	"package": [
 		{
+			"checksumSHA1": "OLRuyOB1Q+0IMDIRNkMQxESoTYQ=",
+			"path": "github.com/corpix/pool",
+			"revision": "1d600341cfa643d753768257f8911034ca6343d1",
+			"revisionTime": "2017-06-02T05:02:19Z"
+		},
+		{
 			"checksumSHA1": "WRu+mhZ2PfQu27qRr69HVGjtN4Q=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
