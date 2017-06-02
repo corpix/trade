@@ -67,7 +67,7 @@ func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.Cur
 		)
 	}
 
-	for k := 0; k < works; k++ {
+	for works > 0 {
 		result := <-results
 		if result.Err != nil {
 			return nil, result.Err
@@ -76,6 +76,7 @@ func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.Cur
 			tickers,
 			result.Value.([]*market.Ticker)...,
 		)
+		works--
 	}
 
 	return tickers, nil
