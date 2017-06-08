@@ -34,7 +34,7 @@ const (
 )
 
 var (
-	DefaultClient *http.Client
+	DefaultClient = http.DefaultClient
 	Default       market.Market
 )
 
