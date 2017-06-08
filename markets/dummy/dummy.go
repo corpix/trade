@@ -27,7 +27,6 @@ import (
 
 	e "github.com/corpix/trade/errors"
 	"github.com/corpix/trade/market"
-	transport "github.com/corpix/trade/transport/http"
 )
 
 const (
@@ -35,8 +34,8 @@ const (
 )
 
 var (
-	DefaultTransport *transport.Transport
-	Default          market.Market
+	DefaultClient *http.Client
+	Default       market.Market
 )
 
 var (
@@ -51,7 +50,7 @@ var (
 )
 
 type Dummy struct {
-	transport *transport.Transport
+	client *http.Client
 }
 
 //
@@ -76,6 +75,8 @@ func (m *Dummy) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, err
 	), nil
 }
 
+func (m *Dummy) Close() error { return nil }
+
 //
 
 func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
@@ -88,11 +89,11 @@ func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
 
 //
 
-func New(t *transport.Transport) (*Dummy, error) {
-	if t == nil {
-		return nil, e.NewErrArgumentIsNil(t)
+func New(c *http.Client) (*Dummy, error) {
+	if c == nil {
+		return nil, e.NewErrArgumentIsNil(c)
 	}
-	return &Dummy{t}, nil
+	return &Dummy{c}, nil
 }
 
 //
@@ -102,15 +103,7 @@ func init() {
 		err error
 	)
 
-	DefaultTransport, err = transport.New(
-		Addr,
-		http.DefaultClient,
-	)
-	if err != nil {
-		panic(err)
-	}
-
-	Default, err = New(DefaultTransport)
+	Default, err = New(DefaultClient)
 	if err != nil {
 		panic(err)
 	}

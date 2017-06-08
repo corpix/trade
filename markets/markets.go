@@ -23,14 +23,12 @@ package markets
 // THE SOFTWARE.
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/corpix/trade/market"
 	"github.com/corpix/trade/markets/bitfinex"
 	"github.com/corpix/trade/markets/btce"
-	// FIXME: Transport should have common interface for all
-	// protocols
-	transport "github.com/corpix/trade/transport/http"
 )
 
 const (
@@ -44,9 +42,9 @@ var (
 		BtceMarket:     btce.Default,
 	}
 
-	Transports = map[string]*transport.Transport{
-		BitfinexMarket: bitfinex.DefaultTransport,
-		BtceMarket:     btce.DefaultTransport,
+	Clients = map[string]interface{}{
+		BitfinexMarket: bitfinex.DefaultClient,
+		BtceMarket:     btce.DefaultClient,
 	}
 )
 
@@ -57,19 +55,25 @@ func GetDefault(market string) (market.Market, error) {
 	return nil, NewErrUnsupportedMarket(market)
 }
 
-func GetDefaultTransport(market string) (*transport.Transport, error) {
-	if t, ok := Transports[strings.ToLower(market)]; ok {
+func GetDefaultClient(market string) (interface{}, error) {
+	if t, ok := Clients[strings.ToLower(market)]; ok {
 		return t, nil
 	}
 	return nil, NewErrUnsupportedMarket(market)
 }
 
-func New(market string, transport *transport.Transport) (market.Market, error) {
+func New(market string, client interface{}) (market.Market, error) {
+	switch client.(type) {
+	case *http.Client:
+	default:
+		return nil, NewErrUnsupportedClient(client)
+	}
+
 	switch strings.ToLower(market) {
 	case BitfinexMarket:
-		return bitfinex.New(transport)
+		return bitfinex.New(client.(*http.Client))
 	case BtceMarket:
-		return btce.New(transport)
+		return btce.New(client.(*http.Client))
 	default:
 		return nil, NewErrUnsupportedMarket(market)
 	}

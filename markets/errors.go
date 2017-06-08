@@ -45,3 +45,23 @@ func NewErrUnsupportedMarket(m string) error {
 }
 
 //
+
+// ErrUnsupportedClient is an error indicating that client `c`
+// is not supported in code.
+type ErrUnsupportedClient struct {
+	c interface{}
+}
+
+func (e *ErrUnsupportedClient) Error() string {
+	return fmt.Sprintf(
+		"Unsupported client of type '%T'",
+		e.c,
+	)
+}
+
+// NewErrUnsupportedClient creates new ErrUnsupportedClient.
+func NewErrUnsupportedClient(c interface{}) error {
+	return &ErrUnsupportedClient{c}
+}
+
+//
