@@ -23,73 +23,54 @@ package markets
 // THE SOFTWARE.
 
 import (
-	"context"
-
-	"github.com/corpix/pool"
+	"strings"
 
 	"github.com/corpix/trade/market"
+	"github.com/corpix/trade/markets/bitfinex"
+	"github.com/corpix/trade/markets/btce"
+	// FIXME: Transport should have common interface for all
+	// protocols
+	transport "github.com/corpix/trade/transport/http"
+)
+
+const (
+	BitfinexMarket = "bitfinex"
+	BtceMarket     = "btce"
 )
 
 var (
-	Default = New(50, 150)
+	Markets = map[string]market.Market{
+		BitfinexMarket: bitfinex.Default,
+		BtceMarket:     btce.Default,
+	}
+
+	Transports = map[string]*transport.Transport{
+		BitfinexMarket: bitfinex.DefaultTransport,
+		BtceMarket:     btce.DefaultTransport,
+	}
 )
 
-type Markets struct {
-	*pool.Pool
-}
-
-func (m *Markets) GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
-	var (
-		works   = len(markets)
-		tickers = []*market.Ticker{}
-		results = make(chan *pool.Result)
-	)
-	defer close(results)
-
-	for _, v := range markets {
-		ctx := context.WithValue(
-			context.Background(),
-			"market",
-			v,
-		)
-		m.Pool.Feed <- pool.NewWorkWithResult(
-			ctx,
-			results,
-			func(ctx context.Context) (interface{}, error) {
-				buf, err := ctx.
-					Value("market").(market.Market).
-					GetTickers(currencyPairs)
-				if err != nil {
-					return nil, err
-				}
-				return buf, nil
-			},
-		)
+func GetDefault(market string) (market.Market, error) {
+	if m, ok := Markets[strings.ToLower(market)]; ok {
+		return m, nil
 	}
+	return nil, NewErrUnsupportedMarket(market)
+}
 
-	for works > 0 {
-		result := <-results
-		if result.Err != nil {
-			return nil, result.Err
-		}
-		tickers = append(
-			tickers,
-			result.Value.([]*market.Ticker)...,
-		)
-		works--
+func GetDefaultTransport(market string) (*transport.Transport, error) {
+	if t, ok := Transports[strings.ToLower(market)]; ok {
+		return t, nil
 	}
-
-	return tickers, nil
+	return nil, NewErrUnsupportedMarket(market)
 }
 
-//
-
-func GetTickers(markets []market.Market, currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
-	return Default.GetTickers(markets, currencyPairs)
-}
-
-//
-
-func New(workers, queueSize int) *Markets {
-	return &Markets{pool.New(workers, queueSize)}
+func New(market string, transport *transport.Transport) (market.Market, error) {
+	switch strings.ToLower(market) {
+	case BitfinexMarket:
+		return bitfinex.New(transport)
+	case BtceMarket:
+		return btce.New(transport)
+	default:
+		return nil, NewErrUnsupportedMarket(market)
+	}
 }

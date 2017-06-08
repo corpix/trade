@@ -1,5 +1,27 @@
 package btce
 
+// The MIT License (MIT)
+//
+// Copyright © 2017 Dmitry Moskowski
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
 import (
 	"encoding/json"
 	"net/http"
@@ -10,6 +32,7 @@ import (
 
 	e "github.com/corpix/trade/errors"
 	"github.com/corpix/trade/market"
+	transport "github.com/corpix/trade/transport/http"
 )
 
 const (
@@ -17,7 +40,7 @@ const (
 )
 
 var (
-	DefaultTransport *Transport
+	DefaultTransport *transport.Transport
 	Default          market.Market
 )
 
@@ -32,13 +55,8 @@ var (
 	CurrencyPairDelimiter = "_"
 )
 
-type Transport struct {
-	Addr   string
-	Client *http.Client
-}
-
 type Btce struct {
-	transport *Transport
+	transport *transport.Transport
 }
 
 type Ticker struct {
@@ -158,22 +176,11 @@ func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
 
 //
 
-func NewTransport(addr string, client *http.Client) (*Transport, error) {
-	if client == nil {
-		return nil, e.NewErrArgumentIsNil(client)
+func New(t *transport.Transport) (*Btce, error) {
+	if t == nil {
+		return nil, e.NewErrArgumentIsNil(t)
 	}
-
-	return &Transport{
-		Addr:   addr,
-		Client: client,
-	}, nil
-}
-
-func New(transport *Transport) (*Btce, error) {
-	if transport == nil {
-		return nil, e.NewErrArgumentIsNil(transport)
-	}
-	return &Btce{transport}, nil
+	return &Btce{t}, nil
 }
 
 //
@@ -183,7 +190,7 @@ func init() {
 		err error
 	)
 
-	DefaultTransport, err = NewTransport(
+	DefaultTransport, err = transport.New(
 		Addr,
 		http.DefaultClient,
 	)

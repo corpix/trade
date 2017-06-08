@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/corpix/trade/market"
-	"github.com/corpix/trade/markets"
 
 	"github.com/corpix/trade/markets/bitfinex"
 	"github.com/corpix/trade/markets/btce"
@@ -12,22 +11,23 @@ import (
 )
 
 func main() {
-	tickers, err := markets.GetTickers(
-		[]market.Market{
-			dummy.Default,
-			btce.Default,
-			bitfinex.Default,
-		},
-		[]market.CurrencyPair{
-			market.NewCurrencyPair(
-				market.BTC,
-				market.USD,
-			),
-			market.NewCurrencyPair(
-				market.LTC,
-				market.USD,
-			),
-		},
-	)
-	spew.Dump(tickers, err)
+	for _, v := range []market.Market{
+		dummy.Default,
+		btce.Default,
+		bitfinex.Default,
+	} {
+		tickers, err := v.GetTickers(
+			[]market.CurrencyPair{
+				market.NewCurrencyPair(
+					market.BTC,
+					market.USD,
+				),
+				market.NewCurrencyPair(
+					market.LTC,
+					market.USD,
+				),
+			},
+		)
+		spew.Dump(tickers, err)
+	}
 }
