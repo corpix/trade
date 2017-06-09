@@ -28,8 +28,6 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/jinzhu/copier"
-
 	e "github.com/corpix/trade/errors"
 	"github.com/corpix/trade/market"
 )
@@ -142,11 +140,15 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 		}
 
 		tickers[n] = market.NewTicker(m, pair)
+		tickers[n].Avg = v.Avg
+		tickers[n].Buy = v.Buy
+		tickers[n].High = v.High
+		tickers[n].Last = v.Last
+		tickers[n].Low = v.Low
+		tickers[n].Sell = v.Sell
 		tickers[n].Timestamp = float64(v.Updated)
-		err = copier.Copy(&tickers[n], v)
-		if err != nil {
-			return nil, err
-		}
+		tickers[n].Vol = v.Vol
+		tickers[n].VolCur = v.VolCur
 		n++
 	}
 

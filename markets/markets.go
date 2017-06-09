@@ -29,22 +29,26 @@ import (
 	"github.com/corpix/trade/market"
 	"github.com/corpix/trade/markets/bitfinex"
 	"github.com/corpix/trade/markets/btce"
+	"github.com/corpix/trade/markets/yobit"
 )
 
 const (
 	BitfinexMarket = bitfinex.Name
 	BtceMarket     = btce.Name
+	YobitMarket    = yobit.Name
 )
 
 var (
 	Markets = map[string]market.Market{
 		BitfinexMarket: bitfinex.Default,
 		BtceMarket:     btce.Default,
+		YobitMarket:    yobit.Default,
 	}
 
 	Clients = map[string]interface{}{
 		BitfinexMarket: bitfinex.DefaultClient,
 		BtceMarket:     btce.DefaultClient,
+		YobitMarket:    yobit.DefaultClient,
 	}
 )
 
@@ -74,6 +78,8 @@ func New(market string, client interface{}) (market.Market, error) {
 		return bitfinex.New(client.(*http.Client))
 	case BtceMarket:
 		return btce.New(client.(*http.Client))
+	case YobitMarket:
+		return yobit.New(client.(*http.Client))
 	default:
 		return nil, NewErrUnsupportedMarket(market)
 	}

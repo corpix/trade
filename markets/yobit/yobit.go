@@ -1,4 +1,4 @@
-package bitfinex
+package yobit
 
 // The MIT License (MIT)
 //
@@ -23,18 +23,17 @@ package bitfinex
 // THE SOFTWARE.
 
 import (
-	"encoding/json"
 	"net/http"
-	"net/url"
 
+	"encoding/json"
 	e "github.com/corpix/trade/errors"
-	jsonTypes "github.com/corpix/trade/json"
 	"github.com/corpix/trade/market"
+	"net/url"
 )
 
 const (
-	Name = "bitfinex"
-	Addr = "https://api.bitfinex.com/v1"
+	Name = "yobit"
+	Addr = "https://yobit.net/api/2"
 )
 
 var (
@@ -44,55 +43,43 @@ var (
 
 var (
 	CurrencyMapping = map[market.Currency]string{
-		// https://api.bitfinex.com/v1/symbols
 		market.BTC: "btc",
 		market.LTC: "ltc",
 		market.USD: "usd",
+		market.EUR: "eur",
+		market.RUB: "rur",
 	}
-	CurrencyPairDelimiter = ""
+	CurrencyPairDelimiter = "_"
 )
 
-type Bitfinex struct {
+type Yobit struct {
 	client *http.Client
 }
 
 type Ticker struct {
-	High      jsonTypes.Float64String `json:"high"`
-	Low       jsonTypes.Float64String `json:"low"`
-	Vol       jsonTypes.Float64String `json:"volume"`
-	Last      jsonTypes.Float64String `json:"last_price"`
-	Buy       jsonTypes.Float64String `json:"bid"`
-	Sell      jsonTypes.Float64String `json:"ask"`
-	Timestamp jsonTypes.Float64String `json:"timestamp"`
+	High       float64 `json:"high"`
+	Low        float64 `json:"low"`
+	Avg        float64 `json:"avg"`
+	Vol        float64 `json:"vol"`
+	VolCur     float64 `json:"vol_cur"`
+	Last       float64 `json:"last"`
+	Buy        float64 `json:"buy"`
+	Sell       float64 `json:"sell"`
+	Updated    int64   `json:"updated"`
+	ServerTime int64   `json:"server_time"`
 }
 
 //
 
-func (m *Bitfinex) ID() string { return Name }
+func (m *Yobit) ID() string { return Name }
 
-func (m *Bitfinex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
-	var (
-		err error
-	)
-
-	tickers := make([]*market.Ticker, len(currencyPairs))
-	for k, v := range currencyPairs {
-		tickers[k], err = m.GetTicker(v)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	return tickers, nil
-}
-
-func (m *Bitfinex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Yobit) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
 	var (
 		u              *url.URL
 		r              *http.Response
 		pair           string
 		ticker         *market.Ticker
-		responseTicker = &Ticker{}
+		responseTicker = make(map[string]Ticker, 1)
 		err            error
 	)
 
@@ -101,8 +88,6 @@ func (m *Bitfinex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, 
 		return nil, err
 	}
 
-	u.Path += "/pubticker"
-
 	pair, err = currencyPair.Format(
 		CurrencyMapping,
 		CurrencyPairDelimiter,
@@ -110,7 +95,8 @@ func (m *Bitfinex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, 
 	if err != nil {
 		return nil, err
 	}
-	u.Path += "/" + pair
+
+	u.Path += "/" + pair + "/ticker"
 
 	//
 
@@ -129,25 +115,41 @@ func (m *Bitfinex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, 
 	}
 
 	defer r.Body.Close()
-	err = json.NewDecoder(r.Body).Decode(responseTicker)
+	err = json.NewDecoder(r.Body).Decode(&responseTicker)
 	if err != nil {
 		return nil, err
 	}
 
-	// XXX: no avg and volcur fields
 	ticker = market.NewTicker(m, currencyPair)
-	ticker.Buy = float64(responseTicker.Buy)
-	ticker.High = float64(responseTicker.High)
-	ticker.Last = float64(responseTicker.Last)
-	ticker.Low = float64(responseTicker.Low)
-	ticker.Sell = float64(responseTicker.Sell)
-	ticker.Timestamp = float64(responseTicker.Timestamp)
-	ticker.Vol = float64(responseTicker.Vol)
+	ticker.Avg = responseTicker["ticker"].Avg
+	ticker.Buy = responseTicker["ticker"].Buy
+	ticker.High = responseTicker["ticker"].High
+	ticker.Last = responseTicker["ticker"].Last
+	ticker.Low = responseTicker["ticker"].Low
+	ticker.Sell = responseTicker["ticker"].Sell
+	ticker.Timestamp = float64(responseTicker["ticker"].Updated)
+	ticker.Vol = responseTicker["ticker"].Vol
+	ticker.VolCur = responseTicker["ticker"].VolCur
 
 	return ticker, nil
 }
 
-func (m *Bitfinex) Close() error { return nil }
+func (m *Yobit) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+	var (
+		tickers = make([]*market.Ticker, len(currencyPairs))
+		err     error
+	)
+
+	for k, v := range currencyPairs {
+		tickers[k], err = m.GetTicker(v)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return tickers, nil
+}
+
+func (m *Yobit) Close() error { return nil }
 
 //
 
@@ -161,11 +163,11 @@ func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
 
 //
 
-func New(c *http.Client) (*Bitfinex, error) {
+func New(c *http.Client) (*Yobit, error) {
 	if c == nil {
 		return nil, e.NewErrArgumentIsNil(c)
 	}
-	return &Bitfinex{c}, nil
+	return &Yobit{c}, nil
 }
 
 //
