@@ -35,6 +35,7 @@ import (
 )
 
 const (
+	Name = "bitfinex"
 	Addr = "https://api.bitfinex.com/v1"
 )
 
@@ -75,7 +76,7 @@ type Ticker struct {
 
 //
 
-func (m *Bitfinex) ID() string { return "bitfinex" }
+func (m *Bitfinex) ID() string { return Name }
 
 func (m *Bitfinex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
 	var (

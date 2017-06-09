@@ -30,6 +30,7 @@ import (
 )
 
 const (
+	Name = "dummy"
 	Addr = "https://localhost"
 )
 
@@ -55,7 +56,7 @@ type Dummy struct {
 
 //
 
-func (m *Dummy) ID() string { return "dummy" }
+func (m *Dummy) ID() string { return Name }
 
 func (m *Dummy) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
 	tickers := make([]*market.Ticker, len(currencyPairs))

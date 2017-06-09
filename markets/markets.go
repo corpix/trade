@@ -32,8 +32,8 @@ import (
 )
 
 const (
-	BitfinexMarket = "bitfinex"
-	BtceMarket     = "btce"
+	BitfinexMarket = bitfinex.Name
+	BtceMarket     = btce.Name
 )
 
 var (

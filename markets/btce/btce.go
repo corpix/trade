@@ -35,6 +35,7 @@ import (
 )
 
 const (
+	Name = "btce"
 	Addr = "https://btc-e.com/api/3"
 )
 
@@ -72,7 +73,7 @@ type Ticker struct {
 
 //
 
-func (m *Btce) ID() string { return "btce" }
+func (m *Btce) ID() string { return Name }
 
 func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
 	var (
