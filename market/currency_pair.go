@@ -43,6 +43,10 @@ func (c CurrencyPair) String() string {
 	)
 }
 
+func (c CurrencyPair) Eq(cp CurrencyPair) bool {
+	return c.Left == cp.Left && c.Right == cp.Right
+}
+
 func (c CurrencyPair) Format(mapping map[Currency]string, delimiter string) (string, error) {
 	var (
 		left  string
