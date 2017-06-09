@@ -72,6 +72,44 @@ func (c CurrencyPair) Format(mapping map[Currency]string, delimiter string) (str
 
 }
 
+func (c *CurrencyPair) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + c.String() + `"`), nil
+}
+
+func (c *CurrencyPair) UnmarshalJSON(buf []byte) error {
+	cp, err := CurrencyPairFromString(
+		strings.Trim(string(buf), `"`),
+		CurrencyMapping,
+		CurrencyPairDelimiter,
+	)
+	if err != nil {
+		return err
+	}
+
+	*c = cp
+
+	return nil
+}
+
+func (c *CurrencyPair) MarshalBinary() ([]byte, error) {
+	return []byte(c.String()), nil
+}
+
+func (c *CurrencyPair) UnmarshalBinary(buf []byte) error {
+	cp, err := CurrencyPairFromString(
+		string(buf),
+		CurrencyMapping,
+		CurrencyPairDelimiter,
+	)
+	if err != nil {
+		return err
+	}
+
+	*c = cp
+
+	return nil
+}
+
 func CurrencyPairFromString(s string, mapping map[Currency]string, delimiter string) (CurrencyPair, error) {
 	var (
 		left  Currency
