@@ -6,8 +6,9 @@ import (
 	"net/url"
 	"strings"
 
+	"github.com/corpix/trade/currencies"
 	e "github.com/corpix/trade/errors"
-	"github.com/corpix/trade/market"
+	"github.com/corpix/trade/markets/market"
 )
 
 const (
@@ -16,17 +17,17 @@ const (
 )
 
 var (
-	DefaultClient = http.DefaultClient
 	Default       market.Market
+	DefaultClient = http.DefaultClient
 )
 
 var (
-	CurrencyMapping = map[market.Currency]string{
-		market.BTC: "btc",
-		market.LTC: "ltc",
-		market.USD: "usd",
-		market.EUR: "eur",
-		market.RUB: "rur",
+	CurrencyMapping = map[currencies.Currency]string{
+		currencies.Bitcoin:            "btc",
+		currencies.Litecoin:           "ltc",
+		currencies.UnitedStatesDollar: "usd",
+		currencies.Euro:               "eur",
+		currencies.RussianRuble:       "rur",
 	}
 	CurrencyPairDelimiter = "_"
 )
@@ -51,12 +52,12 @@ type Ticker struct {
 
 func (m *Btce) ID() string { return Name }
 
-func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func (m *Btce) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	var (
 		u               *url.URL
 		r               *http.Response
 		n               int
-		pair            market.CurrencyPair
+		pair            currencies.CurrencyPair
 		pairs           = make([]string, len(currencyPairs))
 		responseTickers = make(map[string]Ticker, len(currencyPairs))
 		tickers         = make([]*market.Ticker, len(currencyPairs))
@@ -108,7 +109,7 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 
 	n = 0
 	for k, v := range responseTickers {
-		pair, err = market.CurrencyPairFromString(
+		pair, err = currencies.CurrencyPairFromString(
 			k,
 			CurrencyMapping,
 			CurrencyPairDelimiter,
@@ -133,9 +134,9 @@ func (m *Btce) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker
 	return tickers, nil
 }
 
-func (m *Btce) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Btce) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	tickers, err := m.GetTickers(
-		[]market.CurrencyPair{currencyPair},
+		[]currencies.CurrencyPair{currencyPair},
 	)
 	if err != nil {
 		return nil, err
@@ -148,11 +149,11 @@ func (m *Btce) Close() error { return nil }
 
 //
 
-func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	return Default.GetTickers(currencyPairs)
 }
 
-func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return Default.GetTicker(currencyPair)
 }
 

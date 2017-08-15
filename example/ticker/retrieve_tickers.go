@@ -1,33 +1,37 @@
 package main
 
 import (
-	"github.com/corpix/trade/market"
-
-	"github.com/corpix/trade/markets/bitfinex"
-	"github.com/corpix/trade/markets/btce"
-	"github.com/corpix/trade/markets/dummy"
-
 	"github.com/davecgh/go-spew/spew"
+
+	"github.com/corpix/trade/currencies"
+	"github.com/corpix/trade/markets/market"
+	"github.com/corpix/trade/markets/market/bitfinex"
+	"github.com/corpix/trade/markets/market/dummy"
+	"github.com/corpix/trade/markets/market/yobit"
 )
 
 func main() {
 	for _, v := range []market.Market{
-		dummy.Default,
-		btce.Default,
 		bitfinex.Default,
+		dummy.Default,
+		yobit.Default,
 	} {
 		tickers, err := v.GetTickers(
-			[]market.CurrencyPair{
-				market.NewCurrencyPair(
-					market.BTC,
-					market.USD,
+			[]currencies.CurrencyPair{
+				currencies.NewCurrencyPair(
+					currencies.Bitcoin,
+					currencies.UnitedStatesDollar,
 				),
-				market.NewCurrencyPair(
-					market.LTC,
-					market.USD,
+				currencies.NewCurrencyPair(
+					currencies.Litecoin,
+					currencies.UnitedStatesDollar,
 				),
 			},
 		)
-		spew.Dump(tickers, err)
+		spew.Dump(
+			v.ID(),
+			tickers,
+			err,
+		)
 	}
 }

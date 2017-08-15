@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/corpix/trade/market"
-	"github.com/corpix/trade/markets/bitfinex"
-	"github.com/corpix/trade/markets/btce"
-	"github.com/corpix/trade/markets/cex"
-	"github.com/corpix/trade/markets/yobit"
+	"github.com/corpix/trade/markets/market"
+	"github.com/corpix/trade/markets/market/bitfinex"
+	"github.com/corpix/trade/markets/market/btce"
+	"github.com/corpix/trade/markets/market/cex"
+	"github.com/corpix/trade/markets/market/yobit"
 )
 
 const (
@@ -19,14 +19,14 @@ const (
 )
 
 var (
-	Markets = map[string]market.Market{
+	DefaultMarkets = map[string]market.Market{
 		BitfinexMarket: bitfinex.Default,
 		BtceMarket:     btce.Default,
 		CexMarket:      cex.Default,
 		YobitMarket:    yobit.Default,
 	}
 
-	Clients = map[string]interface{}{
+	DefaultClients = map[string]interface{}{
 		BitfinexMarket: bitfinex.DefaultClient,
 		BtceMarket:     btce.DefaultClient,
 		CexMarket:      cex.DefaultClient,
@@ -35,14 +35,14 @@ var (
 )
 
 func GetDefault(market string) (market.Market, error) {
-	if m, ok := Markets[strings.ToLower(market)]; ok {
+	if m, ok := DefaultMarkets[strings.ToLower(market)]; ok {
 		return m, nil
 	}
 	return nil, NewErrUnsupportedMarket(market)
 }
 
 func GetDefaultClient(market string) (interface{}, error) {
-	if t, ok := Clients[strings.ToLower(market)]; ok {
+	if t, ok := DefaultClients[strings.ToLower(market)]; ok {
 		return t, nil
 	}
 	return nil, NewErrUnsupportedMarket(market)
@@ -55,6 +55,8 @@ func New(market string, client interface{}) (market.Market, error) {
 		return nil, NewErrUnsupportedClient(client)
 	}
 
+	// FIXME: Type assertion for clients look like crap
+	// Probably this should be concrete type.
 	switch strings.ToLower(market) {
 	case BitfinexMarket:
 		return bitfinex.New(client.(*http.Client))

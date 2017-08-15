@@ -22,8 +22,6 @@ func NewErrUnsupportedMarket(m string) error {
 	return &ErrUnsupportedMarket{m}
 }
 
-//
-
 // ErrUnsupportedClient is an error indicating that client `c`
 // is not supported in code.
 type ErrUnsupportedClient struct {

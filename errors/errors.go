@@ -21,8 +21,6 @@ func NewErrArgumentIsNil(v interface{}) error {
 	return &ErrArgumentIsNil{v}
 }
 
-//
-
 // ErrNoCurrencyRepresentation is an error indicating that currency
 // has no representation to be used in concrete api calls.
 type ErrNoCurrencyRepresentation struct {
@@ -42,8 +40,6 @@ func NewErrNoCurrencyRepresentation(currency string) error {
 		currency,
 	}
 }
-
-//
 
 // ErrEndpoint is an error indicating that request to endpoint
 // resulted in error.

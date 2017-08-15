@@ -1,10 +1,14 @@
-package market
+package currencies
 
 import (
 	"fmt"
 	"strings"
 
 	e "github.com/corpix/trade/errors"
+)
+
+const (
+	CurrencyPairDelimiter = "-"
 )
 
 type CurrencyPair struct {

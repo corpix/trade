@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/corpix/trade/currencies"
 	e "github.com/corpix/trade/errors"
-	"github.com/corpix/trade/market"
+	"github.com/corpix/trade/markets/market"
 )
 
 const (
@@ -15,17 +16,17 @@ const (
 )
 
 var (
-	DefaultClient = http.DefaultClient
 	Default       market.Market
+	DefaultClient = http.DefaultClient
 )
 
 var (
-	CurrencyMapping = map[market.Currency]string{
-		market.BTC: "btc",
-		market.LTC: "ltc",
-		market.USD: "usd",
-		market.EUR: "eur",
-		market.RUB: "rur",
+	CurrencyMapping = map[currencies.Currency]string{
+		currencies.Bitcoin:            "btc",
+		currencies.Litecoin:           "ltc",
+		currencies.UnitedStatesDollar: "usd",
+		currencies.Euro:               "eur",
+		currencies.RussianRuble:       "rur",
 	}
 	CurrencyPairDelimiter = "_"
 )
@@ -51,7 +52,7 @@ type Ticker struct {
 
 func (m *Yobit) ID() string { return Name }
 
-func (m *Yobit) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Yobit) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	var (
 		u              *url.URL
 		r              *http.Response
@@ -112,7 +113,7 @@ func (m *Yobit) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, err
 	return ticker, nil
 }
 
-func (m *Yobit) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func (m *Yobit) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	var (
 		tickers = make([]*market.Ticker, len(currencyPairs))
 		err     error
@@ -131,11 +132,11 @@ func (m *Yobit) Close() error { return nil }
 
 //
 
-func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	return Default.GetTickers(currencyPairs)
 }
 
-func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return Default.GetTicker(currencyPair)
 }
 

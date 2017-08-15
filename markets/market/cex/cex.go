@@ -1,14 +1,14 @@
 package cex
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/url"
 
-	"encoding/json"
+	"github.com/corpix/trade/currencies"
 	e "github.com/corpix/trade/errors"
-	"github.com/corpix/trade/market"
-
 	jsonTypes "github.com/corpix/trade/json"
+	"github.com/corpix/trade/markets/market"
 )
 
 const (
@@ -17,20 +17,12 @@ const (
 )
 
 var (
-	DefaultClient = http.DefaultClient
 	Default       market.Market
+	DefaultClient = http.DefaultClient
 )
 
 var (
-	CurrencyMapping = map[market.Currency]string{
-		market.BTC: "BTC",
-		market.LTC: "LTC",
-		market.ETH: "ETH",
-		market.GHS: "GHS",
-		market.USD: "USD",
-		market.EUR: "EUR",
-		market.RUB: "RUB",
-	}
+	CurrencyMapping       = map[currencies.Currency]string{}
 	CurrencyPairDelimiter = "/"
 )
 
@@ -59,14 +51,14 @@ type Tickers struct {
 
 func (m *Cex) ID() string { return Name }
 
-func (m *Cex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func (m *Cex) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	var (
 		u               *url.URL
 		r               *http.Response
 		n               int
 		pair            string
 		pairs           = make(map[string]bool, len(currencyPairs))
-		currencyPair    market.CurrencyPair
+		currencyPair    currencies.CurrencyPair
 		responseTickers = &Tickers{}
 		tickers         = make([]*market.Ticker, len(currencyPairs))
 		ok              bool
@@ -120,7 +112,7 @@ func (m *Cex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker,
 
 	n = 0
 	for _, v := range responseTickers.Data {
-		currencyPair, err = market.CurrencyPairFromString(
+		currencyPair, err = currencies.CurrencyPairFromString(
 			v.Pair,
 			CurrencyMapping,
 			":",
@@ -150,9 +142,9 @@ func (m *Cex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker,
 	return tickers, nil
 }
 
-func (m *Cex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Cex) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	tickers, err := m.GetTickers(
-		[]market.CurrencyPair{currencyPair},
+		[]currencies.CurrencyPair{currencyPair},
 	)
 	if err != nil {
 		return nil, err
@@ -165,11 +157,11 @@ func (m *Cex) Close() error { return nil }
 
 //
 
-func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	return Default.GetTickers(currencyPairs)
 }
 
-func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return Default.GetTicker(currencyPair)
 }
 

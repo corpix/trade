@@ -1,4 +1,4 @@
-package market
+package currencies
 
 import (
 	"testing"
@@ -15,10 +15,10 @@ func TestCurrencyPairFormat(t *testing.T) {
 		output string
 	}{
 		{
-			BTC,
-			USD,
+			Bitcoin,
+			UnitedStatesDollar,
 			nil,
-			"BTC-USD",
+			Bitcoin.String() + CurrencyPairDelimiter + UnitedStatesDollar.String(),
 		},
 	}
 
@@ -45,10 +45,10 @@ func TestCurrencyPairFromString(t *testing.T) {
 		right Currency
 	}{
 		{
-			"BTC-USD",
+			Bitcoin.String() + CurrencyPairDelimiter + UnitedStatesDollar.String(),
 			nil,
-			BTC,
-			USD,
+			Bitcoin,
+			UnitedStatesDollar,
 		},
 	}
 

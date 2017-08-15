@@ -3,8 +3,9 @@ package dummy
 import (
 	"net/http"
 
+	"github.com/corpix/trade/currencies"
 	e "github.com/corpix/trade/errors"
-	"github.com/corpix/trade/market"
+	"github.com/corpix/trade/markets/market"
 )
 
 const (
@@ -13,17 +14,17 @@ const (
 )
 
 var (
-	DefaultClient = http.DefaultClient
 	Default       market.Market
+	DefaultClient = http.DefaultClient
 )
 
 var (
-	CurrencyMapping = map[market.Currency]string{
-		market.BTC: "btc",
-		market.LTC: "ltc",
-		market.USD: "usd",
-		market.EUR: "eur",
-		market.RUB: "rub",
+	CurrencyMapping = map[currencies.Currency]string{
+		currencies.Bitcoin:            "btc",
+		currencies.Litecoin:           "ltc",
+		currencies.UnitedStatesDollar: "usd",
+		currencies.Euro:               "eur",
+		currencies.RussianRuble:       "rub",
 	}
 	CurrencyPairDelimiter = "-"
 )
@@ -36,7 +37,7 @@ type Dummy struct {
 
 func (m *Dummy) ID() string { return Name }
 
-func (m *Dummy) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func (m *Dummy) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	tickers := make([]*market.Ticker, len(currencyPairs))
 	for k, v := range currencyPairs {
 		tickers[k] = market.NewTicker(
@@ -47,7 +48,7 @@ func (m *Dummy) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticke
 	return tickers, nil
 }
 
-func (m *Dummy) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Dummy) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return market.NewTicker(
 		m,
 		currencyPair,
@@ -58,11 +59,11 @@ func (m *Dummy) Close() error { return nil }
 
 //
 
-func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	return Default.GetTickers(currencyPairs)
 }
 
-func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return Default.GetTicker(currencyPair)
 }
 

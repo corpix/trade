@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/corpix/trade/currencies"
 	e "github.com/corpix/trade/errors"
 	jsonTypes "github.com/corpix/trade/json"
-	"github.com/corpix/trade/market"
+	"github.com/corpix/trade/markets/market"
 )
 
 const (
@@ -16,16 +17,16 @@ const (
 )
 
 var (
-	DefaultClient = http.DefaultClient
 	Default       market.Market
+	DefaultClient = http.DefaultClient
 )
 
 var (
-	CurrencyMapping = map[market.Currency]string{
+	CurrencyMapping = map[currencies.Currency]string{
 		// https://api.bitfinex.com/v1/symbols
-		market.BTC: "btc",
-		market.LTC: "ltc",
-		market.USD: "usd",
+		currencies.Bitcoin:            "btc",
+		currencies.Litecoin:           "ltc",
+		currencies.UnitedStatesDollar: "usd",
 	}
 	CurrencyPairDelimiter = ""
 )
@@ -48,7 +49,7 @@ type Ticker struct {
 
 func (m *Bitfinex) ID() string { return Name }
 
-func (m *Bitfinex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func (m *Bitfinex) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	var (
 		err error
 	)
@@ -64,7 +65,7 @@ func (m *Bitfinex) GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ti
 	return tickers, nil
 }
 
-func (m *Bitfinex) GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func (m *Bitfinex) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	var (
 		u              *url.URL
 		r              *http.Response
@@ -129,11 +130,11 @@ func (m *Bitfinex) Close() error { return nil }
 
 //
 
-func GetTickers(currencyPairs []market.CurrencyPair) ([]*market.Ticker, error) {
+func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	return Default.GetTickers(currencyPairs)
 }
 
-func GetTicker(currencyPair market.CurrencyPair) (*market.Ticker, error) {
+func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	return Default.GetTicker(currencyPair)
 }
 

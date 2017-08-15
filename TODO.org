@@ -1,10 +1,12 @@
 * DONE Camelize the ticker keys
   CLOSED: [2017-08-15 Tue 12:51]
-* TODO Fix currency pair error
-  =ERRO[0013] No currency representation for 'BCH'=
-
+* DONE Normalize currency names
+  CLOSED: [2017-08-15 Tue 20:37]
   This is a good time to make naming better. Each currency will be labeled
   with it's full name(like BTC -> Bitcoin), all abbreviation mess will be hidden.
+* TODO Fix currency pair error
+  =ERRO[0013] No currency representation for 'BCH'=
 * TODO Implement order books
+* TODO Use corpix/formats where it is possible
 * TODO Implement websocket clients for each market
 * TODO Blueprint basic trading APIs
