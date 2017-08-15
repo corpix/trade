@@ -1,18 +1,17 @@
 package market
 
 type Ticker struct {
-	High      float64
-	Low       float64
-	Avg       float64
-	Vol       float64
-	VolCur    float64
-	Last      float64
-	Buy       float64
-	Sell      float64
-	Timestamp float64
-
-	CurrencyPair CurrencyPair
-	Market       string
+	High         float64      `json:"high"`
+	Low          float64      `json:"low"`
+	Avg          float64      `json:"avg"`
+	Vol          float64      `json:"vol"`
+	VolCur       float64      `json:"volCur"`
+	Last         float64      `json:"last"`
+	Buy          float64      `json:"buy"`
+	Sell         float64      `json:"sell"`
+	Timestamp    float64      `json:"timestamp"`
+	CurrencyPair CurrencyPair `json:"currencyPair"`
+	Market       string       `json:"market"`
 }
 
 func NewTicker(market Market, pair CurrencyPair) *Ticker {
