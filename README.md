@@ -17,7 +17,7 @@ $ make currencies/currencies.go
 
 This script will download all cryptocurrency data from coinmarketcap and generate the Go code from this data.
 
-There are some caveats because of automation nature of the process:
+There are some caveats because of automated nature of the process:
 
 - If currency name begins with numbers(such as `1337`) then it will be prepended with `Coin`
 - Not all currencies will be present, only currencies which have non `low cap` on coinmarketcap
