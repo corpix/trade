@@ -52,6 +52,22 @@ type Ticker struct {
 
 func (m *Yobit) ID() string { return Name }
 
+func (m *Yobit) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
+	var (
+		tickers = make([]*market.Ticker, len(currencyPairs))
+		err     error
+	)
+
+	for k, v := range currencyPairs {
+		tickers[k], err = m.GetTicker(v)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return tickers, nil
+}
+
 func (m *Yobit) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
 	var (
 		u              *url.URL
@@ -111,21 +127,6 @@ func (m *Yobit) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker,
 	ticker.VolCur = responseTicker["ticker"].VolCur
 
 	return ticker, nil
-}
-
-func (m *Yobit) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
-	var (
-		tickers = make([]*market.Ticker, len(currencyPairs))
-		err     error
-	)
-
-	for k, v := range currencyPairs {
-		tickers[k], err = m.GetTicker(v)
-		if err != nil {
-			return nil, err
-		}
-	}
-	return tickers, nil
 }
 
 func (m *Yobit) Close() error { return nil }

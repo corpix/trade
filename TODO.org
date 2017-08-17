@@ -4,8 +4,13 @@
   CLOSED: [2017-08-15 Tue 20:37]
   This is a good time to make naming better. Each currency will be labeled
   with it's full name(like BTC -> Bitcoin), all abbreviation mess will be hidden.
-* TODO Fix currency pair error
+* DONE Fix currency pair error
+  CLOSED: [2017-08-17 Thu 01:11]
   =ERRO[0013] No currency representation for 'BCH'=
+* TODO Download currency names for each market
+  Write script for each market for automatic downloads.
+* TODO Speed up sequential requests
+  With pool.
 * TODO Implement order books
 * TODO Use corpix/formats where it is possible
 * TODO Implement websocket clients for each market

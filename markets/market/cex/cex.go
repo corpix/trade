@@ -22,7 +22,7 @@ var (
 )
 
 var (
-	CurrencyMapping       = map[currencies.Currency]string{}
+	CurrencyMapping       = currencies.CurrencyMapping
 	CurrencyPairDelimiter = "/"
 )
 
@@ -42,27 +42,34 @@ type Ticker struct {
 	Timestamp jsonTypes.Int64String   `json:"timestamp"`
 }
 
-type Tickers struct {
-	Data  []Ticker `json:"data"`
-	Error string   `json:"error"`
-}
-
 //
 
 func (m *Cex) ID() string { return Name }
 
 func (m *Cex) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
 	var (
-		u               *url.URL
-		r               *http.Response
-		n               int
-		pair            string
-		pairs           = make(map[string]bool, len(currencyPairs))
-		currencyPair    currencies.CurrencyPair
-		responseTickers = &Tickers{}
-		tickers         = make([]*market.Ticker, len(currencyPairs))
-		ok              bool
-		err             error
+		tickers = make([]*market.Ticker, len(currencyPairs))
+		err     error
+	)
+
+	for k, v := range currencyPairs {
+		tickers[k], err = m.GetTicker(v)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	return tickers, nil
+}
+
+func (m *Cex) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
+	var (
+		u              *url.URL
+		r              *http.Response
+		pair           string
+		responseTicker = &Ticker{}
+		ticker         *market.Ticker
+		err            error
 	)
 
 	u, err = url.Parse(Addr)
@@ -70,21 +77,15 @@ func (m *Cex) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Tic
 		return nil, err
 	}
 
-	u.Path += "/tickers"
-
-	for _, v := range currencyPairs {
-		pair, err = v.Format(
-			CurrencyMapping,
-			CurrencyPairDelimiter,
-		)
-		if err != nil {
-			return nil, err
-		}
-		pairs[v.String()] = true
-		u.Path += "/" + pair
+	pair, err = currencyPair.Format(
+		CurrencyMapping,
+		CurrencyPairDelimiter,
+	)
+	if err != nil {
+		return nil, err
 	}
 
-	//
+	u.Path += "/ticker/" + pair
 
 	r, err = m.client.Get(u.String())
 	if err != nil {
@@ -101,56 +102,23 @@ func (m *Cex) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Tic
 	}
 
 	defer r.Body.Close()
-	err = json.NewDecoder(r.Body).Decode(responseTickers)
+	err = json.NewDecoder(r.Body).Decode(responseTicker)
 	if err != nil {
 		return nil, err
 	}
 
-	if len(responseTickers.Error) > 0 {
-		return nil, NewErrApi(responseTickers.Error)
-	}
+	// XXX: has no avg
+	ticker = market.NewTicker(m, currencyPair)
+	ticker.Low = float64(responseTicker.Low)
+	ticker.High = float64(responseTicker.High)
+	ticker.Last = float64(responseTicker.Last)
+	ticker.Vol = float64(responseTicker.Vol)
+	ticker.VolCur = float64(responseTicker.VolCur)
+	ticker.Buy = responseTicker.Buy
+	ticker.Sell = responseTicker.Sell
+	ticker.Timestamp = float64(responseTicker.Timestamp)
 
-	n = 0
-	for _, v := range responseTickers.Data {
-		currencyPair, err = currencies.CurrencyPairFromString(
-			v.Pair,
-			CurrencyMapping,
-			":",
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		if _, ok = pairs[currencyPair.String()]; !ok {
-			continue
-		}
-
-		// XXX: has no avg
-		tickers[n] = market.NewTicker(m, currencyPair)
-		tickers[n].Low = float64(v.Low)
-		tickers[n].High = float64(v.High)
-		tickers[n].Last = float64(v.Last)
-		tickers[n].Vol = float64(v.Vol)
-		tickers[n].VolCur = float64(v.VolCur)
-		tickers[n].Buy = v.Buy
-		tickers[n].Sell = v.Sell
-		tickers[n].Timestamp = float64(v.Timestamp)
-
-		n++
-	}
-
-	return tickers, nil
-}
-
-func (m *Cex) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
-	tickers, err := m.GetTickers(
-		[]currencies.CurrencyPair{currencyPair},
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	return tickers[0], nil
+	return ticker, nil
 }
 
 func (m *Cex) Close() error { return nil }

@@ -45,6 +45,7 @@ func (m *Dummy) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.T
 			v,
 		)
 	}
+
 	return tickers, nil
 }
 
