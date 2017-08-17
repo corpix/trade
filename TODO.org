@@ -12,6 +12,8 @@
   or authenticated API.
   In the light of this issue I think tickers and other things(that act like stream of data)
   could be implemented as a channel in complete transport-agnostic approach.
+* TODO Return specific errors for rate-limited queries
+  So the user could handle rate-limiting.
 * TODO Download currency names for each market
   Write script for each market for automatic downloads.
 * TODO Speed up sequential requests
