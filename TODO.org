@@ -7,6 +7,11 @@
 * DONE Fix currency pair error
   CLOSED: [2017-08-17 Thu 01:11]
   =ERRO[0013] No currency representation for 'BCH'=
+* TODO Fix bitfinex rate limiting
+  Probably this will require switching tickers to websocket API
+  or authenticated API.
+  In the light of this issue I think tickers and other things(that act like stream of data)
+  could be implemented as a channel in complete transport-agnostic approach.
 * TODO Download currency names for each market
   Write script for each market for automatic downloads.
 * TODO Speed up sequential requests
