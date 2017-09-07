@@ -6,9 +6,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/corpix/trade/currencies"
-	e "github.com/corpix/trade/errors"
-	"github.com/corpix/trade/markets/market"
+	"github.com/cryptounicorns/trade/currencies"
+	e "github.com/cryptounicorns/trade/errors"
+	"github.com/cryptounicorns/trade/markets/market"
 )
 
 const (

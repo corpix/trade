@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/corpix/trade/markets/market"
-	"github.com/corpix/trade/markets/market/bitfinex"
-	"github.com/corpix/trade/markets/market/btce"
-	"github.com/corpix/trade/markets/market/cex"
-	"github.com/corpix/trade/markets/market/yobit"
+	"github.com/cryptounicorns/trade/markets/market"
+	"github.com/cryptounicorns/trade/markets/market/bitfinex"
+	"github.com/cryptounicorns/trade/markets/market/btce"
+	"github.com/cryptounicorns/trade/markets/market/cex"
+	"github.com/cryptounicorns/trade/markets/market/yobit"
 )
 
 const (

@@ -7,6 +7,8 @@
 * DONE Fix currency pair error
   CLOSED: [2017-08-17 Thu 01:11]
   =ERRO[0013] No currency representation for 'BCH'=
+* DONE Move to cryptounicorns
+  CLOSED: [2017-09-07 Thu 03:03]
 * TODO Fix bitfinex rate limiting
   Probably this will require switching tickers to websocket API
   or authenticated API.

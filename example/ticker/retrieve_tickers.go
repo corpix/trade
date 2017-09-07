@@ -3,11 +3,11 @@ package main
 import (
 	"github.com/davecgh/go-spew/spew"
 
-	"github.com/corpix/trade/currencies"
-	"github.com/corpix/trade/markets/market"
-	"github.com/corpix/trade/markets/market/bitfinex"
-	"github.com/corpix/trade/markets/market/dummy"
-	"github.com/corpix/trade/markets/market/yobit"
+	"github.com/cryptounicorns/trade/currencies"
+	"github.com/cryptounicorns/trade/markets/market"
+	"github.com/cryptounicorns/trade/markets/market/bitfinex"
+	"github.com/cryptounicorns/trade/markets/market/dummy"
+	"github.com/cryptounicorns/trade/markets/market/yobit"
 )
 
 func main() {

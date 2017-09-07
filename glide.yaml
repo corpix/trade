@@ -1,4 +1,4 @@
-package: github.com/corpix/trade
+package: github.com/cryptounicorns/trade
 import:
 - package: github.com/davecgh/go-spew
   version: v1.1.0

@@ -1,7 +1,7 @@
 package market
 
 import (
-	"github.com/corpix/trade/currencies"
+	"github.com/cryptounicorns/trade/currencies"
 )
 
 type Market interface {

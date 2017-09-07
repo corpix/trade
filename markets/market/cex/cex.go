@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/corpix/trade/currencies"
-	e "github.com/corpix/trade/errors"
-	jsonTypes "github.com/corpix/trade/json"
-	"github.com/corpix/trade/markets/market"
+	"github.com/cryptounicorns/trade/currencies"
+	e "github.com/cryptounicorns/trade/errors"
+	jsonTypes "github.com/cryptounicorns/trade/json"
+	"github.com/cryptounicorns/trade/markets/market"
 )
 
 const (
