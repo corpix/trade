@@ -20,142 +20,235 @@
   no big concerns about the implementation at this time.
   First could be implemented in some ways:
   1. Constructors for data streams which return Consumer and Producer for each entity
-    Main concern here is that not every entity supports the symmetric interface for this,
-    e.g. we could consume ticker but we can't produce ticker because it is a duty of the market.
-    As this sounds as reasonable limitation this is just not beautiful.
-    Indeed making orders with this approach could be very easy because we should just produce the
-    order onto some market. But we have limitations in case of the settings, they could not be easily
-    altered because of the nature of the producers and consumers(unify interface).
-    How it could look like:
-    #+BEGIN_SRC go
-    import (
-        "fmt"
+     Main concern here is that not every entity supports the symmetric interface for this,
+     e.g. we could consume ticker but we can't produce ticker because it is a duty of the market.
+     As this sounds as reasonable limitation this is just not beautiful.
+     Indeed making orders with this approach could be very easy because we should just produce the
+     order onto some market. But we have limitations in case of the settings, they could not be easily
+     altered because of the nature of the producers and consumers(unify interface).
+     How it could look like:
+     #+BEGIN_SRC go
+     import (
+         "fmt"
 
-        "github.com/cryptounicorns/trade/currencies"
-        "github.com/cryptounicorns/trade/markets/market"
-    )
-    type Consumer interface {
-        Consume() <-chan []byte
-        Close() error
-    }
-    type Producer interface {
-        Produce(message []byte) error
-        Close() error
-    }
-    type Market interface {
-        // This is an altered version of
-        // github.com/cryptounicorns/trade/markets/market.Market
-	ID() string
-	GetTickers([]currencies.CurrencyPair) ([]*market.Ticker, error)
-	GetTicker(currencies.CurrencyPair) (*market.Ticker, error)
-	Close() error
+         "github.com/cryptounicorns/trade/currencies"
+         "github.com/cryptounicorns/trade/markets/market"
+     )
+     type Consumer interface {
+         Consume() <-chan []byte
+         Close() error
+     }
+     type Producer interface {
+         Produce(message []byte) error
+         Close() error
+     }
+     type Market interface {
+         // This is an altered version of
+         // github.com/cryptounicorns/trade/markets/market.Market
+         ID() string
+         GetTickers([]currencies.CurrencyPair) ([]*market.Ticker, error)
+         GetTicker(currencies.CurrencyPair) (*market.Ticker, error)
+         Close() error
 
-        // FIXME: There are at least two types of market APIs:
-        // - Public API
-        // - Trade API
-        // Each of them requires different data as input,
-        // trade API requires some auth tokens
-        // public API usualy requires nothing but some markets may differ
-        // Q: How to init the market with minimum data possible?
-        // OrderBookConsumer may require no data to init, while
-        // OrderBookProducer requires auth tokens.
-        // Current approach, which I think is not comfortable,
-        // is to pass the auth tokens to OrderBookProducer() as argument.
-        // But this does not scale good.
-        TickerConsumer() (Consumer, error)
-        OrderBookConsumer() (Consumer, error)
-        OrderBookProducer() (Producer, error)
-    }
+         // FIXME: There are at least two types of market APIs:
+         // - Public API
+         // - Trade API
+         // Each of them requires different data as input,
+         // trade API requires some auth tokens
+         // public API usualy requires nothing but some markets may differ
+         // Q: How to init the market with minimum data possible?
+         // OrderBookConsumer may require no data to init, while
+         // OrderBookProducer requires auth tokens.
+         // Current approach, which I think is not comfortable,
+         // is to pass the auth tokens to OrderBookProducer() as argument.
+         // But this does not scale good.
+         TickerConsumer() (Consumer, error)
+         OrderBookConsumer() (Consumer, error)
+         OrderBookProducer() (Producer, error)
+     }
 
-    func main() {
-        var (
-            m       Market
-            tickers Consumer
-            err     error
-        )
+     func main() {
+         var (
+             m       Market
+             tickers Consumer
+             err     error
+         )
 
-        // m = CreateMeNewMarket(...)
+         // m = CreateMeNewMarket(...)
 
-        tickers, err = m.TickerConsumer()
-        if err != nil {
-            panic(err)
-        }
-        defer tickers.Close()
+         tickers, err = m.TickerConsumer()
+         if err != nil {
+             panic(err)
+         }
+         defer tickers.Close()
 
-        for ticker := range tickers.Consume() {
-            fmt.Println("ticker", ticker)
-        }
-    }
-    #+END_SRC
+         for ticker := range tickers.Consume() {
+             fmt.Println("ticker", ticker)
+         }
+     }
+     #+END_SRC
   2. Constructors for data streams which return channels instead of the Consumer. This is minimalist approach,
-    which is good, but on the other hand this approach does not scales well.
-    In previous approach we have an ability to save some state inside the Consumer or Producer,
-    but if our object have no desctructor then it should be very simple and finite by the nature.
-    I have big doubts about that because we want the "trade" component to be really abstract
-    and to be independent from market support of the websockets(in other words - market may not have
-    support for the websockets, in this case we should simulate websockets)
+     which is good, but on the other hand this approach does not scales well.
+     In previous approach we have an ability to save some state inside the Consumer or Producer,
+     but if our object have no desctructor then it should be very simple and finite by the nature.
+     I have big doubts about that because we want the "trade" component to be really abstract
+     and to be independent from market support of the websockets(in other words - market may not have
+     support for the websockets, in this case we should simulate websockets)
   3. Separate constructors for stream API. In this approach there are Consumers and Producers,
-    but each of them should be created from different constructors. Market interface stays fairly simple,
-    all streaming complexity is moved to different objects.
-    This approach has advantages over the first approach, where low-level functions are mixed with
-    high-level streaming API because it clean. Main cons of this approach is the segregation which results
-    in lack of control over the implementation at compile-time, but it could be solved bu the union interface.
-    Which will made it the same as 1, but more structured.
-    Example:
-    #+BEGIN_SRC go
-    import (
-        "fmt"
+     but each of them should be created from different constructors. Market interface stays fairly simple,
+     all streaming complexity is moved to different objects.
+     This approach has advantages over the first approach, where low-level functions are mixed with
+     high-level streaming API because it clean. Main cons of this approach is the segregation which results
+     in lack of control over the implementation at compile-time, but it could be solved bu the union interface
+     (actually this may require the methods of this interfaces to be renamed to not collide).
+     Which will made it the same as 1, but more structured.
+     Example:
+     #+BEGIN_SRC go
+     import (
+         "fmt"
 
-        "github.com/cryptounicorns/trade/currencies"
-        "github.com/cryptounicorns/trade/markets/market"
-    )
-    type Consumer interface {
-        Consume() <-chan []byte
-        Close() error
-    }
-    type Producer interface {
-        Produce(message []byte) error
-        Close() error
-    }
-    type Market interface {
-        // This is an altered version of
-        // github.com/cryptounicorns/trade/markets/market.Market
-	ID() string
-	GetTickers([]currencies.CurrencyPair) ([]*market.Ticker, error)
-	GetTicker(currencies.CurrencyPair) (*market.Ticker, error)
-	Close() error
+         "github.com/cryptounicorns/trade/currencies"
+         "github.com/cryptounicorns/trade/markets/market"
+     )
+     type Consumer interface {
+         Consume() <-chan []byte
+         Close() error
+     }
+     type Producer interface {
+         Produce(message []byte) error
+         Close() error
+     }
+     type Market interface {
+         // This is an altered version of
+         // github.com/cryptounicorns/trade/markets/market.Market
+         ID() string
+         GetTickers([]currencies.CurrencyPair) ([]*market.Ticker, error)
+         GetTicker(currencies.CurrencyPair) (*market.Ticker, error)
+         Close() error
 
-        MarketConsumer
-        MarketProducer
-    }
-    type MarketConsumer interface {
-        Ticker() (Consumer, error)
-        OrderBook() (Consumer, error)
-    }
-    type MarketProducer interface {
-        OrderBook() (Producer, error)
-    }
+         // We can't embed this interfaces,
+         // they have colliding methods!
+         // MarketConsumer
+         // MarketProducer
+     }
+     type MarketConsumer interface {
+         Ticker() (Consumer, error)
+         OrderBook() (Consumer, error)
+     }
+     type MarketProducer interface {
+         OrderBook() (Producer, error)
+     }
 
-    func main() {
-        var (
-            m       MarketConsumer
-            tickers Consumer
-            err     error
-        )
+     func main() {
+         var (
+             m       MarketConsumer
+             tickers Consumer
+             err     error
+         )
 
-        // m = CreateMeNewMarketConsumer(...)
+         // m = CreateMeNewMarketConsumer(...)
 
-        tickers, err = m.Ticker()
-        if err != nil {
-            panic(err)
-        }
-        defer tickers.Close()
+         tickers, err = m.Ticker()
+         if err != nil {
+             panic(err)
+         }
+         defer tickers.Close()
 
-        for ticker := range tickers.Consume() {
-            fmt.Println("ticker", ticker)
-        }
-    }
-    #+END_SRC
+         for ticker := range tickers.Consume() {
+             fmt.Println("ticker", ticker)
+         }
+     }
+     #+END_SRC
+
+  Final version:
+  - At the previous approaches we used =[]byte= as container for our data.
+    Other functions provide us a concrete decoded type, not a container with raw data,
+    e.g. =GetTicker -> *market.Ticker=.
+  - We divided producers and consumers and got nothing
+    Also we have an idea about to divide the API into Public and Trade, but here we also
+    get nothing, only useless groups which apply to nothing.
+    All functions will be in one(=Market=) interface.
+  - I have had a concern about the configuration. We will pass the concrete =Config= to
+    each =Market= constructor where will be stored all necessary information like
+    API tokens timeouts and other.
+
+  We should modify our solution. Also we will add a bit more parameters to functions this time:
+  #+BEGIN_SRC go
+  import (
+      "fmt"
+
+      "github.com/cryptounicorns/trade/currencies"
+      "github.com/cryptounicorns/trade/markets/market"
+  )
+
+  type Config struct {
+      Token string
+  }
+
+  type TickerConsumer interface {
+      Consume([]currencies.CurrencyPair) <-chan *market.Ticker
+      Close() error
+  }
+  type OrderBookConsumer interface {
+      Consume([]currencies.CurrencyPair) <-chan *market.Order
+      Close() error
+  }
+
+  type OrderBookProducer interface {
+      Produce(order *market.Order) error
+      Close() error
+  }
+
+  type Market interface {
+      // This is an altered version of
+      // github.com/cryptounicorns/trade/markets/market.Market
+      ID() string
+
+      GetTickers([]currencies.CurrencyPair) ([]*market.Ticker, error)
+      GetTicker(currencies.CurrencyPair) (*market.Ticker, error)
+
+      TickerConsumer() (TickerConsumer, error)
+      OrderBookConsumer() (OrderBookConsumer, error)
+
+      OrderBookProducer() (OrderBookProducer, error)
+
+      Close() error
+  }
+  func NewMarket(c Config) Market { return nil }
+
+
+  func main() {
+      var (
+          m                 MarketConsumer
+          tickerConsumer    TickerConsumer
+          orderBookProvider OrderBookProvider
+          err               error
+      )
+
+      m = NewMarket(Config{Token: "xxxxxxx"})
+
+      tickerConsumer, err = m.TickerConsumer()
+      if err != nil {
+          panic(err)
+      }
+      defer tickerConsumer.Close()
+
+      for t := range tickerConsumer.Consume() {
+          fmt.Println("ticker", t)
+      }
+
+      orderBookProvider, err = m.OrderBookProvider()
+      if err != nil {
+          panic(err)
+      }
+      defer orderBookProvider.Close()
+
+      err = orderBookProvider.Provide(&market.Order{})
+      if err != nil {
+          panic(err)
+      }
+  }
+  #+END_SRC
 
 ** TODO Blueprint the websocket interface
 ** TODO Implement websockets for bitfinex
