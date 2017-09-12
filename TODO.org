@@ -272,3 +272,14 @@
 ** TODO Implement trading interface for first market
 ** TODO Scale trading interface to 3 markets
 ** TODO Scale to all markets
+* TODO Think about more agile CurrencyPair
+  Bitfinex has:
+  #+BEGIN_QUOTE
+  Trading pairs symbols are formed prepending a "t" before the pair (i.e tBTCUSD, tETHUSD).
+  Margin currencies symbols are formed prepending a "f" before the currency (i.e fUSD, fBTC, ...)
+  #+END_QUOTE
+
+  This could be solved with the custom dictionaries(=CurrencyMapping=) at this time.
+  We should provide this dictionaries out of the box and we
+  need generator script for currency pairs.
+  (alternative dictionaries could be generated in go on top of the "main" currency pair dictionaries)
