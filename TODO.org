@@ -250,7 +250,8 @@
   }
   #+END_SRC
 
-** TODO Blueprint the websocket interface
+** DONE Blueprint the websocket interface
+   CLOSED: [2017-09-12 Tue 01:09]
 ** TODO Implement websockets for bitfinex
 ** TODO Scale websocket interface to all supported markets
 ** TODO Support first 10 markets with highest volume from coinmarketcap list
