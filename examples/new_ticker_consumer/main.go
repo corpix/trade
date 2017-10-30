@@ -6,32 +6,39 @@ import (
 	"github.com/cryptounicorns/trade/currencies"
 	"github.com/cryptounicorns/trade/markets/market"
 	"github.com/cryptounicorns/trade/markets/market/bitfinex"
-	"github.com/cryptounicorns/trade/markets/market/dummy"
-	"github.com/cryptounicorns/trade/markets/market/yobit"
+	// XXX: Import any other market
 )
 
 func main() {
 	for _, v := range []market.Market{
 		bitfinex.Default,
-		dummy.Default,
-		yobit.Default,
+		// XXX: Append here any other market implementation
 	} {
-		tickers, err := v.GetTickers(
+		consumer, err := v.NewTickerConsumer()
+		if err != nil {
+			panic(err)
+		}
+		defer consumer.Close()
+
+		tickers, err := consumer.Consume(
 			[]currencies.CurrencyPair{
 				currencies.NewCurrencyPair(
 					currencies.Bitcoin,
 					currencies.UnitedStatesDollar,
 				),
-				currencies.NewCurrencyPair(
-					currencies.Litecoin,
-					currencies.UnitedStatesDollar,
-				),
+				// XXX: Append here any other currency pair you want to
+				// get ticker for
 			},
 		)
-		spew.Dump(
-			v.ID(),
-			tickers,
-			err,
-		)
+		if err != nil {
+			panic(err)
+		}
+
+		for ticker := range tickers {
+			spew.Dump(
+				v.ID(),
+				ticker,
+			)
+		}
 	}
 }

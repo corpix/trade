@@ -6,31 +6,31 @@ import (
 
 	"github.com/cryptounicorns/trade/markets/market"
 	"github.com/cryptounicorns/trade/markets/market/bitfinex"
-	"github.com/cryptounicorns/trade/markets/market/btce"
-	"github.com/cryptounicorns/trade/markets/market/cex"
-	"github.com/cryptounicorns/trade/markets/market/yobit"
+	//"github.com/cryptounicorns/trade/markets/market/btce"
+	//"github.com/cryptounicorns/trade/markets/market/cex"
+	//"github.com/cryptounicorns/trade/markets/market/yobit"
 )
 
 const (
 	BitfinexMarket = bitfinex.Name
-	BtceMarket     = btce.Name
-	CexMarket      = cex.Name
-	YobitMarket    = yobit.Name
+	//BtceMarket     = btce.Name
+	//CexMarket      = cex.Name
+	//YobitMarket    = yobit.Name
 )
 
 var (
 	DefaultMarkets = map[string]market.Market{
 		BitfinexMarket: bitfinex.Default,
-		BtceMarket:     btce.Default,
-		CexMarket:      cex.Default,
-		YobitMarket:    yobit.Default,
+		//BtceMarket:     btce.Default,
+		//CexMarket:      cex.Default,
+		//YobitMarket:    yobit.Default,
 	}
 
 	DefaultClients = map[string]interface{}{
 		BitfinexMarket: bitfinex.DefaultClient,
-		BtceMarket:     btce.DefaultClient,
-		CexMarket:      cex.DefaultClient,
-		YobitMarket:    yobit.DefaultClient,
+		//BtceMarket:     btce.DefaultClient,
+		//CexMarket:      cex.DefaultClient,
+		//YobitMarket:    yobit.DefaultClient,
 	}
 )
 
@@ -60,12 +60,12 @@ func New(market string, client interface{}) (market.Market, error) {
 	switch strings.ToLower(market) {
 	case BitfinexMarket:
 		return bitfinex.New(client.(*http.Client))
-	case BtceMarket:
-		return btce.New(client.(*http.Client))
-	case CexMarket:
-		return cex.New(client.(*http.Client))
-	case YobitMarket:
-		return yobit.New(client.(*http.Client))
+	// case BtceMarket:
+	// 	return btce.New(client.(*http.Client))
+	// case CexMarket:
+	// 	return cex.New(client.(*http.Client))
+	// case YobitMarket:
+	// 	return yobit.New(client.(*http.Client))
 	default:
 		return nil, NewErrUnsupportedMarket(market)
 	}

@@ -3,7 +3,9 @@ package dummy
 import (
 	"net/http"
 
-	"github.com/cryptounicorns/trade/currencies"
+	"github.com/corpix/loggers"
+	"github.com/corpix/loggers/logger/prefixwrapper"
+
 	e "github.com/cryptounicorns/trade/errors"
 	"github.com/cryptounicorns/trade/markets/market"
 )
@@ -18,67 +20,6 @@ var (
 	DefaultClient = http.DefaultClient
 )
 
-var (
-	CurrencyMapping = map[currencies.Currency]string{
-		currencies.Bitcoin:            "btc",
-		currencies.Litecoin:           "ltc",
-		currencies.UnitedStatesDollar: "usd",
-		currencies.Euro:               "eur",
-		currencies.RussianRuble:       "rub",
-	}
-	CurrencyPairDelimiter = "-"
-)
-
-type Dummy struct {
-	client *http.Client
-}
-
-//
-
-func (m *Dummy) ID() string { return Name }
-
-func (m *Dummy) GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
-	tickers := make([]*market.Ticker, len(currencyPairs))
-	for k, v := range currencyPairs {
-		tickers[k] = market.NewTicker(
-			m,
-			v,
-		)
-	}
-
-	return tickers, nil
-}
-
-func (m *Dummy) GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
-	return market.NewTicker(
-		m,
-		currencyPair,
-	), nil
-}
-
-func (m *Dummy) Close() error { return nil }
-
-//
-
-func GetTickers(currencyPairs []currencies.CurrencyPair) ([]*market.Ticker, error) {
-	return Default.GetTickers(currencyPairs)
-}
-
-func GetTicker(currencyPair currencies.CurrencyPair) (*market.Ticker, error) {
-	return Default.GetTicker(currencyPair)
-}
-
-//
-
-func New(c *http.Client) (*Dummy, error) {
-	if c == nil {
-		return nil, e.NewErrArgumentIsNil(c)
-	}
-	return &Dummy{c}, nil
-}
-
-//
-
 func init() {
 	var (
 		err error
@@ -88,4 +29,30 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+}
+
+type Dummy struct {
+	client *http.Client
+	log    loggers.Logger
+}
+
+func (m *Dummy) ID() string { return Name }
+
+func (m *Dummy) Close() error { return nil }
+
+func New(c *http.Client, l loggers.Logger) (*Dummy, error) {
+	if c == nil {
+		return nil, e.NewErrArgumentIsNil(c)
+	}
+	if l == nil {
+		return nil, e.NewErrArgumentIsNil(l)
+	}
+
+	return &Dummy{
+		client: c,
+		log: prefixwrapper.New(
+			Name+": ",
+			l,
+		),
+	}, nil
 }
