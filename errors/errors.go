@@ -4,23 +4,6 @@ import (
 	"fmt"
 )
 
-// ErrArgumentIsNil is an error indicating that invalid values was passed.
-type ErrArgumentIsNil struct {
-	v interface{}
-}
-
-func (e *ErrArgumentIsNil) Error() string {
-	return fmt.Sprintf(
-		"Argument '%T' is nil",
-		e.v,
-	)
-}
-
-// NewErrArgumentIsNil creates new ErrArgumentIsNil.
-func NewErrArgumentIsNil(v interface{}) error {
-	return &ErrArgumentIsNil{v}
-}
-
 // ErrNoCurrencyRepresentation is an error indicating that currency
 // has no representation to be used in concrete api calls.
 type ErrNoCurrencyRepresentation struct {

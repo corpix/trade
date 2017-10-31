@@ -1,16 +1,12 @@
 package market
 
 import (
-	"github.com/cryptounicorns/trade/currencies"
+	"io"
 )
 
 type Market interface {
 	ID() string
 
-	GetTickers([]currencies.CurrencyPair) ([]*Ticker, error)
-	GetTicker(currencies.CurrencyPair) (*Ticker, error)
-
-	NewTickerConsumer() (TickerConsumer, error)
-
-	Close() error
+	Connect() (io.ReadWriteCloser, error)
+	NewTickerConsumer(io.Reader) TickerConsumer
 }
