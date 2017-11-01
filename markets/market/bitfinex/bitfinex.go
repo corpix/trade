@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	Name = "bitfinex"
+	Name    = "bitfinex"
+	Version = 2
 )
 
 var (
