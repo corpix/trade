@@ -106,6 +106,9 @@ func CurrencyPairFromString(s string, mapping map[Currency]string, delimiter str
 	if len(pair) != 2 {
 		return CurrencyPair{}, e.NewErrNoCurrencyRepresentation(s)
 	}
+
+	// FIXME: If mapping will be a map[string]Currency
+	// Then we could optimize
 	for k, v := range mapping {
 		if pair[0] == v {
 			left = k
@@ -125,6 +128,30 @@ func CurrencyPairFromString(s string, mapping map[Currency]string, delimiter str
 		left,
 		right,
 	}, nil
+}
+
+func CurrencyPairToString(c CurrencyPair, mapping map[Currency]string, delimiter string) (string, error) {
+	var (
+		left  string
+		right string
+		ok    bool
+	)
+
+	left, ok = mapping[c.Left]
+	if !ok {
+		return "", e.NewErrNoCurrencyRepresentation(
+			c.Left.String(),
+		)
+	}
+
+	right, ok = mapping[c.Right]
+	if !ok {
+		return "", e.NewErrNoCurrencyRepresentation(
+			c.Right.String(),
+		)
+	}
+
+	return left + delimiter + right, nil
 }
 
 //

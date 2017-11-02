@@ -10,7 +10,7 @@ import (
 type SubscribeTickerEvent struct {
 	SubscribeEvent
 
-	Pair []currencies.CurrencyPair `json:"pair"`
+	Pair currencies.CurrencyPair `json:"pair"`
 }
 
 type subscribeTickerEventJSON struct {
@@ -19,31 +19,24 @@ type subscribeTickerEventJSON struct {
 	Pair string `json:"pair"`
 }
 
-// FIXME: Map currencies to the bitfinex names!
-
 func (e *SubscribeTickerEvent) MarshalJSON() ([]byte, error) {
-	var (
-		pairs = make([]string, len(e.Pair))
-	)
-
-	for k, v := range e.Pair {
-		pairs[k] = v.Left.String() + v.Right.String()
-	}
-
 	return json.Marshal(
 		&subscribeTickerEventJSON{
 			SubscribeEvent: e.SubscribeEvent,
-			Pair:           strings.Join(pairs, ","),
+			Pair: currencies.CurrencyPairToString(
+				e.Pair,
+				CurrencyMapping,
+				CurrencyPairDelimiter,
+			),
 		},
 	)
 }
 
 func (e *SubscribeTickerEvent) UnmarshalJSON(b []byte) error {
-	panic("not implemented")
-
 	var (
-		v   = &subscribeTickerEventJSON{}
-		err error
+		v    = &subscribeTickerEventJSON{}
+		pair currencies.CurrencyPair
+		err  error
 	)
 
 	err = json.Unmarshal(b, v)
@@ -51,11 +44,17 @@ func (e *SubscribeTickerEvent) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	//currencies.CurrencyPairFromString(s string, mapping map[currencies.Currency]string, delimiter string)
-	//currencies.NewCurrencyPair(left, right)
+	pair, err = currencies.CurrencyPairFromString(
+		v.Pair,
+		CurrencyMapping,
+		CurrencyPairDelimiter,
+	)
+	if err != nil {
+		return err
+	}
 
 	e.SubscribeEvent = v.SubscribeEvent
-	e.Pair = nil
+	e.Pair = pair
 
 	return nil
 }

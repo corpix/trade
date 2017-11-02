@@ -66,7 +66,7 @@ func (c *TickerConsumer) handshake(stream <-chan []byte) error {
 	return nil
 }
 
-func (c *TickerConsumer) subscribe(pairs []currencies.CurrencyPair, stream <-chan []byte) error {
+func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan []byte) error {
 	var (
 		event = Event{
 			Event: SubscribeEventName,
@@ -81,7 +81,7 @@ func (c *TickerConsumer) subscribe(pairs []currencies.CurrencyPair, stream <-cha
 				Event:   event,
 				Channel: TickerChannelName,
 			},
-			Pair: pairs,
+			Pair: pair,
 		},
 	)
 	if err != nil {
