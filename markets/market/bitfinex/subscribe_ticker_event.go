@@ -2,7 +2,6 @@ package bitfinex
 
 import (
 	"encoding/json"
-	"strings"
 
 	"github.com/cryptounicorns/trade/currencies"
 )
@@ -20,14 +19,23 @@ type subscribeTickerEventJSON struct {
 }
 
 func (e *SubscribeTickerEvent) MarshalJSON() ([]byte, error) {
+	var (
+		pair string
+		err  error
+	)
+	pair, err = currencies.CurrencyPairToString(
+		e.Pair,
+		CurrencyMapping,
+		CurrencyPairDelimiter,
+	)
+	if err != nil {
+		return nil, err
+	}
+
 	return json.Marshal(
 		&subscribeTickerEventJSON{
 			SubscribeEvent: e.SubscribeEvent,
-			Pair: currencies.CurrencyPairToString(
-				e.Pair,
-				CurrencyMapping,
-				CurrencyPairDelimiter,
-			),
+			Pair:           pair,
 		},
 	)
 }

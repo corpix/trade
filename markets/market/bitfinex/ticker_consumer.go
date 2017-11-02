@@ -6,7 +6,7 @@ import (
 	"github.com/corpix/loggers"
 	"github.com/corpix/loggers/logger/prefixwrapper"
 	"github.com/cryptounicorns/websocket/consumer"
-	"github.com/davecgh/go-spew/spew"
+	//"github.com/davecgh/go-spew/spew"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 
@@ -18,20 +18,61 @@ const (
 	TickerChannelName = "ticker"
 )
 
+type currencyPairByChannel map[uint]currencies.CurrencyPair
+
 type TickerConsumer struct {
 	*consumer.Consumer
 
-	connection io.ReadWriter
-	log        loggers.Logger
+	channelToCurrencyPair currencyPairByChannel
+	connection            io.ReadWriter
+	log                   loggers.Logger
+}
+
+// This function exists because bitfinex API is inconsistent
+// as shit. It retrieves a data from the stream and checks that
+// retrieved data is a hashmap, skipping arrays, which possibly could
+// be received while subscribing to channels, and handles other
+// shit.
+func (c *TickerConsumer) nextEvent(stream <-chan []byte) ([]byte, error) {
+	var (
+		event []byte
+	)
+
+streamLoop:
+	for {
+		event = <-stream
+		switch {
+		case event[0] == '{':
+			// Hashmap received, looks like we have a new event
+			break streamLoop
+		case event[0] == '[':
+			// Array received, looks like we have a data
+			continue streamLoop
+		default:
+			// Some unexpected shit is received
+			// This should not happen, but WHAT IF
+			return nil, NewErrUnexpectedEvent(
+				"{ ... }",
+				string(event),
+			)
+		}
+	}
+
+	return event, nil
 }
 
 func (c *TickerConsumer) handshake(stream <-chan []byte) error {
 	var (
-		e         = <-stream
 		event     = &Event{}
 		infoEvent = &InfoEvent{}
+		e         []byte
 		err       error
 	)
+
+	e, err = c.nextEvent(stream)
+	if err != nil {
+		return err
+	}
 
 	err = Format.Unmarshal(
 		e,
@@ -66,7 +107,7 @@ func (c *TickerConsumer) handshake(stream <-chan []byte) error {
 	return nil
 }
 
-func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan []byte) error {
+func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan []byte) (uint, error) {
 	var (
 		event = Event{
 			Event: SubscribeEventName,
@@ -85,7 +126,7 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 		},
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	err = wsutil.WriteClientText(
@@ -93,23 +134,34 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 		e,
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	e = <-stream
+	e, err = c.nextEvent(stream)
+	if err != nil {
+		return 0, err
+	}
 
-	spew.Dump(e)
 	err = Format.Unmarshal(
 		e,
 		&event,
 	)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	switch event.Event {
 	case SubscribedEventName:
-		return nil
+		subscribedEvent := &SubscribedEvent{}
+		err = Format.Unmarshal(
+			e,
+			subscribedEvent,
+		)
+		if err != nil {
+			return 0, err
+		}
+
+		return subscribedEvent.ChanID, nil
 	case ErrorEventName:
 		errorEvent := &ErrorEvent{}
 		err = Format.Unmarshal(
@@ -117,15 +169,15 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 			errorEvent,
 		)
 		if err != nil {
-			return err
+			return 0, err
 		}
 
-		return NewErrSubscription(
+		return 0, NewErrSubscription(
 			errorEvent.Channel,
 			errorEvent.Msg,
 		)
 	default:
-		return NewErrUnexpectedEvent(
+		return 0, NewErrUnexpectedEvent(
 			SubscribeEventName+"|"+ErrorEventName,
 			event.Event,
 		)
@@ -135,8 +187,9 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
 	func() {
 		var (
-			stream = c.Consumer.Consume()
-			err    error
+			stream    = c.Consumer.Consume()
+			channelID uint
+			err       error
 		)
 		// FIXME: After a some time it goes to the infinite loop
 		// flooding the terminal with ([]uint8) (cap=512) ...
@@ -159,16 +212,20 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market
 		}
 		c.log.Print("handshaked")
 
-		err = c.subscribe(pairs, stream)
-		if err != nil {
-			c.log.Error(err)
-			return
+		for _, pair := range pairs {
+			channelID, err = c.subscribe(pair, stream)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			c.channelToCurrencyPair[channelID] = pair
+			c.log.Print("subscribed ", channelID, pair)
 		}
 
-		c.log.Print("subscribed")
-
-		spew.Dump("we are ok!", <-stream)
-		spew.Dump("we are ok2!", <-stream)
+		for event := range stream {
+			c.log.Printf("%s", event)
+		}
 	}()
 
 	panic("not going anywhere :)")
@@ -192,8 +249,9 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 			),
 			l,
 		),
-		connection: c,
-		log:        l,
+		channelToCurrencyPair: currencyPairByChannel{},
+		connection:            c,
+		log:                   l,
 	}
 }
 
