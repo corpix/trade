@@ -32,7 +32,7 @@ func main() {
 		consumer = v.NewTickerConsumer(connection)
 		defer consumer.Close()
 
-		tickers, err = consumer.Consume(
+		tickers = consumer.Consume(
 			[]currencies.CurrencyPair{
 				currencies.NewCurrencyPair(
 					currencies.Bitcoin,

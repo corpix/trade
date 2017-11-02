@@ -14,96 +14,169 @@ import (
 	"github.com/cryptounicorns/trade/markets/market"
 )
 
+const (
+	TickerChannelName = "ticker"
+)
+
 type TickerConsumer struct {
 	*consumer.Consumer
 
-	connection io.Reader
+	connection io.ReadWriter
 	log        loggers.Logger
 }
 
-func (c *TickerConsumer) Consume([]currencies.CurrencyPair) (<-chan *market.Ticker, error) {
+func (c *TickerConsumer) handshake(stream <-chan []byte) error {
 	var (
-		err   error
-		n     uint64
-		event *Event
+		e         = <-stream
+		event     = &Event{}
+		infoEvent = &InfoEvent{}
+		err       error
 	)
-	// FIXME: After a some time it goes to the infinite loop
-	// flooding the terminal with ([]uint8) (cap=512) ...
-	// probably conenction is dead?
-	// Yeap, I saw FIN ACK from the server after 100 seconds of incativity.
-consumerLoop:
-	for t := range c.Consumer.Consume() {
-		n++
 
-		// FIXME: Temporary fix for closed connection
-		if len(t) == 0 {
-			break
-		}
-
-		event = &Event{}
-		err = Format.Unmarshal(
-			t,
-			event,
-		)
-		if err != nil {
-			c.log.Errorf(
-				"Got an error while unmarshal event: '%s'",
-				err,
-			)
-			continue
-		}
-
-		switch event.Event {
-
-		// TODO: Next:
-		// - implement pings
-		// - implement subscriptions
-
-		case "info":
-			// FIXME: Any chance we could make this better?
-			if n != 1 {
-				c.log.Error(
-					NewErrUnexpectedEvent(
-						event.Event,
-						1,
-						n,
-					),
-				)
-				break consumerLoop
-			}
-
-			info := &InfoEvent{}
-
-			err = Format.Unmarshal(
-				t,
-				info,
-			)
-			if err != nil {
-				c.log.Error(err)
-				break consumerLoop
-			}
-
-			if info.Version != Version {
-				c.log.Error(
-					NewErrUnsupportedAPIVersion(
-						Version,
-						info.Version,
-					),
-				)
-				break consumerLoop
-			}
-
-			c.log.Print("we are ok")
-			continue
-		}
-
-		spew.Dump(event)
+	err = Format.Unmarshal(
+		e,
+		event,
+	)
+	if err != nil {
+		return err
 	}
-	panic("not impl")
-	return nil, nil
+
+	if event.Event != InfoEventName {
+		return NewErrUnexpectedEvent(
+			InfoEventName,
+			event.Event,
+		)
+	}
+
+	err = Format.Unmarshal(
+		e,
+		infoEvent,
+	)
+	if err != nil {
+		return err
+	}
+
+	if infoEvent.Version != Version {
+		return NewErrUnsupportedAPIVersion(
+			Version,
+			infoEvent.Version,
+		)
+	}
+
+	return nil
 }
 
-func (m *Bitfinex) NewTickerConsumer(r io.Reader) market.TickerConsumer {
+func (c *TickerConsumer) subscribe(pairs []currencies.CurrencyPair, stream <-chan []byte) error {
+	var (
+		event = Event{
+			Event: SubscribeEventName,
+		}
+		e   []byte
+		err error
+	)
+
+	e, err = Format.Marshal(
+		&SubscribeTickerEvent{
+			SubscribeEvent: SubscribeEvent{
+				Event:   event,
+				Channel: TickerChannelName,
+			},
+			Pair: pairs,
+		},
+	)
+	if err != nil {
+		return err
+	}
+
+	err = wsutil.WriteClientText(
+		c.connection,
+		e,
+	)
+	if err != nil {
+		return err
+	}
+
+	e = <-stream
+
+	spew.Dump(e)
+	err = Format.Unmarshal(
+		e,
+		&event,
+	)
+	if err != nil {
+		return err
+	}
+
+	switch event.Event {
+	case SubscribedEventName:
+		return nil
+	case ErrorEventName:
+		errorEvent := &ErrorEvent{}
+		err = Format.Unmarshal(
+			e,
+			errorEvent,
+		)
+		if err != nil {
+			return err
+		}
+
+		return NewErrSubscription(
+			errorEvent.Channel,
+			errorEvent.Msg,
+		)
+	default:
+		return NewErrUnexpectedEvent(
+			SubscribeEventName+"|"+ErrorEventName,
+			event.Event,
+		)
+	}
+}
+
+func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
+	func() {
+		var (
+			stream = c.Consumer.Consume()
+			err    error
+		)
+		// FIXME: After a some time it goes to the infinite loop
+		// flooding the terminal with ([]uint8) (cap=512) ...
+		// probably conenction is dead?
+		// Yeap, I saw FIN ACK from the server after 100 seconds of incativity.
+
+		// FIXME: Add timeout for reading from channel
+
+		// TODO: Next:
+		// - [ ] implement pings
+		// - [X] implement subscriptions
+		// - [ ] transition to the "finalized" state where
+		//       we only receive the ticker
+		//       (and maybe dealing with pings if required)
+
+		err = c.handshake(stream)
+		if err != nil {
+			c.log.Error(err)
+			return
+		}
+		c.log.Print("handshaked")
+
+		err = c.subscribe(pairs, stream)
+		if err != nil {
+			c.log.Error(err)
+			return
+		}
+
+		c.log.Print("subscribed")
+
+		spew.Dump("we are ok!", <-stream)
+		spew.Dump("we are ok2!", <-stream)
+	}()
+
+	panic("not going anywhere :)")
+	return nil
+}
+
+// FIXME: This is shit, consumer should receive reader by semantic.
+func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 	var (
 		l = prefixwrapper.New(
 			"TickerConsumer: ",
@@ -114,16 +187,16 @@ func (m *Bitfinex) NewTickerConsumer(r io.Reader) market.TickerConsumer {
 	return &TickerConsumer{
 		Consumer: consumer.New(
 			wsutil.NewReader(
-				r,
+				c,
 				ws.StateClientSide,
 			),
 			l,
 		),
-		connection: r,
+		connection: c,
 		log:        l,
 	}
 }
 
-func NewTickerConsumer(r io.Reader) market.TickerConsumer {
+func NewTickerConsumer(r io.ReadWriter) market.TickerConsumer {
 	return Default.NewTickerConsumer(r)
 }

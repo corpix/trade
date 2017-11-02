@@ -8,5 +8,5 @@ type Market interface {
 	ID() string
 
 	Connect() (io.ReadWriteCloser, error)
-	NewTickerConsumer(io.Reader) TickerConsumer
+	NewTickerConsumer(io.ReadWriter) TickerConsumer
 }

@@ -1,9 +1,8 @@
 package bitfinex
 
-type Event struct {
-	Event string `json:"event"`
-	Code  int    `json:"code"`
-}
+const (
+	InfoEventName = "info"
+)
 
 type InfoEvent struct {
 	Event
