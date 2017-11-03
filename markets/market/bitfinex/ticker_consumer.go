@@ -2,11 +2,12 @@ package bitfinex
 
 import (
 	"io"
+	"strconv"
 
 	"github.com/corpix/loggers"
 	"github.com/corpix/loggers/logger/prefixwrapper"
 	"github.com/cryptounicorns/websocket/consumer"
-	//"github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 
@@ -17,8 +18,6 @@ import (
 const (
 	TickerChannelName = "ticker"
 )
-
-type currencyPairByChannel map[uint]currencies.CurrencyPair
 
 type TickerConsumer struct {
 	*consumer.Consumer
@@ -41,12 +40,21 @@ func (c *TickerConsumer) nextEvent(stream <-chan []byte) ([]byte, error) {
 streamLoop:
 	for {
 		event = <-stream
+
+		if len(event) == 0 {
+			continue
+		}
+
 		switch {
 		case event[0] == '{':
 			// Hashmap received, looks like we have a new event
 			break streamLoop
 		case event[0] == '[':
 			// Array received, looks like we have a data
+			c.log.Errorf(
+				"Skipping `data` while receiving `event` '%s'",
+				event,
+			)
 			continue streamLoop
 		default:
 			// Some unexpected shit is received
@@ -61,6 +69,49 @@ streamLoop:
 	return event, nil
 }
 
+// This function exists because bitfinex API is inconsistent
+// as shit. It retrieves a data from the stream and checks that
+// retrieved data is a hashmap, skipping arrays, which possibly could
+// be received while subscribing to channels, and handles other
+// shit.
+func (c *TickerConsumer) nextData(stream <-chan []byte) ([]byte, error) {
+	var (
+		data []byte
+	)
+
+streamLoop:
+	for {
+		data = <-stream
+
+		if len(data) == 0 {
+			continue
+		}
+
+		switch {
+		case data[0] == '[':
+			// Array received, looks like we have a data
+			break streamLoop
+		case data[0] == '{':
+			// Hashmap received, looks like we have a new event
+			c.log.Errorf(
+				"Skipping `event` while receiving `data` '%s'",
+				data,
+			)
+			continue streamLoop
+		default:
+			// Some unexpected shit is received
+			// This should not happen, but WHAT IF
+			return nil, NewErrUnexpectedData(
+				"[ ... ]",
+				string(data),
+			)
+		}
+	}
+
+	return data, nil
+}
+
+// FIXME: This should be on a more common level
 func (c *TickerConsumer) handshake(stream <-chan []byte) error {
 	var (
 		event     = &Event{}
@@ -223,8 +274,95 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market
 			c.log.Print("subscribed ", channelID, pair)
 		}
 
-		for event := range stream {
-			c.log.Printf("%s", event)
+		for {
+			var (
+				expectedDataLength = 2
+				data               = make(
+					Data,
+					expectedDataLength,
+				)
+
+				d []byte
+
+				payload   = make([]float64, 10)
+				channelID int
+
+				pair currencies.CurrencyPair
+			)
+
+			d, err = c.nextData(stream)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			err = Format.Unmarshal(d, &data)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			if len(data) != expectedDataLength {
+				c.log.Error(
+					NewErrDataLengthMismatch(
+						expectedDataLength,
+						len(data),
+					),
+				)
+				return
+			}
+
+			if len(data[1]) == 0 {
+				c.log.Error(
+					NewErrEmptyDataPayload(),
+				)
+				return
+			}
+
+			switch data[1][0] {
+			case '[':
+				// We got ticker, this is what we have expect.
+			case '"':
+				// We got string message(heartbeat), nothing to do with them
+				// now, skipping.
+				continue
+			default:
+				// FIXME: I don't like this error message
+				// both arguments should represent type
+				// but it is hard to infer it from string
+				c.log.Error(
+					NewErrUnexpectedDataPayloadType(
+						"[]float64",
+						string(data[1]),
+					),
+				)
+			}
+
+			err = Format.Unmarshal(data[1], &payload)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			channelID, err = strconv.Atoi(
+				string(data[0]),
+			)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			pair, err = c.channelToCurrencyPair.Get(
+				uint(channelID),
+			)
+			if err != nil {
+				c.log.Error(err)
+				return
+			}
+
+			spew.Dump(pair, channelID, payload)
+			c.log.Printf("%s", data)
+			//spew.Dump(data)
 		}
 	}()
 
