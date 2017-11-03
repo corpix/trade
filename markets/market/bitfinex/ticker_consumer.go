@@ -336,6 +336,7 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market
 						string(data[1]),
 					),
 				)
+				return
 			}
 
 			err = Format.Unmarshal(data[1], &payload)
