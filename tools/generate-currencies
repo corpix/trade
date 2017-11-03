@@ -6,6 +6,9 @@ from math import inf as infinity
 
 def load(args, stream):
     for line in stream:
+        if not line.strip():
+            continue
+
         v = json_unmarshal(line.strip())
 
         if v["volume"] < args["min_volume"]:
@@ -20,9 +23,6 @@ def load(args, stream):
                 )
             continue
 
-        yield format(v)
-
-    for v in fiat_currencies():
         yield format(v)
 
 def format(v):
@@ -68,18 +68,6 @@ var (
 	}
 )
 """
-
-def fiat_currencies():
-    volume = {"volume": infinity}
-
-    return [
-        {"name": "China Yan",            "symbol": "CNY", **volume},
-        {"name": "Japanese Yen",         "symbol": "JPY", **volume},
-        {"name": "Russian Ruble",        "symbol": "RUB", **volume},
-        {"name": "United States Dollar", "symbol": "USD", **volume},
-        {"name": "Euro",                 "symbol": "EUR", **volume},
-        {"name": "Canadian Dollar",      "symbol": "CAD", **volume}
-    ]
 
 def main(args):
     stdout.write(
