@@ -162,9 +162,12 @@ func AllAction(ctx *cli.Context) error {
 
 func ExchangesAction(ctx *cli.Context) error {
 	var (
-		exchange = ctx.String("exchange")
-		d        *goquery.Document
-		err      error
+		exchange        = ctx.String("exchange")
+		currencies      = map[string]*Currency{}
+		currenciesOrder = []string{}
+		buf             []byte
+		d               *goquery.Document
+		err             error
 	)
 
 	if exchange == "" {
@@ -195,12 +198,12 @@ func ExchangesAction(ctx *cli.Context) error {
 					)[0]
 					volume, _ = s.Find("td > .volume").Attr("data-usd")
 
-					c = Currency{
+					c = &Currency{
 						Name:   strings.TrimSpace(name),
 						Symbol: strings.TrimSpace(symbol),
 					}
 
-					buf []byte
+					ok bool
 				)
 
 				c.Volume, err = parseVolume(volume)
@@ -208,19 +211,32 @@ func ExchangesAction(ctx *cli.Context) error {
 					return false
 				}
 
-				buf, err = format.Marshal(&c)
-				if err != nil {
-					return false
-				}
-
-				err = write(buf)
-				if err != nil {
-					return false
+				_, ok = currencies[symbol]
+				if ok {
+					currencies[symbol].Volume += c.Volume
+				} else {
+					currencies[symbol] = c
+					currenciesOrder = append(
+						currenciesOrder,
+						symbol,
+					)
 				}
 
 				return true
 			},
 		)
+
+	for _, symbol := range currenciesOrder {
+		buf, err = format.Marshal(currencies[symbol])
+		if err != nil {
+			return err
+		}
+
+		err = write(buf)
+		if err != nil {
+			return err
+		}
+	}
 
 	return err
 }
