@@ -3,11 +3,11 @@ package bitfinex
 import (
 	"io"
 	"strconv"
+	"time"
 
 	"github.com/corpix/loggers"
 	"github.com/corpix/loggers/logger/prefixwrapper"
 	"github.com/cryptounicorns/websocket/consumer"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 
@@ -24,6 +24,8 @@ type TickerConsumer struct {
 
 	connection            io.ReadWriter
 	channelToCurrencyPair currencyPairByChannel
+	tickers               chan *market.Ticker
+	done                  chan struct{}
 	log                   loggers.Logger
 }
 
@@ -213,43 +215,91 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 	}, nil
 }
 
-func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
-	func() {
-		var (
-			stream   = c.Consumer.Consume()
-			iterator = NewIterator(stream, c.log)
+func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
+	// see: https://docs.bitfinex.com/v2/reference#ws-public-ticker
+	// (snapshot)
+	// [
+	// 	CHANNEL_ID,
+	// 	[
+	// 	0	BID,
+	// 	1	BID_SIZE,
+	// 	2	ASK,
+	// 	3	ASK_SIZE,
+	// 	4	DAILY_CHANGE,
+	// 	5	DAILY_CHANGE_PERC,
+	// 	6	LAST_PRICE,
+	// 	7	VOLUME,
+	// 	8	HIGH,
+	// 	9	LOW
+	// 	]
+	// ]
+	return &market.Ticker{
+		High:         pt.Ticker[8],
+		Low:          pt.Ticker[9],
+		Vol:          pt.Ticker[7],
+		Last:         pt.Ticker[6],
+		Buy:          pt.Ticker[2],
+		Sell:         pt.Ticker[0],
+		Timestamp:    uint64(time.Now().UTC().UnixNano()),
+		CurrencyPair: pt.CurrencyPair,
+		Market:       Name,
+	}
+}
 
-			pairTicker *pairTicker
-			err        error
-		)
+func (c *TickerConsumer) worker(pairs []currencies.CurrencyPair) {
+	var (
+		stream   = c.Consumer.Consume()
+		iterator = NewIterator(stream, c.log)
 
-		err = c.preamble(pairs, iterator)
-		if err != nil {
-			c.log.Error(err)
-			return
-		}
+		pairTicker *pairTicker
+		err        error
+	)
 
-		for {
+	err = c.preamble(pairs, iterator)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+
+workerLoop:
+	for {
+		select {
+		case <-c.done:
+			break workerLoop
+		default:
 			pairTicker, err = c.consume(iterator)
 			if err != nil {
 				switch err.(type) {
 				case *ErrContinue:
-					continue
+					continue workerLoop
 				default:
 					c.log.Error(err)
 					return
 				}
 			}
 
-			spew.Dump(pairTicker.CurrencyPair, pairTicker.Ticker)
+			c.tickers <- c.convertTicker(pairTicker)
 		}
-	}()
-
-	panic("not going anywhere :)")
-	return nil
+	}
 }
 
-// FIXME: This is shit, consumer should receive reader by semantic.
+func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
+	go c.worker(pairs)
+
+	return c.tickers
+}
+
+func (c *TickerConsumer) Close() error {
+	close(c.done)
+	// XXX: Not closing it, it will be GC'ed
+	// Or we could make worker a panic in case of race
+	// close(c.stream)
+	return c.Consumer.Close()
+}
+
+// FIXME: This is shit, consumer should receive reader by semantic,
+// but it can't ATM because consumer subscribes to channels only
+// when Consume(...) is called.
 func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 	var (
 		l = prefixwrapper.New(
@@ -268,6 +318,8 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 		),
 		channelToCurrencyPair: currencyPairByChannel{},
 		connection:            c,
+		tickers:               make(chan *market.Ticker, 128),
+		done:                  make(chan struct{}),
 		log:                   l,
 	}
 }

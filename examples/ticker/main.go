@@ -38,10 +38,6 @@ func main() {
 					currencies.Bitcoin,
 					currencies.UnitedStatesDollar,
 				),
-				currencies.NewCurrencyPair(
-					currencies.Litecoin,
-					currencies.UnitedStatesDollar,
-				),
 				// XXX: Append here any other currency pair you want to
 				// get ticker for
 			},
