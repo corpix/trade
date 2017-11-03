@@ -3,6 +3,8 @@ from http.client import HTTPSConnection
 from re import findall, match
 from sys import stderr, stdout
 
+min_volume = 1000
+
 
 class Request(object):
     headers = {
@@ -67,15 +69,34 @@ def crypto_currencies():
             "<td.*?</td>",
             currency
         )
-        if match(".*?low vol.*?", columns[7].lower()):
-            continue
-        yield match(
+
+        name, symbol = match(
             (
-                ".*?<td.*?>.*?<a.*?href=\"/currencies/(.*?)\".*?</td>.*?"
+                ".*?<td.*?>.*?<a.*?href=\"/currencies/(.*?)/\".*?</td>.*?"
                 ".*?<td.*?>(.*?)</td>.*?"
             ),
             columns[1] + columns[2]
         ).groups()
+
+        volume = match(
+            ".*?data-usd=\"(.*?)\".*?",
+            columns[3]
+        ).groups()[0].strip()
+
+        if volume == "?":
+            volume = "0"
+
+        if float(volume) < min_volume:
+            stderr.write(
+                "Skipping '{}({})' because it have low volume '{}'\n".format(
+                    symbol,
+                    name,
+                    volume
+                )
+            )
+            continue
+
+        yield (name, symbol)
 
 def fiat_currencies():
     return [
