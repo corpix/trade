@@ -22,143 +22,12 @@ const (
 type TickerConsumer struct {
 	*consumer.Consumer
 
-	channelToCurrencyPair currencyPairByChannel
 	connection            io.ReadWriter
+	channelToCurrencyPair currencyPairByChannel
 	log                   loggers.Logger
 }
 
-// This function exists because bitfinex API is inconsistent
-// as shit. It retrieves a data from the stream and checks that
-// retrieved data is a hashmap, skipping arrays, which possibly could
-// be received while subscribing to channels, and handles other
-// shit.
-func (c *TickerConsumer) nextEvent(stream <-chan []byte) ([]byte, error) {
-	var (
-		event []byte
-	)
-
-streamLoop:
-	for {
-		event = <-stream
-
-		if len(event) == 0 {
-			continue
-		}
-
-		switch {
-		case event[0] == '{':
-			// Hashmap received, looks like we have a new event
-			break streamLoop
-		case event[0] == '[':
-			// Array received, looks like we have a data
-			c.log.Errorf(
-				"Skipping `data` while receiving `event` '%s'",
-				event,
-			)
-			continue streamLoop
-		default:
-			// Some unexpected shit is received
-			// This should not happen, but WHAT IF
-			return nil, NewErrUnexpectedEvent(
-				"{ ... }",
-				string(event),
-			)
-		}
-	}
-
-	return event, nil
-}
-
-// This function exists because bitfinex API is inconsistent
-// as shit. It retrieves a data from the stream and checks that
-// retrieved data is a hashmap, skipping arrays, which possibly could
-// be received while subscribing to channels, and handles other
-// shit.
-func (c *TickerConsumer) nextData(stream <-chan []byte) ([]byte, error) {
-	var (
-		data []byte
-	)
-
-streamLoop:
-	for {
-		data = <-stream
-
-		if len(data) == 0 {
-			continue
-		}
-
-		switch {
-		case data[0] == '[':
-			// Array received, looks like we have a data
-			break streamLoop
-		case data[0] == '{':
-			// Hashmap received, looks like we have a new event
-			c.log.Errorf(
-				"Skipping `event` while receiving `data` '%s'",
-				data,
-			)
-			continue streamLoop
-		default:
-			// Some unexpected shit is received
-			// This should not happen, but WHAT IF
-			return nil, NewErrUnexpectedData(
-				"[ ... ]",
-				string(data),
-			)
-		}
-	}
-
-	return data, nil
-}
-
-// FIXME: This should be on a more common level
-func (c *TickerConsumer) handshake(stream <-chan []byte) error {
-	var (
-		event     = &Event{}
-		infoEvent = &InfoEvent{}
-		e         []byte
-		err       error
-	)
-
-	e, err = c.nextEvent(stream)
-	if err != nil {
-		return err
-	}
-
-	err = Format.Unmarshal(
-		e,
-		event,
-	)
-	if err != nil {
-		return err
-	}
-
-	if event.Event != InfoEventName {
-		return NewErrUnexpectedEvent(
-			InfoEventName,
-			event.Event,
-		)
-	}
-
-	err = Format.Unmarshal(
-		e,
-		infoEvent,
-	)
-	if err != nil {
-		return err
-	}
-
-	if infoEvent.Version != Version {
-		return NewErrUnsupportedAPIVersion(
-			Version,
-			infoEvent.Version,
-		)
-	}
-
-	return nil
-}
-
-func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan []byte) (uint, error) {
+func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, iterator *Iterator) (uint, error) {
 	var (
 		event = Event{
 			Event: SubscribeEventName,
@@ -188,7 +57,7 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 		return 0, err
 	}
 
-	e, err = c.nextEvent(stream)
+	e, err = iterator.NextEvent()
 	if err != nil {
 		return 0, err
 	}
@@ -235,135 +104,144 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, stream <-chan [
 	}
 }
 
+func (c *TickerConsumer) preamble(pairs []currencies.CurrencyPair, iterator *Iterator) error {
+	var (
+		handshaker = NewHandshaker(iterator, c.log)
+
+		channelID uint
+		err       error
+	)
+
+	err = handshaker.Handshake()
+	if err != nil {
+		return err
+	}
+	c.log.Debug("Handshaked")
+
+	for _, pair := range pairs {
+		channelID, err = c.subscribe(pair, iterator)
+		if err != nil {
+			return err
+		}
+
+		c.channelToCurrencyPair[channelID] = pair
+		c.log.Debug("Subscribed ", channelID, pair)
+	}
+
+	c.log.Debug("Preamble complete")
+
+	return nil
+}
+
+func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
+	var (
+		expectedLen = 2
+		data        = make(
+			Data,
+			expectedLen,
+		)
+
+		d []byte
+
+		ticker    = Ticker{}
+		channelID int
+
+		pair currencies.CurrencyPair
+		err  error
+	)
+
+	d, err = iterator.NextData()
+	if err != nil {
+		return nil, err
+	}
+
+	err = Format.Unmarshal(d, &data)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(data) != expectedLen {
+		return nil, NewErrDataLengthMismatch(
+			expectedLen,
+			len(data),
+		)
+	}
+
+	if len(data[1]) == 0 {
+		return nil, NewErrEmptyDataPayload()
+	}
+
+	switch data[1][0] {
+	case '[':
+		// We got ticker, this is what we have expect.
+	case '"':
+		// We got string message(heartbeat), nothing to do with them
+		// now, skipping.
+		return nil, errContinue
+	default:
+		// FIXME: I don't like this error message
+		// both arguments should represent type
+		// but it is hard to infer it from string
+		return nil, NewErrUnexpectedDataPayloadType(
+			"Ticker",
+			string(data[1]),
+		)
+	}
+
+	err = Format.Unmarshal(data[1], &ticker)
+	if err != nil {
+		return nil, err
+	}
+
+	channelID, err = strconv.Atoi(
+		string(data[0]),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	pair, err = c.channelToCurrencyPair.Get(
+		uint(channelID),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &pairTicker{
+		CurrencyPair: pair,
+		Ticker:       ticker,
+	}, nil
+}
+
 func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
 	func() {
 		var (
-			stream    = c.Consumer.Consume()
-			channelID uint
-			err       error
+			stream   = c.Consumer.Consume()
+			iterator = NewIterator(stream, c.log)
+
+			pairTicker *pairTicker
+			err        error
 		)
-		// FIXME: After a some time it goes to the infinite loop
-		// flooding the terminal with ([]uint8) (cap=512) ...
-		// probably conenction is dead?
-		// Yeap, I saw FIN ACK from the server after 100 seconds of incativity.
 
-		// FIXME: Add timeout for reading from channel
-
-		// TODO: Next:
-		// - [ ] implement pings
-		// - [X] implement subscriptions
-		// - [ ] transition to the "finalized" state where
-		//       we only receive the ticker
-		//       (and maybe dealing with pings if required)
-
-		err = c.handshake(stream)
+		err = c.preamble(pairs, iterator)
 		if err != nil {
 			c.log.Error(err)
 			return
 		}
-		c.log.Print("handshaked")
-
-		for _, pair := range pairs {
-			channelID, err = c.subscribe(pair, stream)
-			if err != nil {
-				c.log.Error(err)
-				return
-			}
-
-			c.channelToCurrencyPair[channelID] = pair
-			c.log.Print("subscribed ", channelID, pair)
-		}
 
 		for {
-			var (
-				expectedDataLength = 2
-				data               = make(
-					Data,
-					expectedDataLength,
-				)
-
-				d []byte
-
-				payload   = make([]float64, 10)
-				channelID int
-
-				pair currencies.CurrencyPair
-			)
-
-			d, err = c.nextData(stream)
+			pairTicker, err = c.consume(iterator)
 			if err != nil {
-				c.log.Error(err)
-				return
+				switch err.(type) {
+				case *ErrContinue:
+					continue
+				default:
+					c.log.Error(err)
+					return
+				}
 			}
 
-			err = Format.Unmarshal(d, &data)
-			if err != nil {
-				c.log.Error(err)
-				return
-			}
-
-			if len(data) != expectedDataLength {
-				c.log.Error(
-					NewErrDataLengthMismatch(
-						expectedDataLength,
-						len(data),
-					),
-				)
-				return
-			}
-
-			if len(data[1]) == 0 {
-				c.log.Error(
-					NewErrEmptyDataPayload(),
-				)
-				return
-			}
-
-			switch data[1][0] {
-			case '[':
-				// We got ticker, this is what we have expect.
-			case '"':
-				// We got string message(heartbeat), nothing to do with them
-				// now, skipping.
-				continue
-			default:
-				// FIXME: I don't like this error message
-				// both arguments should represent type
-				// but it is hard to infer it from string
-				c.log.Error(
-					NewErrUnexpectedDataPayloadType(
-						"[]float64",
-						string(data[1]),
-					),
-				)
-				return
-			}
-
-			err = Format.Unmarshal(data[1], &payload)
-			if err != nil {
-				c.log.Error(err)
-				return
-			}
-
-			channelID, err = strconv.Atoi(
-				string(data[0]),
-			)
-			if err != nil {
-				c.log.Error(err)
-				return
-			}
-
-			pair, err = c.channelToCurrencyPair.Get(
-				uint(channelID),
-			)
-			if err != nil {
-				c.log.Error(err)
-				return
-			}
-
-			spew.Dump(pair, channelID, payload)
-			c.log.Printf("%s", data)
-			//spew.Dump(data)
+			spew.Dump(pairTicker.CurrencyPair, pairTicker.Ticker)
 		}
 	}()
 
@@ -394,6 +272,6 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 	}
 }
 
-func NewTickerConsumer(r io.ReadWriter) market.TickerConsumer {
-	return Default.NewTickerConsumer(r)
+func NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
+	return Default.NewTickerConsumer(c)
 }
