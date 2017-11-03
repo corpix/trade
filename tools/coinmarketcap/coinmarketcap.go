@@ -1,13 +1,13 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/corpix/formats"
 	"github.com/corpix/loggers/logger/logrus"
 	logrusLogger "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -22,6 +22,7 @@ const (
 var (
 	log     = logrus.New(logrusLogger.New())
 	newLine = []byte{'\n'}
+	format  formats.Format
 )
 
 var (
@@ -48,6 +49,14 @@ var (
 				},
 			},
 			Action: ExchangesAction,
+		},
+	}
+
+	Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "format",
+			Usage: "Name of the output format supported by https://github.com/corpix/formats",
+			Value: "json",
 		},
 	}
 )
@@ -87,6 +96,19 @@ func parseVolume(volume string) (float64, error) {
 	)
 }
 
+func BeforeAction(ctx *cli.Context) error {
+	var (
+		err error
+	)
+
+	format, err = formats.New(ctx.String("format"))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func AllAction(ctx *cli.Context) error {
 	var (
 		d   *goquery.Document
@@ -121,7 +143,7 @@ func AllAction(ctx *cli.Context) error {
 					return false
 				}
 
-				buf, err = json.Marshal(&c)
+				buf, err = format.Marshal(&c)
 				if err != nil {
 					return false
 				}
@@ -186,7 +208,7 @@ func ExchangesAction(ctx *cli.Context) error {
 					return false
 				}
 
-				buf, err = json.Marshal(&c)
+				buf, err = format.Marshal(&c)
 				if err != nil {
 					return false
 				}
@@ -209,7 +231,9 @@ func main() {
 		err error
 	)
 
+	app.Flags = Flags
 	app.Commands = Commands
+	app.Before = BeforeAction
 
 	err = app.Run(os.Args)
 	if err != nil {
