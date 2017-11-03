@@ -4,23 +4,33 @@ const (
 	InvalidCurrency Currency = iota
 	Abncoin
 	Aces
+	Achain
 	Acoin
 	AdCoin
+	Adcoin
 	Adelphoi
-	Adex
 	Adshares
 	Adtoken
 	AdvancedInternetBlocks
+	AdxNet
 	Aeon
-	AeternityPreLaunch
+	Aeternity
 	AgorasTokens
+	AgrelloDelta
 	Agrolifecoin
-	Alexium
+	AidosKuneen
+	Aion
+	Airswap
+	Airtoken
+	AkuyaCoin
+	Alis
 	Allion
 	Allsafe
 	Alpacoin
-	Alphabit
-	Altcoin
+	Alphabitcoinfund
+	AltcoinAlt
+	AltcommunityCoin
+	Amber
 	Ambercoin
 	Amis
 	AmmoRewards
@@ -31,7 +41,8 @@ const (
 	Antibitcoin
 	Antilitecoin
 	Antimatter
-	Applecoin
+	Applebyte
+	ApplecoinApw
 	Apx
 	Aquariuscoin
 	Aragon
@@ -43,30 +54,36 @@ const (
 	Argus
 	Aricoin
 	Ark
-	Artbyte
 	ArtexCoin
 	Asch
+	Aseancoin
 	Asiacoin
 	Asiadigicoin
 	Asiccoin
-	AssetBackedCoin
+	Atbcoin
 	AtcCoin
+	Atlant
+	Atmcoin
 	Atmos
 	AtomicCoin
+	AttentionTokenOfMedia
 	Audiocoin
 	Augur
+	Aureus
 	Auroracoin
 	Aurumcoin
+	Authorship
 	Avatarcoin
+	Aventus
 	Avoncoin
 	Axfunds
 	Axiom
 	Ayedcoin
 	B3coin
-	Bagcoin
 	Bancor
 	Bankcoin
 	BasicAttentionToken
+	Bastonet
 	Bata
 	Batcoin
 	Bbqcoin
@@ -78,19 +95,24 @@ const (
 	Berncash
 	Bestchain
 	Betacoin
+	Biblepay
+	Bigboobscoin
 	Bigup
 	Billarycoin
+	BillionaireToken
 	BinanceCoin
 	Biobar
-	Bioscrypto
+	BiosCrypto
 	Bipcoin
 	Birds
+	Bismuth
 	Bit
 	Bit20
 	BitEny
 	Bitalphacoin
 	Bitasean
 	Bitbar
+	Bitbase
 	Bitbay
 	Bitbean
 	Bitbtc
@@ -102,19 +124,24 @@ const (
 	Bitcoin
 	BitcoinCash
 	BitcoinCoin21
+	BitcoinGold
 	BitcoinPlanet
 	BitcoinPlus
+	BitcoinRed
 	BitcoinScrypt
-	BitcoinUnlimitedFutures
+	BitcoinSilver
+	BitcoinUnlimited
+	Bitcoincashscrypt
 	Bitcoindark
 	Bitcoinfast
-	Bitcointx
 	Bitconnect
 	Bitcore
 	Bitcrystals
 	Bitcurrency
 	Bitdeal
+	Bitdice
 	Biteur
+	Bitfid
 	Bitgem
 	Bitgold
 	Bitland
@@ -123,10 +150,12 @@ const (
 	BitparkCoin
 	Bitquark
 	Bitquence
+	Bitqy
 	Bitradio
 	Bitsend
 	Bitshares
 	Bitsilver
+	Bitsoar
 	Bitstar
 	Bitswift
 	Bittokens
@@ -135,38 +164,48 @@ const (
 	BlaEcoin
 	BlaErcoin
 	Blackcoin
+	BlackmoonCrypto
 	Blackstar
 	Blakecoin
 	Blakestar
 	BlitCash
 	Blockcat
+	BlockchainIndex
+	Blockmason
 	Blocknet
 	Blockpay
 	Blocktix
 	Bluecoin
 	Bnrtxcoin
+	Bolenum
 	Bolivarcoin
 	Bongger
-	Boolberry
 	Boostcoin
+	Boscoin
 	Bottlecaps
+	Bowhead
 	Bowscoin
 	Braincoin
+	Brat
 	Breakout
 	BreakoutStake
 	Briacoin
+	Bridgecoin
 	Britcoin
-	Btcdragon
-	Btcgold
+	Bt1Cst
+	Bt2Cst
+	Btcmoon
 	Btctalkcoin
 	Btsr
+	BuCoin
+	Bubble
 	Bumbacoin
 	Bunnycoin
 	Burst
 	Burstocean
 	Byteball
 	Bytecent
-	Bytecoin
+	BytecoinBcn
 	Bytom
 	CBit
 	Cabbage
@@ -182,10 +221,11 @@ const (
 	Cannation
 	Capricoin
 	Carboncoin
+	Cardano
 	Cash
+	CashPokerPro
 	Cashcoin
 	Cashme
-	Cashshare
 	Casino
 	Casinocoin
 	Catcoin
@@ -195,46 +235,54 @@ const (
 	Centra
 	Centurion
 	Chaincoin
+	Chainlink
 	Chancoin
+	Change
 	Cheapcoin
 	Chesscoin
 	ChinaYan
+	Chips
 	Chncoin
 	Chronobank
+	Chronologic
 	Chronos
+	Cindicator
 	CircuitsOfValue
 	Civic
 	Clams
 	Classic
+	Clearpoll
 	Clinton
 	Cloakcoin
 	Clubcoin
-	Coeval
+	Cobinhood
 	Coexistcoin
 	CofoundIt
-	CoimaticCoin2Coin0
+	CoimaticCoin2
+	CoimaticCoin3
 	Coin
-	Coin020londoncoin
-	Coin1337
-	Coin1credit
-	Coin23Skidoo
+	Coin0x
+	Coin10mtoken
+	Coin1337coin
 	Coin2Coin1
 	Coin2give
 	Coin300Token
 	Coin42Coin
 	Coin808coin
 	Coin8bit
-	CoinO
 	Coindash
 	Coinonat
 	Coinonatx
 	ColossuscoinV2
+	Colossuscoinxt
 	Comet
 	Compcoin
 	Compucoin
 	Concoin
 	Condensate
 	Corgicoin
+	Corion
+	Coss
 	Counterparty
 	Coupecoin
 	Crave
@@ -242,26 +290,32 @@ const (
 	Creatio
 	Creativecoin
 	Creditbit
+	Credo
 	Crevacoin
 	Crown
 	Crtcoin
 	Cryptcoin
 	Crypto
-	CryptoBullion
 	Cryptocarbon
 	Cryptoescudo
 	Cryptoforecast
+	CryptogenicBullion
 	Cryptojacks
+	Cryptonex
 	Cryptonite
 	Cryptoping
 	CryptoworldxToken
+	CrystalClear
 	CthulhuOfferings
 	Cubits
 	Curecoin
 	Cvcoin
+	Cybcsec
 	Cybercoin
 	CyclingCoin
+	Cyder
 	Cypher
+	Dalecoin
 	DaoCasino
 	Dappster
 	Darcrus
@@ -275,28 +329,28 @@ const (
 	Daxxcoin
 	Debitcoin
 	Decent
+	Decentraland
 	Decred
 	Deeponion
 	Deltacredits
-	Denarius
+	DenariusDnr
 	Dent
 	Dentacoin
 	Destiny
 	Deuscoin
 	DeutscheEmark
 	Devcoin
-	Dhg
+	Dfscoin
 	Diamond
 	Dibcoin
 	Digibyte
 	Digicube
 	DigitalBullionGold
 	DigitalCredits
+	DigitalDevelopersFund
 	DigitalMoneyBits
 	DigitalRupees
 	Digitalcoin
-	Digitaldevelopersfund
-	Digitalfund
 	Digitalnote
 	Digitalprice
 	Digixdao
@@ -305,59 +359,74 @@ const (
 	District0x
 	DixAsset
 	Dnotes
-	Dobbscoin
 	Dogecoin
 	DollarOnline
 	Dollarcoin
+	Domraider
 	Donationcoin
 	Dopecoin
 	Dotcoin
 	Doubloon
+	Dovu
 	Dpay
 	Draftcoin
 	Dreamcoin
+	Droxne
 	DtToken
-	Dubaicoin
+	DubaicoinDbix
 	Dubstep
+	DutchCoin
 	Dynamic
 	Dynamiccoin
-	E4row
 	ECoin
-	ECurrencyCoin
 	EDinarCoin
 	EGulden
 	Earthcoin
-	Eb3Coin
+	Ebit
 	EbittreeCoin
-	Eboost
+	Eboostcoin
+	Ebtc
+	Ebtcnew
+	Eccoin
 	Ecobit
 	Ecocoin
 	Edgeless
 	Edrcoin
 	Eggcoin
 	Ego
+	Egold
+	Eidoo
 	Einsteinium
 	Eitcoin
 	Elacoin
 	Elastic
-	Elcoin
+	ElcoinEl
 	Electra
+	Electroneum
 	Elementrem
+	Elixir
+	Ellaism
+	Eltc
 	Elysium
 	Embercoin
 	Embers
-	EmeraldCrypto
+	Emerald
 	Emercoin
 	Emoneypower
 	Encash
 	Encryptotel
+	EncryptotelEth
 	Energycoin
 	Engold
 	Enigma
+	EnigmaProject
+	EnjinCoin
 	Ennies
 	Environ
 	Eos
+	EotToken
 	Equitrader
+	Ereal
 	Ergo
 	Ero
 	Eryllium
@@ -365,33 +434,50 @@ const (
 	Etacoin
 	Etamicron
 	Eternity
+	Ethbet
 	Ethbits
+	EtherForTheRestOfTheWorld
+	Etherdoge
 	Ethereum
+	EthereumBlue
 	EthereumClassic
+	EthereumDark
+	EthereumGold
+	EthereumLite
 	EthereumMovieVenture
+	Ethereumcash
 	Etheriya
 	Etheroll
+	Etherparty
 	Etherx
+	Ethgas
 	Euro
 	Eurocoin
 	Europecoin
+	Eusd
+	Eusshield
+	Everex
 	Evergreencoin
+	Everus
 	EvilCoin
 	Evotion
 	Excelcoin
+	ExchangeUnion
+	Exchangen
 	Exclusivecoin
 	Expanse
+	Exrnchain
 	FaCoin
+	Facecoin
 	Factom
 	Faircoin
 	Falcoin
 	Fantomcoin
+	Fapcoin
 	Fargocoin
 	Fastcoin
 	Feathercoin
 	Fedoracoin
-	Fedorashare
-	Fibocoins
 	Fimkrypto
 	Fincoin
 	Firecoin
@@ -400,34 +486,37 @@ const (
 	FirstBitcoinCapital
 	Firstblood
 	Firstcoin
+	Flappycoin
 	Flash
 	Flavorcoin
 	Flaxscript
+	Flik
 	Florincoin
 	Fluttercoin
 	Flycoin
+	Flypme
 	Foldingcoin
 	FonIecoin
 	FootyCash
+	Force
+	FraCoin
 	Francs
 	Franko
 	Frankywillcoin
 	Freicoin
 	FuBalls
 	Fucktoken
-	FudaEnergy
 	Fuelcoin
 	Fujicoin
+	Fujinto
 	Funcoin
 	Fundyourselfnow
 	Funfair
 	Futcoin
 	FutureDigitalCurrency
-	Futurxe
-	G3n
+	Futurexe
 	Gaia
 	Gambit
-	Gambleo
 	GamebetCoin
 	Gamecredits
 	Gameleaguecoin
@@ -435,63 +524,75 @@ const (
 	Ganjacoin
 	Gapcoin
 	Gas
-	GayMoney
+	Gaycoin
 	Gbcgoldcoin
 	Gcoin
 	Geertcoin
+	Genstake
 	Geocoin
 	Geysercoin
+	GigaWattToken
+	Gimli
 	GlobalBusinessRevolution
 	GlobalCurrencyReserve
 	GlobalTourCoin
 	GlobalboostY
 	Globalcoin
 	Globaltoken
-	Gnosis
+	GnosisGno
+	GoCoin
 	GoldPressedLatinum
 	Goldblocks
 	Goldcoin
 	Goldmaxcoin
-	GoldpayCoin
 	Goldpieces
 	Goldreserve
 	Goldunioncoin
-	Golem
+	GolemNetworkTokens
 	Golfcoin
 	Golos
 	GolosGold
-	GoodKarma
+	Goodomy
 	GpuCoin
+	Granitecoin
 	Grantcoin
 	Greencoin
+	Grid
 	Gridcoin
 	Groestlcoin
+	GrowersInternational
 	Guccionecoin
 	Gulden
 	Gulfcoin
 	Guncoin
+	Guppy
 	Gxshares
-	Gycoin
 	HackerGold
 	Halcyon
 	HalloweenCoin
 	HappyCreatorCoin
 	Happycoin
-	Harmonycoin
-	Hbcoin
+	HarmonycoinHmc
 	Healthywormcoin
-	Heat
+	HeatLedger
+	Hedge
 	Helleniccoin
+	Hellogold
 	Hempcoin
+	HempcoinHmp
 	Hexx
 	Hicoin
+	HighGain
 	HighVoltage
-	Hirocoin
 	Hitcoin
+	Hive
 	Hobonickels
+	HodlBucks
 	Hodlcoin
 	Honey
+	Hshare
 	Htmlcoin
+	HubiiNetwork
 	Humaniq
 	Huncoin
 	Huntercoin
@@ -499,44 +600,52 @@ const (
 	Hyper
 	Hyperstake
 	I0coin
-	IOCoin
 	Ibank
-	Ico
+	Ibtc
 	IcoOpenledger
 	Icobid
 	Icoin
+	Icon
 	Iconic
 	Iconomi
+	Icos
 	Idice
-	IexecRlc
+	Iethereum
 	Ilbercoin
 	Impact
 	Impulsecoin
 	Incakoin
 	Incent
 	IndependentMoneySystem
+	IndiaCoin
+	IndorseToken
 	Infchain
 	Infinitecoin
+	InfinityEconomics
 	Inflationcoin
 	Influxcoin
 	Inpay
-	Insanecoin
-	Insurex
+	InsanecoinInsn
+	IntelligentTradingTech
+	InterOne
 	InternationalDiamond
 	InternetOfPeople
 	InternetOfThings
+	Internxt
 	Investfeed
 	Invisiblecoin
+	Iocoin
 	Ion
 	Iota
-	Iou1
+	Iquant
 	Irishcoin
 	Islacoin
 	Iticoin
-	Ivugeocoin
 	Ixcoin
+	Ixledger
 	Janus
 	JapaneseYen
+	JavascriptToken
 	Jetcoin
 	Jewels
 	JinCoin
@@ -548,32 +657,40 @@ const (
 	Karbowanec
 	Karmacoin
 	Kashhcoin
-	Kayi
+	Kayicoin
 	Kekcoin
+	Kexcoin
 	Kibicoin
+	Kickico
 	Kilocoin
+	Kin
 	KingnCoin
 	Kittehcoin
 	Kobocoin
-	Kolschcoin
+	Kolion
 	Komodo
 	Korecoin
+	Kronecoin
+	Kucoin
 	Kurrent
 	Kushcoin
+	KyberNetwork
 	LaAruscoin
+	Lampix
 	Lanacoin
 	Landcoin
 	Lathaan
-	LbryCredits
+	Latoken
 	Leacoin
 	LegendsRoom
 	Leocoin
-	Lepaoquan
 	Lepen
 	Letitride
-	LeviarcoinPreLaunch
+	Leviarcoin
 	Levoplus
 	Lex4all
+	LibraryCredit
+	Life
 	Linda
 	LinkPlatform
 	Linkedcoin
@@ -582,22 +699,30 @@ const (
 	Litebar
 	Litebitcoin
 	Litecoin
+	LitecoinGold
+	LitecoinPlus
+	LitecoinUltra
 	Litecred
 	Litedoge
+	Lltoken
 	Lomocoin
+	Loopring
 	Lottocoin
 	Ltbcoin
 	Luckchain
 	LunaCoin
 	Lunyr
+	Luxcoin
 	Lykke
 	MaAcoin
 	Machinecoin
+	Macro1
 	Macron
+	Maecenas
 	Magi
+	Magnetcoin
 	Magnum
 	Maidsafecoin
-	Malcoin
 	Mantracoin
 	MaoEdong
 	Marijuanacoin
@@ -605,55 +730,69 @@ const (
 	Martexcoin
 	Marxcoin
 	MasterSwiscoin
-	Matchpool
+	Masternodecoin
 	Mavro
 	Maxcoin
 	Mcap
 	Megacoin
 	Melon
+	Memetic
 	Mercury
+	MercuryProtocol
 	Mergecoin
 	Metal
 	MetalMusicCoin
 	Metalcoin
-	MetaverseEtp
+	Metaverse
 	Microcoin
 	Mikethemug
 	Milocoin
+	Mincoin
 	MindGene
 	Mindcoin
 	Minereum
-	MinersCoin3RewardToken
+	MinersRewardToken
 	Mineum
 	Minex
+	Minexcoin
 	Mintcoin
 	Miyucoin
 	Mmxvi
 	Mobilecash
 	Mobilego
+	Modum
+	MoedaLoyaltyPoints
 	Moin
 	Mojocoin
 	Monaco
+	Monacocoin
 	Monacoin
 	Monero
-	Moneta
+	Moneta2
 	Monetaryunit
+	Monetha
 	Money
 	Moneycoin
-	Monkey
 	MonsterByte
 	Mooncoin
+	MorningstarPayments
 	Mothership
 	Motocoin
+	Msd
 	Mtmgaming
-	Muse
 	Musicoin
+	Musiconomi
 	Mustangcoin
+	MybitToken
 	Myriad
 	Mysterium
 	Namecoin
+	Namocoin
+	Natcoin
 	Nautiluscoin
 	NavCoin
+	Neblio
+	NebulasToken
 	Nem
 	Neo
 	Neoscoin
@@ -661,7 +800,9 @@ const (
 	Netbit
 	Netcoin
 	Netko
+	NetworkToken
 	Neuro
+	Neurodao
 	Neutron
 	Nevacoin
 	Neverdie
@@ -676,14 +817,18 @@ const (
 	Nolimitcoin
 	Novacoin
 	Nubits
+	Nuls
 	Numeraire
 	Nushares
 	Nvo
 	Nxt
 	Nyancoin
+	O2olondoncoin
+	Oax
 	Obits
+	Obsidian
+	Oceanlab
 	Ocow
-	Octanox
 	Octocoin
 	OhmWallet
 	Oin
@@ -694,35 +839,38 @@ const (
 	Onecoin
 	Onix
 	Opal
-	Openanx
-	Operacoin
+	OpenTradingNetwork
 	Operand
 	Opescoin
+	Opus
 	Oraclechain
 	Orbitcoin
 	Orlycoin
+	OrmeusCoin
 	Osmiumcoin
+	OxFina
 	P7coin
 	PabyosiCoinSpecial
 	Paccoin
 	Pakcoin
-	Pandacoin
-	PangeaPoker
+	PandacoinPnd
+	Paragon
 	Parallelcoin
 	Parkbyte
 	Particl
 	PascalCoin
 	PascalLite
 	Patientory
-	Paycoin
+	Paycoin2
 	Paycon
 	Paypeer
+	Paypie
+	Peacecoin
 	Peepcoin
 	Peercoin
-	Peerplays
+	PeerplaysPpy
 	Peoplecoin
 	PepeCash
-	Pepecoin
 	Pesetacoin
 	Pesobit
 	Petrodollar
@@ -736,12 +884,15 @@ const (
 	Pillar
 	Pinkcoin
 	Pinkdog
-	Pipcoin
+	Piplcoin
 	PirateBlocks
+	Pirl
 	Pivx
 	Platinumbar
+	Playercoin
 	Plncoin
 	Pluton
+	Poet
 	Pokecoin
 	Polybius
 	PonIcoin
@@ -749,16 +900,17 @@ const (
 	Populous
 	Posex
 	Postcoin
+	Postoken
 	PoswCoin
 	Potcoin
+	PowerLedger
 	Powercoin
 	Prcoin
-	PresidentClinton
 	PresidentJohnson
-	PresidentSanders
 	PresidentTrump
 	PriM
-	PrimalbaseToken
+	Primalbase
+	Primas
 	PrimeXi
 	Primecoin
 	Primulon
@@ -767,12 +919,14 @@ const (
 	Procurrency
 	ProjectDecorum
 	ProjectX
+	Propy
+	ProspectorsGold
+	Protean
 	Prototanium
 	Psilocybin
 	Pulse
 	Pura
 	Purevid
-	PutinClassic
 	Putincoin
 	Px
 	QibuckAsset
@@ -782,25 +936,31 @@ const (
 	Quantum
 	QuantumResistantLedger
 	Quark
-	Quart
 	Quatloo
 	Qubitcoin
 	Quebecoin
 	Quotient
+	Qvolta
 	Qwark
 	Rabbitcoin
 	Radium
 	Raiblocks
-	RarePepeParty
 	Ratecoin
-	Rawcoin
+	Rawcoin2
+	Rchain
 	Rcoin
+	Real
+	RealEstateTokens
+	RedPulse
 	Redcoin
 	Reddcoin
 	Reecoin
 	Regacoin
+	Regalcoin
 	Remicoin
 	Renos
+	RequestNetwork
+	Revain
 	Revenu
 	Revolvercoin
 	Rhfcoin
@@ -809,30 +969,38 @@ const (
 	RideMyCar
 	Riecoin
 	Rimbit
+	RipioCreditNetwork
 	Ripple
 	RiptoBux
 	Rise
+	Rivet
+	Rlc
 	Ronpaulcoin
+	Roofs
 	Roulettetoken
-	Round
+	RoyalKingdomCoin
 	Royalcoin
-	RoyalcoinCoin2
 	Royalties
 	Rsgpcoin
 	Rubies
 	Rublebit
 	Rubycoin
+	Runners
 	Rupaya
 	Rupee
 	Russiacoin
+	RussianMiningCoin
 	RussianRuble
 	Rustbits
+	Sacoin
 	SafeExchangeCoin
 	SafeTradeCoin
 	Safecoin
 	Sakuracoin
+	Salt
 	Salus
-	SantimentNetworkToken
+	SandCoin
+	Santiment
 	Sativacoin
 	Satoshimadness
 	SaveAndGain
@@ -840,7 +1008,9 @@ const (
 	Secoin
 	Secretcoin
 	Securecoin
+	Segwit2x
 	Selfiecoin
+	Senderon
 	Sequence
 	Sexcoin
 	Shacoin
@@ -848,12 +1018,12 @@ const (
 	Shadowcash
 	Sharkcoin
 	Shellcoin
-	Shellpay
 	Shift
 	Shilling
 	Shorty
 	Siacoin
 	Sibcoin
+	Sigmacoin
 	Signatum
 	Singulardtv
 	Sixeleven
@@ -863,12 +1033,15 @@ const (
 	Slevin
 	Slimcoin
 	Sling
+	SmartInvestmentFundToken
 	Smartcash
 	Smartcoin
 	Smileycoin
+	Smoke
 	Snakeeyes
 	Soarcoin
-	Socialcoin
+	Social
+	SocialcoinSocc
 	Soilcoin
 	Sojourn
 	Solarcoin
@@ -889,14 +1062,15 @@ const (
 	Spreadcoin
 	Sprouts
 	Sproutsextreme
-	Stakecoin
+	StakecoinStcn
+	Starcredits
 	Starta
 	Startcoin
 	Status
 	Stealthcoin
 	Steem
 	SteemDollars
-	StellarLumens
+	Stellar
 	Steps
 	Sterlingcoin
 	Stex
@@ -904,17 +1078,21 @@ const (
 	StorjcoinX
 	Stox
 	Stratis
+	StreamrDatacoin
 	Stress
 	Stronghands
+	Substratum
 	Sumokoin
 	Suncontract
 	Supercoin
-	Supernet
-	Superturbostake
+	SupernetUnity
+	Suretly
 	Swagbucks
+	Swapcoin
 	Swaptoken
 	SwarmCity
 	Swing
+	Swisscoin
 	Sydpak
 	Sync
 	Syndicate
@@ -927,8 +1105,10 @@ const (
 	Tagrcoin
 	Tajcoin
 	Tao
-	TattoocoinLimitedEdition
-	TattoocoinStandardEdition
+	TargetCoin
+	Tattoocoin
+	TattoocoinLimited
+	TeOs
 	Teamup
 	Techshares
 	Tekcoin
@@ -940,48 +1120,53 @@ const (
 	Teslacoilcoin
 	Teslacoin
 	Tether
-	TheChampionCoin
+	TheChampcoin
 	TheCypherfunks
 	TheVeganInitiative
 	Thecreed
 	Thegcccoin
 	TheresaMayCoin
 	Tickets
+	Tierion
 	Tigercoin
 	Tilecoin
-	Timereum
 	Titcoin
 	Tittiecoin
 	Toacoin
 	Todaycoin
 	Tokencard
 	Tokes
-	TopaCoin
-	Torcoin
-	Tradecoinv2
+	Topa
+	Topcoin
+	TorcoinTor
+	Trackr
+	Tracto
+	TradecoinV2
 	Transfercoin
+	TreArcoin
 	Triangles
 	Trickycoin
 	Triggers
 	TristarCoin
 	Trollcoin
-	Troptions
+	Tron
 	Truckcoin
-	TrueInvestmentCoin
+	Trueflip
 	Trumpcoin
+	Trust
 	Trustplus
 	Turbocoin
 	Tychocoin
 	Tyrocoin
 	Ubiq
-	Ucoin
 	UfoCoin
+	UgToken
 	Ugain
+	Ulatech
 	UltimateSecureCash
 	Ultracoin
 	Unbreakablecoin
 	Uncoin
-	Uniburst
 	Unicoin
 	Unify
 	UnitedStatesDollar
@@ -995,12 +1180,14 @@ const (
 	Ur
 	Urcoin
 	Uro
+	Usde
 	UselessEthereumToken
 	Utacoin
 	Valorbit
 	Vaperscoin
 	VaultCoin
 	Vcash
+	Vechain
 	Vector
 	Vegascoin
 	Veltor
@@ -1012,36 +1199,43 @@ const (
 	Version
 	Vertcoin
 	Viacoin
-	Victoriouscoin
+	Vibe
+	Viberate
 	VipTokens
 	VirtaUniqueCoin
 	Virtacoin
 	Virtacoinplus
 	Virtualcoin
 	Visio
-	Voise
+	Vivo
+	Voisecom
 	Voxels
 	Voyacoin
 	Vpncoin
 	Vslice
-	Vsync
+	VsyncVsx
 	Vtorrent
+	Vulcano
 	WaSpace
 	Wagerr
+	WalletBuildersCoin
+	Walton
 	Warp
 	Waves
 	WavesCommunityToken
 	Wavesgo
 	Wayguide
 	Wearesatoshi
-	Wetrust
 	Wexcoin
+	Whalecoin
 	Whitecoin
+	WiCoin
 	WildBeastBlock
+	WildCrypto
 	Wings
 	Wink
 	Wmcoin
-	Womencoin
+	Women
 	Woodcoin
 	Worldcoin
 	Wowcoin
@@ -1053,511 +1247,613 @@ const (
 	Xaurum
 	Xcurrency
 	XdeIi
-	Xenixcoin
-	Xiaomicoin
+	Xenon
+	Xios
 	Xonecoin
 	Xp
+	Xplay
+	XtdCoin
 	Xtrabytes
 	Yacoin
 	Yashcoin
-	Ybcoin
 	Yescoin
 	Yocoin
-	Yogold
+	Yoyow
 )
 
 var (
 	CurrencyMapping = map[Currency]string{
-		Abncoin:                "ABN",
-		Aces:                   "ACES",
-		Acoin:                  "ACOIN",
-		AdCoin:                 "ADZ",
-		Adelphoi:               "ADL",
-		Adex:                   "ADX",
-		Adshares:               "ADST",
-		Adtoken:                "ADT",
-		AdvancedInternetBlocks: "AIB",
-		Aeon:                     "AEON",
-		AeternityPreLaunch:       "AE",
-		AgorasTokens:             "AGRS",
-		Agrolifecoin:             "AGLC",
-		Alexium:                  "AUM",
-		Allion:                   "ALL",
-		Allsafe:                  "ASAFE2",
-		Alpacoin:                 "APC",
-		Alphabit:                 "ABC",
-		Altcoin:                  "ALT",
-		Ambercoin:                "AMBER",
-		Amis:                     "AMIS",
-		AmmoRewards:              "AMMO",
-		Amsterdamcoin:            "AMS",
-		Anarchistsprime:          "ACP",
-		Animecoin:                "ANI",
-		Anoncoin:                 "ANC",
-		Antibitcoin:              "ANTI",
-		Antilitecoin:             "ALTC",
-		Antimatter:               "ANTX",
-		Applecoin:                "APW",
-		Apx:                      "APX",
-		Aquariuscoin:             "ARCO",
-		Aragon:                   "ANT",
-		Arbit:                    "ARB",
-		ArcadeToken:              "ARC",
-		Arcticcoin:               "ARC",
-		Ardor:                    "ARDR",
-		Argentum:                 "ARG",
-		Argus:                    "ARGUS",
-		Aricoin:                  "ARI",
-		Ark:                      "ARK",
-		Artbyte:                  "ABY",
-		ArtexCoin:                "ATX",
-		Asch:                     "XAS",
-		Asiacoin:                 "AC",
-		Asiadigicoin:             "ADCN",
-		Asiccoin:                 "ASC",
-		AssetBackedCoin:          "ABC",
-		AtcCoin:                  "ATCC",
-		Atmos:                    "ATMS",
-		AtomicCoin:               "ATOM",
-		Audiocoin:                "ADC",
-		Augur:                    "REP",
-		Auroracoin:               "AUR",
-		Aurumcoin:                "AU",
-		Avatarcoin:               "AV",
-		Avoncoin:                 "ACN",
-		Axfunds:                  "AXF",
-		Axiom:                    "AXIOM",
-		Ayedcoin:                 "ZYD",
-		B3coin:                   "B3",
-		Bagcoin:                  "BGC",
-		Bancor:                   "BNT",
-		Bankcoin:                 "B@",
-		BasicAttentionToken:      "BAT",
-		Bata:                     "BTA",
-		Batcoin:                  "BAT",
-		Bbqcoin:                  "BQC",
-		Bcap:                     "BCAP",
-		Beatcoin:                 "XBTS",
-		Beavercoin:               "BVC",
-		Belacoin:                 "BELA",
-		Benjirolls:               "BENJI",
-		Berncash:                 "BERN",
-		Bestchain:                "BEST",
-		Betacoin:                 "BET",
-		Bigup:                    "BIGUP",
-		Billarycoin:              "BLRY",
-		BinanceCoin:              "BNB",
-		Biobar:                   "BIOB",
-		Bioscrypto:               "BIOS",
-		Bipcoin:                  "BIP",
-		Birds:                    "BIRDS",
-		Bit:                      "BITZ",
-		Bit20:                    "BTWTY",
-		BitEny:                   "ZNY",
-		Bitalphacoin:             "BAC",
-		Bitasean:                 "BAS",
-		Bitbar:                   "BTB",
-		Bitbay:                   "BAY",
-		Bitbean:                  "BITB",
-		Bitbtc:                   "BITBTC",
-		Bitcedi:                  "BXC",
-		Bitcentavo:               "NBE",
-		Bitcloud:                 "BTD",
-		Bitcny:                   "BITCNY",
-		Bitcoal:                  "COAL",
-		Bitcoin:                  "BTC",
-		BitcoinCash:              "BCH",
-		BitcoinCoin21:            "XBTC21",
-		BitcoinPlanet:            "BTPL",
-		BitcoinPlus:              "XBC",
-		BitcoinScrypt:            "BTCS",
-		BitcoinUnlimitedFutures:  "BTU",
-		Bitcoindark:              "BTCD",
-		Bitcoinfast:              "BCF",
-		Bitcointx:                "BTX",
-		Bitconnect:               "BCC",
-		Bitcore:                  "BTX",
-		Bitcrystals:              "BCY",
-		Bitcurrency:              "BTCR",
-		Bitdeal:                  "BDL",
-		Biteur:                   "BITEUR",
-		Bitgem:                   "BTG",
-		Bitgold:                  "BITGOLD",
-		Bitland:                  "CADASTRAL",
-		Bitmark:                  "BTM",
-		Bitok:                    "BITOK",
-		BitparkCoin:              "BPC",
-		Bitquark:                 "BTQ",
-		Bitquence:                "BQX",
-		Bitradio:                 "BRO",
-		Bitsend:                  "BSD",
-		Bitshares:                "BTS",
-		Bitsilver:                "BITSILVER",
-		Bitstar:                  "BITS",
-		Bitswift:                 "SWIFT",
-		Bittokens:                "BXT",
-		Bitusd:                   "BITUSD",
-		Bitvolt:                  "VOLT",
-		BlaEcoin:                 "BLZ",
-		BlaErcoin:                "BLAZR",
-		Blackcoin:                "BLK",
-		Blackstar:                "BSTAR",
-		Blakecoin:                "BLC",
-		Blakestar:                "BLAS",
-		BlitCash:                 "BLITZ",
-		Blockcat:                 "CAT",
-		Blocknet:                 "BLOCK",
-		Blockpay:                 "BLOCKPAY",
-		Blocktix:                 "TIX",
-		Bluecoin:                 "BLU",
-		Bnrtxcoin:                "BNX",
-		Bolivarcoin:              "BOLI",
-		Bongger:                  "BGR",
-		Boolberry:                "XBB",
-		Boostcoin:                "BOST",
-		Bottlecaps:               "CAP",
-		Bowscoin:                 "BSC",
-		Braincoin:                "BRAIN",
-		Breakout:                 "BRK",
-		BreakoutStake:            "BRX",
-		Briacoin:                 "BRIA",
-		Britcoin:                 "BRIT",
-		Btcdragon:                "DRAGON",
-		Btcgold:                  "XBG",
-		Btctalkcoin:              "TALK",
-		Btsr:                     "BTSR",
-		Bumbacoin:                "BUMBA",
-		Bunnycoin:                "BUN",
-		Burst:                    "BURST",
-		Burstocean:               "OCEAN",
-		Byteball:                 "GBYTE",
-		Bytecent:                 "BYC",
-		Bytecoin:                 "BCN",
-		Bytom:                    "BTM",
-		CBit:                     "XCT",
-		Cabbage:                  "CAB",
-		Cachecoin:                "CACH",
-		Cagecoin:                 "CAGE",
-		Californium:              "CF",
-		Caliphcoin:               "CALC",
-		Campuscoin:               "CMPCO",
-		CanadaEcoin:              "CDN",
-		CanadianDollar:           "CAD",
-		Cannabiscoin:             "CANN",
-		Cannacoin:                "CCN",
-		Cannation:                "CNNC",
-		Capricoin:                "CPC",
-		Carboncoin:               "CARBON",
-		Cash:                     "ZEC",
-		Cashcoin:                 "CASH",
-		Cashme:                   "CME",
-		Cashshare:                "ZHS",
-		Casino:                   "CASINO",
-		Casinocoin:               "CSC",
-		Catcoin:                  "CAT",
-		CbdCrystals:              "CBD",
-		Ccminer:                  "CCM100",
-		Ccoin:                    "ZCC",
-		Centra:                   "CTR",
-		Centurion:                "CNT",
-		Chaincoin:                "CHC",
-		Chancoin:                 "4CHN",
-		Cheapcoin:                "CHEAP",
-		Chesscoin:                "CHESS",
-		ChinaYan:                 "CNY",
-		Chncoin:                  "CNC",
-		Chronobank:               "TIME",
-		Chronos:                  "CRX",
-		CircuitsOfValue:          "COVAL",
-		Civic:                    "CVC",
-		Clams:                    "CLAM",
-		Classic:                  "ZCL",
-		Clinton:                  "CLINT",
-		Cloakcoin:                "CLOAK",
-		Clubcoin:                 "CLUB",
-		Coeval:                   "COE",
-		Coexistcoin:              "COXST",
-		CofoundIt:                "CFI",
-		CoimaticCoin2Coin0:       "CTIC2",
-		Coin:                     "9COIN",
-		Coin020londoncoin:        "020",
-		Coin1337:                 "1337",
-		Coin1credit:              "1CR",
-		Coin23Skidoo:             "CHAO",
-		Coin2Coin1:               "C2",
-		Coin2give:                "2GIVE",
-		Coin300Token:             "300",
-		Coin42Coin:               "42",
-		Coin808coin:              "808",
-		Coin8bit:                 "8BIT",
-		CoinO:                    "CNO",
-		Coindash:                 "CDT",
-		Coinonat:                 "CXT",
-		Coinonatx:                "XCXT",
-		ColossuscoinV2:           "CV2",
-		Comet:                    "CMT",
-		Compcoin:                 "CMP",
-		Compucoin:                "CPN",
-		Concoin:                  "CONX",
-		Condensate:               "RAIN",
-		Corgicoin:                "CORG",
-		Counterparty:             "XCP",
-		Coupecoin:                "COUPE",
-		Crave:                    "CRAVE",
-		Cream:                    "CRM",
-		Creatio:                  "XCRE",
-		Creativecoin:             "CREA",
-		Creditbit:                "CRB",
-		Crevacoin:                "CREVA",
-		Crown:                    "CRW",
-		Crtcoin:                  "CRT",
-		Cryptcoin:                "CRYPT",
-		Crypto:                   "CTO",
-		CryptoBullion:            "CBX",
-		Cryptocarbon:             "CCRB",
-		Cryptoescudo:             "CESC",
-		Cryptoforecast:           "CFT",
-		Cryptojacks:              "CJ",
-		Cryptonite:               "XCN",
-		Cryptoping:               "PING",
-		CryptoworldxToken:        "CWXT",
-		CthulhuOfferings:         "OFF",
-		Cubits:                   "QBT",
-		Curecoin:                 "CURE",
-		Cvcoin:                   "CVCOIN",
-		Cybercoin:                "CC",
-		CyclingCoin:              "CYC",
-		Cypher:                   "CYP",
-		DaoCasino:                "BET",
-		Dappster:                 "DLISK",
-		Darcrus:                  "DAR",
-		Darklisk:                 "DISK",
-		Darsek:                   "KED",
-		Das:                      "DAS",
-		Dash:                     "DASH",
-		Dashcoin:                 "DSH",
-		Dashs:                    "DASHS",
-		Databits:                 "DTB",
-		Daxxcoin:                 "DAXX",
-		Debitcoin:                "DBTC",
-		Decent:                   "DCT",
-		Decred:                   "DCR",
-		Deeponion:                "ONION",
-		Deltacredits:             "DCRE",
-		Denarius:                 "DNR",
-		Dent:                     "DENT",
-		Dentacoin:                "DCN",
-		Destiny:                  "DES",
-		Deuscoin:                 "DEUS",
-		DeutscheEmark:            "DEM",
-		Devcoin:                  "DVC",
-		Dhg:                      "DHG",
-		Diamond:                  "DMD",
-		Dibcoin:                  "DIBC",
-		Digibyte:                 "DGB",
-		Digicube:                 "CUBE",
-		DigitalBullionGold:       "DBG",
-		DigitalCredits:           "DGCS",
-		DigitalMoneyBits:         "DMB",
-		DigitalRupees:            "DRS",
-		Digitalcoin:              "DGC",
-		Digitaldevelopersfund:    "DDF",
-		Digitalfund:              "DTF",
-		Digitalnote:              "XDN",
-		Digitalprice:             "DP",
-		Digixdao:                 "DGD",
-		Dimecoin:                 "DIME",
-		Dinastycoin:              "DCY",
-		District0x:               "DNT",
-		DixAsset:                 "DIX",
-		Dnotes:                   "NOTE",
-		Dobbscoin:                "BOB",
-		Dogecoin:                 "DOGE",
-		DollarOnline:             "DOLLAR",
-		Dollarcoin:               "DLC",
-		Donationcoin:             "DON",
-		Dopecoin:                 "DOPE",
-		Dotcoin:                  "DOT",
-		Doubloon:                 "BOAT",
-		Dpay:                     "DPAY",
-		Draftcoin:                "DFT",
-		Dreamcoin:                "DRM",
-		DtToken:                  "DRACO",
-		Dubaicoin:                "DBIX",
-		Dubstep:                  "DUB",
-		Dynamic:                  "DYN",
-		Dynamiccoin:              "DMC",
-		E4row:                    "E4ROW",
-		ECoin:                    "ECN",
-		ECurrencyCoin:            "ECC",
-		EDinarCoin:               "EDR",
-		EGulden:                  "EFL",
-		Earthcoin:                "EAC",
-		Eb3Coin:                  "EB3",
-		EbittreeCoin:             "EBT",
-		Eboost:                   "EBST",
-		Ecobit:                   "ECOB",
-		Ecocoin:                  "ECO",
-		Edgeless:                 "EDG",
-		Edrcoin:                  "EDRC",
-		Eggcoin:                  "EGG",
-		Ego:                      "EGO",
-		Einsteinium:              "EMC2",
-		Eitcoin:                  "ZEIT",
-		Elacoin:                  "ELC",
-		Elastic:                  "XEL",
-		Elcoin:                   "ELCO",
-		Electra:                  "ECA",
-		Elementrem:               "ELE",
-		Elysium:                  "ELS",
-		Embercoin:                "EMB",
-		Embers:                   "MBRS",
-		EmeraldCrypto:            "EMD",
-		Emercoin:                 "EMC",
-		Emoneypower:              "EMP",
-		Encash:                   "ZEN",
-		Encryptotel:              "ETT",
-		Energycoin:               "ENRG",
-		Engold:                   "ZENGOLD",
-		Enigma:                   "XNG",
-		Ennies:                   "ZENI",
-		Environ:                  "ENV",
-		Eos:                      "EOS",
-		Equitrader:               "EQT",
-		Ergo:                     "EFYT",
-		Ero:                      "ZER",
-		Eryllium:                 "ERY",
-		Espers:                   "ESP",
-		Etacoin:                  "ZET",
-		Etamicron:                "ZMC",
-		Eternity:                 "ENT",
-		Ethbits:                  "ETB",
-		Ethereum:                 "ETH",
-		EthereumClassic:          "ETC",
-		EthereumMovieVenture:     "EMV",
-		Etheriya:                 "RIYA",
-		Etheroll:                 "DICE",
-		Etherx:                   "ETX",
-		Euro:                     "EUR",
-		Eurocoin:                 "EUC",
-		Europecoin:               "ERC",
-		Evergreencoin:            "EGC",
-		EvilCoin:                 "EVIL",
-		Evotion:                  "EVO",
-		Excelcoin:                "EXL",
-		Exclusivecoin:            "EXCL",
-		Expanse:                  "EXP",
-		FaCoin:                   "FAZZ",
-		Factom:                   "FCT",
-		Faircoin:                 "FAIR",
-		Falcoin:                  "FAL",
-		Fantomcoin:               "FCN",
-		Fargocoin:                "FRGC",
-		Fastcoin:                 "FST",
-		Feathercoin:              "FTC",
-		Fedoracoin:               "TIPS",
-		Fedorashare:              "FEDS",
-		Fibocoins:                "FBC",
-		Fimkrypto:                "FIMK",
-		Fincoin:                  "FNC",
-		Firecoin:                 "FIRE",
-		Fireflycoin:              "FFC",
-		FirstBitcoin:             "BIT",
-		FirstBitcoinCapital:      "BITCF",
-		Firstblood:               "1ST",
-		Firstcoin:                "FRST",
-		Flash:                    "FLASH",
-		Flavorcoin:               "FLVR",
-		Flaxscript:               "FLAX",
-		Florincoin:               "FLO",
-		Fluttercoin:              "FLT",
-		Flycoin:                  "FLY",
-		Foldingcoin:              "FLDC",
-		FonIecoin:                "FONZ",
-		FootyCash:                "FOOT",
-		Francs:                   "FRN",
-		Franko:                   "FRK",
-		Frankywillcoin:           "FRWC",
-		Freicoin:                 "FRC",
-		FuBalls:                  "FUZZ",
-		Fucktoken:                "FUCK",
-		FudaEnergy:               "FEI",
-		Fuelcoin:                 "FC2",
-		Fujicoin:                 "FJC",
-		Funcoin:                  "FUNC",
-		Fundyourselfnow:          "FYN",
-		Funfair:                  "FUN",
-		Futcoin:                  "FUTC",
-		FutureDigitalCurrency:    "FDC",
-		Futurxe:                  "FXE",
-		G3n:                      "G3N",
-		Gaia:                     "GAIA",
-		Gambit:                   "GAM",
-		Gambleo:                  "GMB",
-		GamebetCoin:              "GBT",
-		Gamecredits:              "GAME",
-		Gameleaguecoin:           "GML",
-		Gameunits:                "UNITS",
-		Ganjacoin:                "420G",
-		Gapcoin:                  "GAP",
-		Gas:                      "GAS",
-		GayMoney:                 "GAY",
-		Gbcgoldcoin:              "GBC",
-		Gcoin:                    "GCN",
-		Geertcoin:                "GEERT",
-		Geocoin:                  "GEO",
-		Geysercoin:               "GSR",
+		Abncoin:                   "ABN",
+		Aces:                      "ACES",
+		Achain:                    "ACT",
+		Acoin:                     "ACOIN",
+		AdCoin:                    "ADZ",
+		Adcoin:                    "ACC",
+		Adelphoi:                  "ADL",
+		Adshares:                  "ADST",
+		Adtoken:                   "ADT",
+		AdvancedInternetBlocks:    "AIB",
+		AdxNet:                    "ADX",
+		Aeon:                      "AEON",
+		Aeternity:                 "AE",
+		AgorasTokens:              "AGRS",
+		AgrelloDelta:              "DLT",
+		Agrolifecoin:              "AGLC",
+		AidosKuneen:               "ADK",
+		Aion:                      "AION",
+		Airswap:                   "AST",
+		Airtoken:                  "AIR",
+		AkuyaCoin:                 "AKY",
+		Alis:                      "ALIS",
+		Allion:                    "ALL",
+		Allsafe:                   "ASAFE2",
+		Alpacoin:                  "APC",
+		Alphabitcoinfund:          "ABC",
+		AltcoinAlt:                "ALT",
+		AltcommunityCoin:          "ALTCOM",
+		Amber:                     "AMB",
+		Ambercoin:                 "AMBER",
+		Amis:                      "AMIS",
+		AmmoRewards:               "AMMO",
+		Amsterdamcoin:             "AMS",
+		Anarchistsprime:           "ACP",
+		Animecoin:                 "ANI",
+		Anoncoin:                  "ANC",
+		Antibitcoin:               "ANTI",
+		Antilitecoin:              "ALTC",
+		Antimatter:                "ANTX",
+		Applebyte:                 "ABY",
+		ApplecoinApw:              "APW",
+		Apx:                       "APX",
+		Aquariuscoin:              "ARCO",
+		Aragon:                    "ANT",
+		Arbit:                     "ARB",
+		ArcadeToken:               "ARC",
+		Arcticcoin:                "ARC",
+		Ardor:                     "ARDR",
+		Argentum:                  "ARG",
+		Argus:                     "ARGUS",
+		Aricoin:                   "ARI",
+		Ark:                       "ARK",
+		ArtexCoin:                 "ATX",
+		Asch:                      "XAS",
+		Aseancoin:                 "ASN",
+		Asiacoin:                  "AC",
+		Asiadigicoin:              "ADCN",
+		Asiccoin:                  "ASC",
+		Atbcoin:                   "ATB",
+		AtcCoin:                   "ATCC",
+		Atlant:                    "ATL",
+		Atmcoin:                   "ATMC",
+		Atmos:                     "ATMS",
+		AtomicCoin:                "ATOM",
+		AttentionTokenOfMedia:     "ATM",
+		Audiocoin:                 "ADC",
+		Augur:                     "REP",
+		Aureus:                    "AURS",
+		Auroracoin:                "AUR",
+		Aurumcoin:                 "AU",
+		Authorship:                "ATS",
+		Avatarcoin:                "AV",
+		Aventus:                   "AVT",
+		Avoncoin:                  "ACN",
+		Axfunds:                   "AXF",
+		Axiom:                     "AXIOM",
+		Ayedcoin:                  "ZYD",
+		B3coin:                    "B3",
+		Bancor:                    "BNT",
+		Bankcoin:                  "B@",
+		BasicAttentionToken:       "BAT",
+		Bastonet:                  "BSN",
+		Bata:                      "BTA",
+		Batcoin:                   "BAT",
+		Bbqcoin:                   "BQC",
+		Bcap:                      "BCAP",
+		Beatcoin:                  "XBTS",
+		Beavercoin:                "BVC",
+		Belacoin:                  "BELA",
+		Benjirolls:                "BENJI",
+		Berncash:                  "BERN",
+		Bestchain:                 "BEST",
+		Betacoin:                  "BET",
+		Biblepay:                  "BBP",
+		Bigboobscoin:              "BBC",
+		Bigup:                     "BIGUP",
+		Billarycoin:               "BLRY",
+		BillionaireToken:          "XBL",
+		BinanceCoin:               "BNB",
+		Biobar:                    "BIOB",
+		BiosCrypto:                "BIOS",
+		Bipcoin:                   "BIP",
+		Birds:                     "BIRDS",
+		Bismuth:                   "BIS",
+		Bit:                       "BITZ",
+		Bit20:                     "BTWTY",
+		BitEny:                    "ZNY",
+		Bitalphacoin:              "BAC",
+		Bitasean:                  "BAS",
+		Bitbar:                    "BTB",
+		Bitbase:                   "BTBC",
+		Bitbay:                    "BAY",
+		Bitbean:                   "BITB",
+		Bitbtc:                    "BITBTC",
+		Bitcedi:                   "BXC",
+		Bitcentavo:                "NBE",
+		Bitcloud:                  "BTDX",
+		Bitcny:                    "BITCNY",
+		Bitcoal:                   "COAL",
+		Bitcoin:                   "BTC",
+		BitcoinCash:               "BCH",
+		BitcoinCoin21:             "XBTC21",
+		BitcoinGold:               "BTG",
+		BitcoinPlanet:             "BTPL",
+		BitcoinPlus:               "XBC",
+		BitcoinRed:                "BTCRED",
+		BitcoinScrypt:             "BTCS",
+		BitcoinSilver:             "BTCS",
+		BitcoinUnlimited:          "BTU",
+		Bitcoincashscrypt:         "BCCS",
+		Bitcoindark:               "BTCD",
+		Bitcoinfast:               "BCF",
+		Bitconnect:                "BCC",
+		Bitcore:                   "BTX",
+		Bitcrystals:               "BCY",
+		Bitcurrency:               "BTCR",
+		Bitdeal:                   "BDL",
+		Bitdice:                   "CSNO",
+		Biteur:                    "BITEUR",
+		Bitfid:                    "FID",
+		Bitgem:                    "BTG",
+		Bitgold:                   "BITGOLD",
+		Bitland:                   "CADASTRAL",
+		Bitmark:                   "BTM",
+		Bitok:                     "BITOK",
+		BitparkCoin:               "BPC",
+		Bitquark:                  "BTQ",
+		Bitquence:                 "BQX",
+		Bitqy:                     "BQ",
+		Bitradio:                  "BRO",
+		Bitsend:                   "BSD",
+		Bitshares:                 "BTS",
+		Bitsilver:                 "BITSILVER",
+		Bitsoar:                   "BSR",
+		Bitstar:                   "BITS",
+		Bitswift:                  "SWIFT",
+		Bittokens:                 "BXT",
+		Bitusd:                    "BITUSD",
+		Bitvolt:                   "VOLT",
+		BlaEcoin:                  "BLZ",
+		BlaErcoin:                 "BLAZR",
+		Blackcoin:                 "BLK",
+		BlackmoonCrypto:           "BMC",
+		Blackstar:                 "BSTAR",
+		Blakecoin:                 "BLC",
+		Blakestar:                 "BLAS",
+		BlitCash:                  "BLITZ",
+		Blockcat:                  "CAT",
+		BlockchainIndex:           "BLX",
+		Blockmason:                "BCPT",
+		Blocknet:                  "BLOCK",
+		Blockpay:                  "BLOCKPAY",
+		Blocktix:                  "TIX",
+		Bluecoin:                  "BLU",
+		Bnrtxcoin:                 "BNX",
+		Bolenum:                   "BLN",
+		Bolivarcoin:               "BOLI",
+		Bongger:                   "BGR",
+		Boostcoin:                 "BOST",
+		Boscoin:                   "BOS",
+		Bottlecaps:                "CAP",
+		Bowhead:                   "AHT",
+		Bowscoin:                  "BSC",
+		Braincoin:                 "BRAIN",
+		Brat:                      "BRAT",
+		Breakout:                  "BRK",
+		BreakoutStake:             "BRX",
+		Briacoin:                  "BRIA",
+		Bridgecoin:                "BCO",
+		Britcoin:                  "BRIT",
+		Bt1Cst:                    "BT1",
+		Bt2Cst:                    "BT2",
+		Btcmoon:                   "BTCM",
+		Btctalkcoin:               "TALK",
+		Btsr:                      "BTSR",
+		BuCoin:                    "BUZZ",
+		Bubble:                    "BUB",
+		Bumbacoin:                 "BUMBA",
+		Bunnycoin:                 "BUN",
+		Burst:                     "BURST",
+		Burstocean:                "OCEAN",
+		Byteball:                  "GBYTE",
+		Bytecent:                  "BYC",
+		BytecoinBcn:               "BCN",
+		Bytom:                     "BTM",
+		CBit:                      "XCT",
+		Cabbage:                   "CAB",
+		Cachecoin:                 "CACH",
+		Cagecoin:                  "CAGE",
+		Californium:               "CF",
+		Caliphcoin:                "CALC",
+		Campuscoin:                "CMPCO",
+		CanadaEcoin:               "CDN",
+		CanadianDollar:            "CAD",
+		Cannabiscoin:              "CANN",
+		Cannacoin:                 "CCN",
+		Cannation:                 "CNNC",
+		Capricoin:                 "CPC",
+		Carboncoin:                "CARBON",
+		Cardano:                   "ADA",
+		Cash:                      "ZEC",
+		CashPokerPro:              "CASH",
+		Cashcoin:                  "CASH",
+		Cashme:                    "CME",
+		Casino:                    "CASINO",
+		Casinocoin:                "CSC",
+		Catcoin:                   "CAT",
+		CbdCrystals:               "CBD",
+		Ccminer:                   "CCM100",
+		Ccoin:                     "ZCC",
+		Centra:                    "CTR",
+		Centurion:                 "CNT",
+		Chaincoin:                 "CHC",
+		Chainlink:                 "LINK",
+		Chancoin:                  "4CHN",
+		Change:                    "CAG",
+		Cheapcoin:                 "CHEAP",
+		Chesscoin:                 "CHESS",
+		ChinaYan:                  "CNY",
+		Chips:                     "CHIPS",
+		Chncoin:                   "CNC",
+		Chronobank:                "TIME",
+		Chronologic:               "DAY",
+		Chronos:                   "CRX",
+		Cindicator:                "CND",
+		CircuitsOfValue:           "COVAL",
+		Civic:                     "CVC",
+		Clams:                     "CLAM",
+		Classic:                   "ZCL",
+		Clearpoll:                 "POLL",
+		Clinton:                   "CLINT",
+		Cloakcoin:                 "CLOAK",
+		Clubcoin:                  "CLUB",
+		Cobinhood:                 "COB",
+		Coexistcoin:               "COXST",
+		CofoundIt:                 "CFI",
+		CoimaticCoin2:             "CTIC2",
+		CoimaticCoin3:             "CTIC3",
+		Coin:                      "9COIN",
+		Coin0x:                    "ZRX",
+		Coin10mtoken:              "10MT",
+		Coin1337coin:              "1337",
+		Coin2Coin1:                "C2",
+		Coin2give:                 "2GIVE",
+		Coin300Token:              "300",
+		Coin42Coin:                "42",
+		Coin808coin:               "808",
+		Coin8bit:                  "8BIT",
+		Coindash:                  "CDT",
+		Coinonat:                  "CXT",
+		Coinonatx:                 "XCXT",
+		ColossuscoinV2:            "CV2",
+		Colossuscoinxt:            "COLX",
+		Comet:                     "CMT",
+		Compcoin:                  "CMP",
+		Compucoin:                 "CPN",
+		Concoin:                   "CONX",
+		Condensate:                "RAIN",
+		Corgicoin:                 "CORG",
+		Corion:                    "COR",
+		Coss:                      "COSS",
+		Counterparty:              "XCP",
+		Coupecoin:                 "COUPE",
+		Crave:                     "CRAVE",
+		Cream:                     "CRM",
+		Creatio:                   "XCRE",
+		Creativecoin:              "CREA",
+		Creditbit:                 "CRB",
+		Credo:                     "CREDO",
+		Crevacoin:                 "CREVA",
+		Crown:                     "CRW",
+		Crtcoin:                   "CRT",
+		Cryptcoin:                 "CRYPT",
+		Crypto:                    "CTO",
+		Cryptocarbon:              "CCRB",
+		Cryptoescudo:              "CESC",
+		Cryptoforecast:            "CFT",
+		CryptogenicBullion:        "CBX",
+		Cryptojacks:               "CJ",
+		Cryptonex:                 "CNX",
+		Cryptonite:                "XCN",
+		Cryptoping:                "PING",
+		CryptoworldxToken:         "CWXT",
+		CrystalClear:              "CCT",
+		CthulhuOfferings:          "OFF",
+		Cubits:                    "QBT",
+		Curecoin:                  "CURE",
+		Cvcoin:                    "CVCOIN",
+		Cybcsec:                   "XCS",
+		Cybercoin:                 "CC",
+		CyclingCoin:               "CYC",
+		Cyder:                     "CYDER",
+		Cypher:                    "CYP",
+		Dalecoin:                  "DALC",
+		DaoCasino:                 "BET",
+		Dappster:                  "DLISK",
+		Darcrus:                   "DAR",
+		Darklisk:                  "DISK",
+		Darsek:                    "KED",
+		Das:                       "DAS",
+		Dash:                      "DASH",
+		Dashcoin:                  "DSH",
+		Dashs:                     "DASHS",
+		Databits:                  "DTB",
+		Daxxcoin:                  "DAXX",
+		Debitcoin:                 "DBTC",
+		Decent:                    "DCT",
+		Decentraland:              "MANA",
+		Decred:                    "DCR",
+		Deeponion:                 "ONION",
+		Deltacredits:              "DCRE",
+		DenariusDnr:               "DNR",
+		Dent:                      "DENT",
+		Dentacoin:                 "DCN",
+		Destiny:                   "DES",
+		Deuscoin:                  "DEUS",
+		DeutscheEmark:             "DEM",
+		Devcoin:                   "DVC",
+		Dfscoin:                   "DFS",
+		Diamond:                   "DMD",
+		Dibcoin:                   "DIBC",
+		Digibyte:                  "DGB",
+		Digicube:                  "CUBE",
+		DigitalBullionGold:        "DBG",
+		DigitalCredits:            "DGCS",
+		DigitalDevelopersFund:     "DDF",
+		DigitalMoneyBits:          "DMB",
+		DigitalRupees:             "DRS",
+		Digitalcoin:               "DGC",
+		Digitalnote:               "XDN",
+		Digitalprice:              "DP",
+		Digixdao:                  "DGD",
+		Dimecoin:                  "DIME",
+		Dinastycoin:               "DCY",
+		District0x:                "DNT",
+		DixAsset:                  "DIX",
+		Dnotes:                    "NOTE",
+		Dogecoin:                  "DOGE",
+		DollarOnline:              "DOLLAR",
+		Dollarcoin:                "DLC",
+		Domraider:                 "DRT",
+		Donationcoin:              "DON",
+		Dopecoin:                  "DOPE",
+		Dotcoin:                   "DOT",
+		Doubloon:                  "BOAT",
+		Dovu:                      "DOVU",
+		Dpay:                      "DPAY",
+		Draftcoin:                 "DFT",
+		Dreamcoin:                 "DRM",
+		Droxne:                    "DRXNE",
+		DtToken:                   "DRACO",
+		DubaicoinDbix:             "DBIX",
+		Dubstep:                   "DUB",
+		DutchCoin:                 "DUTCH",
+		Dynamic:                   "DYN",
+		Dynamiccoin:               "DMC",
+		ECoin:                     "ECN",
+		EDinarCoin:                "EDR",
+		EGulden:                   "EFL",
+		Earthcoin:                 "EAC",
+		Ebit:                      "EBIT",
+		EbittreeCoin:              "EBT",
+		Eboostcoin:                "EBST",
+		Ebtc:                      "EBTC",
+		Ebtcnew:                   "EBTC",
+		Eccoin:                    "ECC",
+		Ecobit:                    "ECOB",
+		Ecocoin:                   "ECO",
+		Edgeless:                  "EDG",
+		Edrcoin:                   "EDRC",
+		Eggcoin:                   "EGG",
+		Ego:                       "EGO",
+		Egold:                     "EGOLD",
+		Eidoo:                     "EDO",
+		Einsteinium:               "EMC2",
+		Eitcoin:                   "ZEIT",
+		Elacoin:                   "ELC",
+		Elastic:                   "XEL",
+		ElcoinEl:                  "EL",
+		Electra:                   "ECA",
+		Electroneum:               "ETN",
+		Elementrem:                "ELE",
+		Elixir:                    "ELIX",
+		Ellaism:                   "ELLA",
+		Eltc:                      "ELTC2",
+		Elysium:                   "ELS",
+		Embercoin:                 "EMB",
+		Embers:                    "MBRS",
+		Emerald:                   "EMD",
+		Emercoin:                  "EMC",
+		Emoneypower:               "EMP",
+		Encash:                    "ZEN",
+		Encryptotel:               "ETT",
+		EncryptotelEth:            "ETT",
+		Energycoin:                "ENRG",
+		Engold:                    "ZENGOLD",
+		Enigma:                    "XNG",
+		EnigmaProject:             "ENG",
+		EnjinCoin:                 "ENJ",
+		Ennies:                    "ZENI",
+		Environ:                   "ENV",
+		Eos:                       "EOS",
+		EotToken:                  "EOT",
+		Equitrader:                "EQT",
+		Ereal:                     "EREAL",
+		Ergo:                      "EFYT",
+		Ero:                       "ZER",
+		Eryllium:                  "ERY",
+		Espers:                    "ESP",
+		Etacoin:                   "ZET",
+		Etamicron:                 "ZMC",
+		Eternity:                  "ENT",
+		Ethbet:                    "EBET",
+		Ethbits:                   "ETBS",
+		EtherForTheRestOfTheWorld: "E4ROW",
+		Etherdoge:                 "EDOGE",
+		Ethereum:                  "ETH",
+		EthereumBlue:              "BLUE",
+		EthereumClassic:           "ETC",
+		EthereumDark:              "ETHD",
+		EthereumGold:              "ETG",
+		EthereumLite:              "ELITE",
+		EthereumMovieVenture:      "EMV",
+		Ethereumcash:              "ECASH",
+		Etheriya:                  "RIYA",
+		Etheroll:                  "DICE",
+		Etherparty:                "FUEL",
+		Etherx:                    "ETX",
+		Ethgas:                    "EGAS",
+		Euro:                      "EUR",
+		Eurocoin:                  "EUC",
+		Europecoin:                "ERC",
+		Eusd:                      "EUSD",
+		Eusshield:                 "ZSC",
+		Everex:                    "EVX",
+		Evergreencoin:             "EGC",
+		Everus:                    "EVR",
+		EvilCoin:                  "EVIL",
+		Evotion:                   "EVO",
+		Excelcoin:                 "EXL",
+		ExchangeUnion:             "XUC",
+		Exchangen:                 "EXN",
+		Exclusivecoin:             "EXCL",
+		Expanse:                   "EXP",
+		Exrnchain:                 "EXRN",
+		FaCoin:                    "FAZZ",
+		Facecoin:                  "FC",
+		Factom:                    "FCT",
+		Faircoin:                  "FAIR",
+		Falcoin:                   "FAL",
+		Fantomcoin:                "FCN",
+		Fapcoin:                   "FAP",
+		Fargocoin:                 "FRGC",
+		Fastcoin:                  "FST",
+		Feathercoin:               "FTC",
+		Fedoracoin:                "TIPS",
+		Fimkrypto:                 "FIMK",
+		Fincoin:                   "FNC",
+		Firecoin:                  "FIRE",
+		Fireflycoin:               "FFC",
+		FirstBitcoin:              "BIT",
+		FirstBitcoinCapital:       "BITCF",
+		Firstblood:                "1ST",
+		Firstcoin:                 "FRST",
+		Flappycoin:                "FLAP",
+		Flash:                     "FLASH",
+		Flavorcoin:                "FLVR",
+		Flaxscript:                "FLAX",
+		Flik:                      "FLIK",
+		Florincoin:                "FLO",
+		Fluttercoin:               "FLT",
+		Flycoin:                   "FLY",
+		Flypme:                    "FYP",
+		Foldingcoin:               "FLDC",
+		FonIecoin:                 "FONZ",
+		FootyCash:                 "XFT",
+		Force:                     "FOR",
+		FraCoin:                   "FRAZ",
+		Francs:                    "FRN",
+		Franko:                    "FRK",
+		Frankywillcoin:            "FRWC",
+		Freicoin:                  "FRC",
+		FuBalls:                   "FUZZ",
+		Fucktoken:                 "FUCK",
+		Fuelcoin:                  "FC2",
+		Fujicoin:                  "FJC",
+		Fujinto:                   "NTO",
+		Funcoin:                   "FUNC",
+		Fundyourselfnow:           "FYN",
+		Funfair:                   "FUN",
+		Futcoin:                   "FUTC",
+		FutureDigitalCurrency:     "FDC",
+		Futurexe:                  "FXE",
+		Gaia:                      "GAIA",
+		Gambit:                    "GAM",
+		GamebetCoin:               "GBT",
+		Gamecredits:               "GAME",
+		Gameleaguecoin:            "GML",
+		Gameunits:                 "UNITS",
+		Ganjacoin:                 "MRJA",
+		Gapcoin:                   "GAP",
+		Gas:                       "GAS",
+		Gaycoin:                   "GAY",
+		Gbcgoldcoin:               "GBC",
+		Gcoin:                     "GCN",
+		Geertcoin:                 "GEERT",
+		Genstake:                  "G3N",
+		Geocoin:                   "GEO",
+		Geysercoin:                "GSR",
+		GigaWattToken:             "WTT",
+		Gimli:                     "GIM",
 		GlobalBusinessRevolution: "GBRC",
 		GlobalCurrencyReserve:    "GCR",
 		GlobalTourCoin:           "GTC",
 		GlobalboostY:             "BSTY",
 		Globalcoin:               "GLC",
 		Globaltoken:              "GLT",
-		Gnosis:                   "GNO",
+		GnosisGno:                "GNO",
+		GoCoin:                   "XGOX",
 		GoldPressedLatinum:       "GPL",
 		Goldblocks:               "GB",
 		Goldcoin:                 "GLD",
 		Goldmaxcoin:              "GMX",
-		GoldpayCoin:              "GP",
 		Goldpieces:               "GP",
 		Goldreserve:              "XGR",
 		Goldunioncoin:            "GUC",
-		Golem:                    "GNT",
+		GolemNetworkTokens:       "GNT",
 		Golfcoin:                 "GOLF",
 		Golos:                    "GOLOS",
 		GolosGold:                "GBG",
-		GoodKarma:                "GOOD",
+		Goodomy:                  "GOOD",
 		GpuCoin:                  "GPU",
+		Granitecoin:              "GRN",
 		Grantcoin:                "GRT",
 		Greencoin:                "GRE",
+		Grid:                     "GRID",
 		Gridcoin:                 "GRC",
 		Groestlcoin:              "GRS",
+		GrowersInternational:     "GRWI",
 		Guccionecoin:             "GCC",
 		Gulden:                   "NLG",
 		Gulfcoin:                 "MGC",
 		Guncoin:                  "GUN",
+		Guppy:                    "GUP",
 		Gxshares:                 "GXS",
-		Gycoin:                   "GYC",
 		HackerGold:               "HKG",
 		Halcyon:                  "HAL",
 		HalloweenCoin:            "HALLO",
 		HappyCreatorCoin:         "HCC",
 		Happycoin:                "HPC",
-		Harmonycoin:              "HMC",
-		Hbcoin:                   "HBC",
+		HarmonycoinHmc:           "HMC",
 		Healthywormcoin:          "WORM",
-		Heat:                     "HEAT",
+		HeatLedger:               "HEAT",
+		Hedge:                    "HDG",
 		Helleniccoin:             "HNC",
-		Hempcoin:                 "HMP",
+		Hellogold:                "HGT",
+		Hempcoin:                 "THC",
+		HempcoinHmp:              "HMP",
 		Hexx:                     "HXX",
 		Hicoin:                   "XHI",
+		HighGain:                 "HIGH",
 		HighVoltage:              "HVCO",
-		Hirocoin:                 "HIRO",
 		Hitcoin:                  "HTC",
+		Hive:                     "HVN",
 		Hobonickels:              "HBN",
+		HodlBucks:                "HDLB",
 		Hodlcoin:                 "HODL",
 		Honey:                    "HONEY",
+		Hshare:                   "HSR",
 		Htmlcoin:                 "HTML5",
+		HubiiNetwork:             "HBT",
 		Humaniq:                  "HMQ",
 		Huncoin:                  "HNC",
 		Huntercoin:               "HUC",
@@ -1565,44 +1861,52 @@ var (
 		Hyper:                    "HYPER",
 		Hyperstake:               "HYP",
 		I0coin:                   "I0C",
-		IOCoin:                   "IOC",
 		Ibank:                    "IBANK",
-		Ico:                      "ICO",
+		Ibtc:                     "IBTC",
 		IcoOpenledger:            "ICOO",
 		Icobid:                   "ICOB",
 		Icoin:                    "ICN",
+		Icon:                     "ICX",
 		Iconic:                   "ICON",
 		Iconomi:                  "ICN",
+		Icos:                     "ICOS",
 		Idice:                    "ICE",
-		IexecRlc:                 "RLC",
+		Iethereum:                "IETH",
 		Ilbercoin:                "ZBC",
 		Impact:                   "IMX",
 		Impulsecoin:              "IMPS",
 		Incakoin:                 "NKA",
 		Incent:                   "INCNT",
 		IndependentMoneySystem:   "IMS",
+		IndiaCoin:                "INDIA",
+		IndorseToken:             "IND",
 		Infchain:                 "INF",
 		Infinitecoin:             "IFC",
+		InfinityEconomics:        "XIN",
 		Inflationcoin:            "IFLT",
 		Influxcoin:               "INFX",
 		Inpay:                    "INPAY",
-		Insanecoin:               "INSANE",
-		Insurex:                  "IXT",
+		InsanecoinInsn:           "INSN",
+		IntelligentTradingTech:   "ITT",
+		InterOne:                 "ITZ",
 		InternationalDiamond:     "XID",
 		InternetOfPeople:         "IOP",
 		InternetOfThings:         "XOT",
+		Internxt:                 "INXT",
 		Investfeed:               "IFT",
 		Invisiblecoin:            "IVZ",
+		Iocoin:                   "IOC",
 		Ion:                      "ION",
 		Iota:                     "MIOTA",
-		Iou1:                     "IOU",
+		Iquant:                   "IQT",
 		Irishcoin:                "IRL",
 		Islacoin:                 "ISL",
 		Iticoin:                  "ITI",
-		Ivugeocoin:               "IEC",
 		Ixcoin:                   "IXC",
+		Ixledger:                 "IXT",
 		Janus:                    "JNS",
 		JapaneseYen:              "JPY",
+		JavascriptToken:          "JS",
 		Jetcoin:                  "JET",
 		Jewels:                   "JWL",
 		JinCoin:                  "JIN",
@@ -1614,32 +1918,40 @@ var (
 		Karbowanec:               "KRB",
 		Karmacoin:                "KARMA",
 		Kashhcoin:                "KASHH",
-		Kayi:                     "KAYI",
+		Kayicoin:                 "KAYI",
 		Kekcoin:                  "KEK",
+		Kexcoin:                  "KEXCOIN",
 		Kibicoin:                 "KIC",
+		Kickico:                  "KICK",
 		Kilocoin:                 "KLC",
+		Kin:                      "KIN",
 		KingnCoin:                "KNC",
 		Kittehcoin:               "MEOW",
 		Kobocoin:                 "KOBO",
-		Kolschcoin:               "TP1",
+		Kolion:                   "KLN",
 		Komodo:                   "KMD",
 		Korecoin:                 "KORE",
+		Kronecoin:                "KRONE",
+		Kucoin:                   "KCS",
 		Kurrent:                  "KURT",
 		Kushcoin:                 "KUSH",
+		KyberNetwork:             "KNC",
 		LaAruscoin:               "LAZ",
+		Lampix:                   "PIX",
 		Lanacoin:                 "LANA",
 		Landcoin:                 "LDCN",
 		Lathaan:                  "LTH",
-		LbryCredits:              "LBC",
+		Latoken:                  "LA",
 		Leacoin:                  "LEA",
 		LegendsRoom:              "LGD",
 		Leocoin:                  "LEO",
-		Lepaoquan:                "HLB",
 		Lepen:                    "LEPEN",
 		Letitride:                "LIR",
-		LeviarcoinPreLaunch:      "XLC",
+		Leviarcoin:               "XLC",
 		Levoplus:                 "LVPS",
 		Lex4all:                  "LEX",
+		LibraryCredit:            "LBC",
+		Life:                     "LIFE",
 		Linda:                    "LINDA",
 		LinkPlatform:             "LNK",
 		Linkedcoin:               "LKC",
@@ -1648,22 +1960,30 @@ var (
 		Litebar:                  "LTB",
 		Litebitcoin:              "LBTC",
 		Litecoin:                 "LTC",
+		LitecoinGold:             "LTG",
+		LitecoinPlus:             "LCP",
+		LitecoinUltra:            "LTCU",
 		Litecred:                 "LTCR",
 		Litedoge:                 "LDOGE",
+		Lltoken:                  "LLT",
 		Lomocoin:                 "LMC",
+		Loopring:                 "LRC",
 		Lottocoin:                "LOT",
 		Ltbcoin:                  "LTBC",
 		Luckchain:                "BASH",
 		LunaCoin:                 "LUNA",
 		Lunyr:                    "LUN",
+		Luxcoin:                  "LUX",
 		Lykke:                    "LKK",
 		MaAcoin:                  "MZC",
 		Machinecoin:              "MAC",
+		Macro1:                   "MCR",
 		Macron:                   "MCRN",
+		Maecenas:                 "ART",
 		Magi:                     "XMG",
+		Magnetcoin:               "MAGN",
 		Magnum:                   "MGM",
 		Maidsafecoin:             "MAID",
-		Malcoin:                  "MALC",
 		Mantracoin:               "MNC",
 		MaoEdong:                 "MAO",
 		Marijuanacoin:            "MAR",
@@ -1671,55 +1991,69 @@ var (
 		Martexcoin:               "MXT",
 		Marxcoin:                 "MARX",
 		MasterSwiscoin:           "MSCN",
-		Matchpool:                "GUP",
+		Masternodecoin:           "MTNC",
 		Mavro:                    "MAVRO",
 		Maxcoin:                  "MAX",
 		Mcap:                     "MCAP",
 		Megacoin:                 "MEC",
 		Melon:                    "MLN",
+		Memetic:                  "MEME",
 		Mercury:                  "MER",
+		MercuryProtocol:          "GMT",
 		Mergecoin:                "MGC",
 		Metal:                    "MTL",
 		MetalMusicCoin:           "MTLMC3",
 		Metalcoin:                "METAL",
-		MetaverseEtp:             "ETP",
+		Metaverse:                "ETP",
 		Microcoin:                "MRC",
 		Mikethemug:               "MUG",
 		Milocoin:                 "MILO",
+		Mincoin:                  "MNC",
 		MindGene:                 "MG",
 		Mindcoin:                 "MND",
 		Minereum:                 "MNE",
-		MinersCoin3RewardToken:   "MRT",
+		MinersRewardToken:        "MRT",
 		Mineum:                   "MNM",
 		Minex:                    "MINEX",
+		Minexcoin:                "MNX",
 		Mintcoin:                 "MINT",
 		Miyucoin:                 "MIU",
 		Mmxvi:                    "MMXVI",
 		Mobilecash:               "MBL",
 		Mobilego:                 "MGO",
+		Modum:                    "MOD",
+		MoedaLoyaltyPoints:       "MDA",
 		Moin:                     "MOIN",
 		Mojocoin:                 "MOJO",
 		Monaco:                   "MCO",
+		Monacocoin:               "XMCC",
 		Monacoin:                 "MONA",
 		Monero:                   "XMR",
-		Moneta:                   "MONETA",
+		Moneta2:                  "MONETA",
 		Monetaryunit:             "MUE",
+		Monetha:                  "MTH",
 		Money:                    "$$$",
 		Moneycoin:                "MONEY",
-		Monkey:                   "MNY",
 		MonsterByte:              "MBI",
 		Mooncoin:                 "MOON",
+		MorningstarPayments:      "MRNG",
 		Mothership:               "MSP",
 		Motocoin:                 "MOTO",
+		Msd:                      "MSD",
 		Mtmgaming:                "MTM",
-		Muse:                     "MUSE",
 		Musicoin:                 "MUSIC",
+		Musiconomi:               "MCI",
 		Mustangcoin:              "MST",
+		MybitToken:               "MYB",
 		Myriad:                   "XMY",
 		Mysterium:                "MYST",
 		Namecoin:                 "NMC",
+		Namocoin:                 "NAMO",
+		Natcoin:                  "NTC",
 		Nautiluscoin:             "NAUT",
 		NavCoin:                  "NAV",
+		Neblio:                   "NEBL",
+		NebulasToken:             "NAS",
 		Nem:                      "XEM",
 		Neo:                      "NEO",
 		Neoscoin:                 "NEOS",
@@ -1727,7 +2061,9 @@ var (
 		Netbit:                   "NBIT",
 		Netcoin:                  "NET",
 		Netko:                    "NETKO",
+		NetworkToken:             "NTWK",
 		Neuro:                    "NRO",
+		Neurodao:                 "NDAO",
 		Neutron:                  "NTRN",
 		Nevacoin:                 "NEVA",
 		Neverdie:                 "NDC",
@@ -1742,14 +2078,18 @@ var (
 		Nolimitcoin:              "NLC2",
 		Novacoin:                 "NVC",
 		Nubits:                   "USNBT",
+		Nuls:                     "NULS",
 		Numeraire:                "NMR",
 		Nushares:                 "NSR",
 		Nvo:                      "NVST",
 		Nxt:                      "NXT",
 		Nyancoin:                 "NYAN",
+		O2olondoncoin:            "020",
+		Oax:                      "OAX",
 		Obits:                    "OBITS",
+		Obsidian:                 "ODN",
+		Oceanlab:                 "OCL",
 		Ocow:                     "OCOW",
-		Octanox:                  "OTX",
 		Octocoin:                 "888",
 		OhmWallet:                "OHM",
 		Oin:                      "ZOI",
@@ -1760,35 +2100,38 @@ var (
 		Onecoin:                  "ZNE",
 		Onix:                     "ONX",
 		Opal:                     "OPAL",
-		Openanx:                  "OAX",
-		Operacoin:                "OCN",
+		OpenTradingNetwork:       "OTN",
 		Operand:                  "OP",
 		Opescoin:                 "OPES",
+		Opus:                     "OPT",
 		Oraclechain:              "OCT",
 		Orbitcoin:                "ORB",
 		Orlycoin:                 "ORLY",
+		OrmeusCoin:               "ORME",
 		Osmiumcoin:               "OS76",
+		OxFina:                   "OX",
 		P7coin:                   "P7C",
 		PabyosiCoinSpecial:       "PCS",
 		Paccoin:                  "PAC",
 		Pakcoin:                  "PAK",
-		Pandacoin:                "PND",
-		PangeaPoker:              "PANGEA",
+		PandacoinPnd:             "PND",
+		Paragon:                  "PRG",
 		Parallelcoin:             "DUO",
 		Parkbyte:                 "PKB",
 		Particl:                  "PART",
 		PascalCoin:               "PASC",
 		PascalLite:               "PASL",
 		Patientory:               "PTOY",
-		Paycoin:                  "XPY",
+		Paycoin2:                 "XPY",
 		Paycon:                   "CON",
 		Paypeer:                  "PAYP",
+		Paypie:                   "PPP",
+		Peacecoin:                "PEC",
 		Peepcoin:                 "PCN",
 		Peercoin:                 "PPC",
-		Peerplays:                "PPY",
+		PeerplaysPpy:             "PPY",
 		Peoplecoin:               "MEN",
 		PepeCash:                 "PEPECASH",
-		Pepecoin:                 "PEPE",
 		Pesetacoin:               "PTC",
 		Pesobit:                  "PSB",
 		Petrodollar:              "XPD",
@@ -1802,12 +2145,15 @@ var (
 		Pillar:                   "PLR",
 		Pinkcoin:                 "PINK",
 		Pinkdog:                  "PDG",
-		Pipcoin:                  "PIP",
+		Piplcoin:                 "PIPL",
 		PirateBlocks:             "SKULL",
+		Pirl:                     "PIRL",
 		Pivx:                     "PIVX",
 		Platinumbar:              "XPTX",
+		Playercoin:               "PLACO",
 		Plncoin:                  "PLNC",
 		Pluton:                   "PLU",
+		Poet:                     "POE",
 		Pokecoin:                 "POKE",
 		Polybius:                 "PLBT",
 		PonIcoin:                 "PONZI",
@@ -1815,16 +2161,17 @@ var (
 		Populous:                 "PPT",
 		Posex:                    "PEX",
 		Postcoin:                 "POST",
+		Postoken:                 "POS",
 		PoswCoin:                 "POSW",
 		Potcoin:                  "POT",
+		PowerLedger:              "POWR",
 		Powercoin:                "PWR",
 		Prcoin:                   "PRC",
-		PresidentClinton:         "HILL",
 		PresidentJohnson:         "GARY",
-		PresidentSanders:         "BURN",
 		PresidentTrump:           "PRES",
 		PriM:                     "PZM",
-		PrimalbaseToken:          "PBT",
+		Primalbase:               "PBT",
+		Primas:                   "PST",
 		PrimeXi:                  "PXI",
 		Primecoin:                "XPM",
 		Primulon:                 "PRIMU",
@@ -1833,12 +2180,14 @@ var (
 		Procurrency:              "PROC",
 		ProjectDecorum:           "PDC",
 		ProjectX:                 "NANOX",
+		Propy:                    "PRO",
+		ProspectorsGold:          "PGL",
+		Protean:                  "PRN",
 		Prototanium:              "PR",
 		Psilocybin:               "PSY",
 		Pulse:                    "PULSE",
 		Pura:                     "PURA",
 		Purevid:                  "VIDZ",
-		PutinClassic:             "PUTIC",
 		Putincoin:                "PUT",
 		Px:                       "PX",
 		QibuckAsset:              "QBK",
@@ -1847,288 +2196,329 @@ var (
 		QuaArcoin:                "QCN",
 		Quantum:                  "QAU",
 		QuantumResistantLedger:   "QRL",
-		Quark:            "QRK",
-		Quart:            "QRZ",
-		Quatloo:          "QTL",
-		Qubitcoin:        "Q2C",
-		Quebecoin:        "QBC",
-		Quotient:         "XQN",
-		Qwark:            "QWARK",
-		Rabbitcoin:       "RBBT",
-		Radium:           "RADS",
-		Raiblocks:        "XRB",
-		RarePepeParty:    "RAREPEPEP",
-		Ratecoin:         "XRA",
-		Rawcoin:          "XRC",
-		Rcoin:            "RCN",
-		Redcoin:          "RED",
-		Reddcoin:         "RDD",
-		Reecoin:          "REE",
-		Regacoin:         "REGA",
-		Remicoin:         "RMC",
-		Renos:            "RNS",
-		Revenu:           "REV",
-		Revolvercoin:     "XRE",
-		Rhfcoin:          "RHFC",
-		Rialto:           "XRL",
-		Richcoin:         "RICHX",
-		RideMyCar:        "RIDE",
-		Riecoin:          "RIC",
-		Rimbit:           "RBT",
-		Ripple:           "XRP",
-		RiptoBux:         "RBX",
-		Rise:             "RISE",
-		Ronpaulcoin:      "RPC",
-		Roulettetoken:    "RLT",
-		Round:            "ROUND",
-		Royalcoin:        "ROYAL",
-		RoyalcoinCoin2:   "RYCN",
-		Royalties:        "XRY",
-		Rsgpcoin:         "RSGP",
-		Rubies:           "RBIES",
-		Rublebit:         "RUBIT",
-		Rubycoin:         "RBY",
-		Rupaya:           "RUPX",
-		Rupee:            "RUP",
-		Russiacoin:       "RC",
-		RussianRuble:     "RUB",
-		Rustbits:         "RUSTBITS",
-		SafeExchangeCoin: "SAFEX",
-		SafeTradeCoin:    "XSTC",
-		Safecoin:         "SFE",
-		Sakuracoin:       "SKR",
-		Salus:            "SLS",
-		SantimentNetworkToken: "SAN",
-		Sativacoin:            "STV",
-		Satoshimadness:        "MAD",
-		SaveAndGain:           "SANDG",
-		Scorecoin:             "SCORE",
-		Secoin:                "ZSE",
-		Secretcoin:            "SCRT",
-		Securecoin:            "SRC",
-		Selfiecoin:            "SLFI",
-		Sequence:              "SEQ",
-		Sexcoin:               "SXC",
-		Shacoin:               "SHA",
-		ShadowToken:           "SHDW",
-		Shadowcash:            "SDC",
-		Sharkcoin:             "SAK",
-		Shellcoin:             "SHELL",
-		Shellpay:              "SHELL",
-		Shift:                 "SHIFT",
-		Shilling:              "SH",
-		Shorty:                "SHORTY",
-		Siacoin:               "SC",
-		Sibcoin:               "SIB",
-		Signatum:              "SIGT",
-		Singulardtv:           "SNGLS",
-		Sixeleven:             "611",
-		Skeincoin:             "SKC",
-		Skincoin:              "SKIN",
-		Skycoin:               "SKY",
-		Slevin:                "SLEVIN",
-		Slimcoin:              "SLM",
-		Sling:                 "SLING",
-		Smartcash:             "SMART",
-		Smartcoin:             "SMC",
-		Smileycoin:            "SMLY",
-		Snakeeyes:             "SNAKE",
-		Soarcoin:              "SOAR",
-		Socialcoin:            "SOCC",
-		Soilcoin:              "SOIL",
-		Sojourn:               "SOJ",
-		Solarcoin:             "SLR",
-		Solarflarecoin:        "SFC",
-		Solaris:               "XLR",
-		Songcoin:              "SONG",
-		Sonm:                  "SNM",
-		Sooncoin:              "SOON",
-		Soulcoin:              "SOUL",
-		SovereignHero:         "HERO",
-		Spacecoin:             "SPACE",
-		Spectrecoin:           "XSPEC",
-		Speedcash:             "SCS",
-		Sphere:                "SPHR",
-		SphreAir:              "XID",
-		Sportscoin:            "SPORT",
-		Spots:                 "SPT",
-		Spreadcoin:            "SPR",
-		Sprouts:               "SPRTS",
-		Sproutsextreme:        "SPEX",
-		Stakecoin:             "STCN",
-		Starta:                "STA",
-		Startcoin:             "START",
-		Status:                "SNT",
-		Stealthcoin:           "XST",
-		Steem:                 "STEEM",
-		SteemDollars:          "SBD",
-		StellarLumens:         "XLM",
-		Steps:                 "STEPS",
-		Sterlingcoin:          "SLG",
-		Stex:                  "STEX",
-		Storj:                 "STORJ",
-		StorjcoinX:            "SJCX",
-		Stox:                  "STX",
-		Stratis:               "STRAT",
-		Stress:                "STS",
-		Stronghands:           "SHND",
-		Sumokoin:              "SUMO",
-		Suncontract:           "SNC",
-		Supercoin:             "SUPER",
-		Supernet:              "UNITY",
-		Superturbostake:       "STRB",
-		Swagbucks:             "BUCKS",
-		Swaptoken:             "TOKEN",
-		SwarmCity:             "SWT",
-		Swing:                 "SWING",
-		Sydpak:                "SDP",
-		Sync:                  "SYNC",
-		Syndicate:             "SYNX",
-		Synereo:               "AMP",
-		Synergy:               "SNRG",
-		Syscoin:               "SYS",
-		TCoin:                 "TCOIN",
-		Taas:                  "TAAS",
-		Tagcoin:               "TAG",
-		Tagrcoin:              "TAGR",
-		Tajcoin:               "TAJ",
-		Tao:                   "XTO",
-		TattoocoinLimitedEdition:  "TLE",
-		TattoocoinStandardEdition: "TSE",
-		Teamup:               "TEAM",
-		Techshares:           "THS",
-		Tekcoin:              "TEK",
-		Tellurion:            "TELL",
-		Tenx:                 "PAY",
-		Teracoin:             "TERA",
-		Terracoin:            "TRC",
-		Terranova:            "TER",
-		Teslacoilcoin:        "TESLA",
-		Teslacoin:            "TES",
-		Tether:               "USDT",
-		TheChampionCoin:      "TCC",
-		TheCypherfunks:       "FUNK",
-		TheVeganInitiative:   "XVE",
-		Thecreed:             "TCR",
-		Thegcccoin:           "GCC",
-		TheresaMayCoin:       "MAY",
-		Tickets:              "TIX",
-		Tigercoin:            "TGC",
-		Tilecoin:             "XTC",
-		Timereum:             "TME",
-		Titcoin:              "TIT",
-		Tittiecoin:           "TTC",
-		Toacoin:              "TOA",
-		Todaycoin:            "TODAY",
-		Tokencard:            "TKN",
-		Tokes:                "TKS",
-		TopaCoin:             "TOPAZ",
-		Torcoin:              "TOR",
-		Tradecoinv2:          "TRADE2",
-		Transfercoin:         "TX",
-		Triangles:            "TRI",
-		Trickycoin:           "TRICK",
-		Triggers:             "TRIG",
-		TristarCoin:          "TSTR",
-		Trollcoin:            "TROLL",
-		Troptions:            "TROPTIONS",
-		Truckcoin:            "TRK",
-		TrueInvestmentCoin:   "TIC",
-		Trumpcoin:            "TRUMP",
-		Trustplus:            "TRUST",
-		Turbocoin:            "TURBO",
-		Tychocoin:            "TYCHO",
-		Tyrocoin:             "TYC",
-		Ubiq:                 "UBQ",
-		Ucoin:                "U",
-		UfoCoin:              "UFO",
-		Ugain:                "GAIN",
-		UltimateSecureCash:   "USC",
-		Ultracoin:            "UTC",
-		Unbreakablecoin:      "UNB",
-		Uncoin:               "UNC",
-		Uniburst:             "UNIBURST",
-		Unicoin:              "UNIC",
-		Unify:                "UNIFY",
-		UnitedStatesDollar:   "USD",
-		Unitus:               "UIS",
-		UnityIngot:           "UNY",
-		UniversalCurrency:    "UNIT",
-		Universalroyalcoin:   "UNRC",
-		Universe:             "UNI",
-		Unobtanium:           "UNO",
-		Unrealcoin:           "URC",
-		Ur:                   "UR",
-		Urcoin:               "ZUR",
-		Uro:                  "URO",
-		UselessEthereumToken: "UET",
-		Utacoin:              "UTA",
-		Valorbit:             "VAL",
-		Vaperscoin:           "VPRC",
-		VaultCoin:            "VLTC",
-		Vcash:                "XVC",
-		Vector:               "VEC2",
-		Vegascoin:            "VGC",
-		Veltor:               "VLT",
-		Verge:                "XVG",
-		Vericoin:             "VRC",
-		Veritaseum:           "VERI",
-		Veriumreserve:        "VRM",
-		Veros:                "VRS",
-		Version:              "V",
-		Vertcoin:             "VTC",
-		Viacoin:              "VIA",
-		Victoriouscoin:       "VTY",
-		VipTokens:            "VIP",
-		VirtaUniqueCoin:      "VUC",
-		Virtacoin:            "VTA",
-		Virtacoinplus:        "XVP",
-		Virtualcoin:          "VC",
-		Visio:                "VISIO",
-		Voise:                "VSM",
-		Voxels:               "VOX",
-		Voyacoin:             "VOYA",
-		Vpncoin:              "VASH",
-		Vslice:               "VSL",
-		Vsync:                "XVS",
-		Vtorrent:             "VTR",
-		WaSpace:              "WA",
-		Wagerr:               "WGR",
-		Warp:                 "WARP",
-		Waves:                "WAVES",
-		WavesCommunityToken:  "WCT",
-		Wavesgo:              "WGO",
-		Wayguide:             "WAY",
-		Wearesatoshi:         "WSX",
-		Wetrust:              "TRST",
-		Wexcoin:              "WEX",
-		Whitecoin:            "XWC",
-		WildBeastBlock:       "WBB",
-		Wings:                "WINGS",
-		Wink:                 "WINK",
-		Wmcoin:               "WMC",
-		Womencoin:            "WOMEN",
-		Woodcoin:             "LOG",
-		Worldcoin:            "WDC",
-		Wowcoin:              "WOW",
-		Wowecoin:             "WEC",
-		Wyvern:               "WYV",
-		X2:                   "X2",
-		XCoin:                "XCO",
-		Xaucoin:              "XAU",
-		Xaurum:               "XAUR",
-		Xcurrency:            "XC",
-		XdeIi:                "XDE2",
-		Xenixcoin:            "XEN",
-		Xiaomicoin:           "MI",
-		Xonecoin:             "XOC",
-		Xp:                   "XP",
-		Xtrabytes:            "XBY",
-		Yacoin:               "YAC",
-		Yashcoin:             "YASH",
-		Ybcoin:               "YBC",
-		Yescoin:              "YES",
-		Yocoin:               "YOC",
-		Yogold:               "YOG",
+		Quark:              "QRK",
+		Quatloo:            "QTL",
+		Qubitcoin:          "Q2C",
+		Quebecoin:          "QBC",
+		Quotient:           "XQN",
+		Qvolta:             "QVT",
+		Qwark:              "QWARK",
+		Rabbitcoin:         "RBBT",
+		Radium:             "RADS",
+		Raiblocks:          "XRB",
+		Ratecoin:           "XRA",
+		Rawcoin2:           "XRC",
+		Rchain:             "RHOC",
+		Rcoin:              "RCN",
+		Real:               "REAL",
+		RealEstateTokens:   "REX",
+		RedPulse:           "RPX",
+		Redcoin:            "RED",
+		Reddcoin:           "RDD",
+		Reecoin:            "REE",
+		Regacoin:           "REGA",
+		Regalcoin:          "REC",
+		Remicoin:           "RMC",
+		Renos:              "RNS",
+		RequestNetwork:     "REQ",
+		Revain:             "R",
+		Revenu:             "REV",
+		Revolvercoin:       "XRE",
+		Rhfcoin:            "RHFC",
+		Rialto:             "XRL",
+		Richcoin:           "RICHX",
+		RideMyCar:          "RIDE",
+		Riecoin:            "RIC",
+		Rimbit:             "RBT",
+		RipioCreditNetwork: "RCN",
+		Ripple:             "XRP",
+		RiptoBux:           "RBX",
+		Rise:               "RISE",
+		Rivet:              "RVT",
+		Rlc:                "RLC",
+		Ronpaulcoin:        "RPC",
+		Roofs:              "ROOFS",
+		Roulettetoken:      "RLT",
+		RoyalKingdomCoin:   "RKC",
+		Royalcoin:          "ROYAL",
+		Royalties:          "XRY",
+		Rsgpcoin:           "RSGP",
+		Rubies:             "RBIES",
+		Rublebit:           "RUBIT",
+		Rubycoin:           "RBY",
+		Runners:            "RUNNERS",
+		Rupaya:             "RUPX",
+		Rupee:              "RUP",
+		Russiacoin:         "RC",
+		RussianMiningCoin:  "RMC",
+		RussianRuble:       "RUB",
+		Rustbits:           "RUSTBITS",
+		Sacoin:             "SAC",
+		SafeExchangeCoin:   "SAFEX",
+		SafeTradeCoin:      "XSTC",
+		Safecoin:           "SFE",
+		Sakuracoin:         "SKR",
+		Salt:               "SALT",
+		Salus:              "SLS",
+		SandCoin:           "SND",
+		Santiment:          "SAN",
+		Sativacoin:         "STV",
+		Satoshimadness:     "MAD",
+		SaveAndGain:        "SANDG",
+		Scorecoin:          "SCORE",
+		Secoin:             "ZSE",
+		Secretcoin:         "SCRT",
+		Securecoin:         "SRC",
+		Segwit2x:           "B2X",
+		Selfiecoin:         "SLFI",
+		Senderon:           "SDRN",
+		Sequence:           "SEQ",
+		Sexcoin:            "SXC",
+		Shacoin:            "SHA",
+		ShadowToken:        "SHDW",
+		Shadowcash:         "SDC",
+		Sharkcoin:          "SAK",
+		Shellcoin:          "SHELL",
+		Shift:              "SHIFT",
+		Shilling:           "SH",
+		Shorty:             "SHORTY",
+		Siacoin:            "SC",
+		Sibcoin:            "SIB",
+		Sigmacoin:          "SIGMA",
+		Signatum:           "SIGT",
+		Singulardtv:        "SNGLS",
+		Sixeleven:          "611",
+		Skeincoin:          "SKC",
+		Skincoin:           "SKIN",
+		Skycoin:            "SKY",
+		Slevin:             "SLEVIN",
+		Slimcoin:           "SLM",
+		Sling:              "SLING",
+		SmartInvestmentFundToken: "SIFT",
+		Smartcash:                "SMART",
+		Smartcoin:                "SMC",
+		Smileycoin:               "SMLY",
+		Smoke:                    "SMOKE",
+		Snakeeyes:                "SNAKE",
+		Soarcoin:                 "SOAR",
+		Social:                   "SCL",
+		SocialcoinSocc:           "SOCC",
+		Soilcoin:                 "SOIL",
+		Sojourn:                  "SOJ",
+		Solarcoin:                "SLR",
+		Solarflarecoin:           "SFC",
+		Solaris:                  "XLR",
+		Songcoin:                 "SONG",
+		Sonm:                     "SNM",
+		Sooncoin:                 "SOON",
+		Soulcoin:                 "SOUL",
+		SovereignHero:            "HERO",
+		Spacecoin:                "SPACE",
+		Spectrecoin:              "XSPEC",
+		Speedcash:                "SCS",
+		Sphere:                   "SPHR",
+		SphreAir:                 "XID",
+		Sportscoin:               "SPORT",
+		Spots:                    "SPT",
+		Spreadcoin:               "SPR",
+		Sprouts:                  "SPRTS",
+		Sproutsextreme:           "SPEX",
+		StakecoinStcn:            "STCN",
+		Starcredits:              "STRC",
+		Starta:                   "STA",
+		Startcoin:                "START",
+		Status:                   "SNT",
+		Stealthcoin:              "XST",
+		Steem:                    "STEEM",
+		SteemDollars:             "SBD",
+		Stellar:                  "XLM",
+		Steps:                    "STEPS",
+		Sterlingcoin:             "SLG",
+		Stex:                     "STEX",
+		Storj:                    "STORJ",
+		StorjcoinX:               "SJCX",
+		Stox:                     "STX",
+		Stratis:                  "STRAT",
+		StreamrDatacoin:          "DATA",
+		Stress:                   "STS",
+		Stronghands:              "SHND",
+		Substratum:               "SUB",
+		Sumokoin:                 "SUMO",
+		Suncontract:              "SNC",
+		Supercoin:                "SUPER",
+		SupernetUnity:            "UNITY",
+		Suretly:                  "SUR",
+		Swagbucks:                "BUCKS",
+		Swapcoin:                 "SWP",
+		Swaptoken:                "TOKEN",
+		SwarmCity:                "SWT",
+		Swing:                    "SWING",
+		Swisscoin:                "SIC",
+		Sydpak:                   "SDP",
+		Sync:                     "SYNC",
+		Syndicate:                "SYNX",
+		Synereo:                  "AMP",
+		Synergy:                  "SNRG",
+		Syscoin:                  "SYS",
+		TCoin:                    "TCOIN",
+		Taas:                     "TAAS",
+		Tagcoin:                  "TAG",
+		Tagrcoin:                 "TAGR",
+		Tajcoin:                  "TAJ",
+		Tao:                      "XTO",
+		TargetCoin:               "TGT",
+		Tattoocoin:               "TSE",
+		TattoocoinLimited:        "TLE",
+		TeOs:                     "XTZ",
+		Teamup:                   "TEAM",
+		Techshares:               "THS",
+		Tekcoin:                  "TEK",
+		Tellurion:                "TELL",
+		Tenx:                     "PAY",
+		Teracoin:                 "TERA",
+		Terracoin:                "TRC",
+		Terranova:                "TER",
+		Teslacoilcoin:            "TESLA",
+		Teslacoin:                "TES",
+		Tether:                   "USDT",
+		TheChampcoin:             "TCC",
+		TheCypherfunks:           "FUNK",
+		TheVeganInitiative:       "XVE",
+		Thecreed:                 "TCR",
+		Thegcccoin:               "GCC",
+		TheresaMayCoin:           "MAY",
+		Tickets:                  "TIX",
+		Tierion:                  "TNT",
+		Tigercoin:                "TGC",
+		Tilecoin:                 "XTC",
+		Titcoin:                  "TIT",
+		Tittiecoin:               "TTC",
+		Toacoin:                  "TOA",
+		Todaycoin:                "TODAY",
+		Tokencard:                "TKN",
+		Tokes:                    "TKS",
+		Topa:                     "TOPAZ",
+		Topcoin:                  "TOP",
+		TorcoinTor:               "TOR",
+		Trackr:                   "TKR",
+		Tracto:                   "TRCT",
+		TradecoinV2:              "TRADE",
+		Transfercoin:             "TX",
+		TreArcoin:                "TZC",
+		Triangles:                "TRI",
+		Trickycoin:               "TRICK",
+		Triggers:                 "TRIG",
+		TristarCoin:              "TSTR",
+		Trollcoin:                "TROLL",
+		Tron:                     "TRX",
+		Truckcoin:                "TRK",
+		Trueflip:                 "TFL",
+		Trumpcoin:                "TRUMP",
+		Trust:                    "TRST",
+		Trustplus:                "TRUST",
+		Turbocoin:                "TURBO",
+		Tychocoin:                "TYCHO",
+		Tyrocoin:                 "TYC",
+		Ubiq:                     "UBQ",
+		UfoCoin:                  "UFO",
+		UgToken:                  "UGT",
+		Ugain:                    "GAIN",
+		Ulatech:                  "ULA",
+		UltimateSecureCash:       "USC",
+		Ultracoin:                "UTC",
+		Unbreakablecoin:          "UNB",
+		Uncoin:                   "UNC",
+		Unicoin:                  "UNIC",
+		Unify:                    "UNIFY",
+		UnitedStatesDollar:       "USD",
+		Unitus:                   "UIS",
+		UnityIngot:               "UNY",
+		UniversalCurrency:        "UNIT",
+		Universalroyalcoin:       "UNRC",
+		Universe:                 "UNI",
+		Unobtanium:               "UNO",
+		Unrealcoin:               "URC",
+		Ur:                       "UR",
+		Urcoin:                   "ZUR",
+		Uro:                      "URO",
+		Usde:                     "USDE",
+		UselessEthereumToken:     "UET",
+		Utacoin:                  "UTA",
+		Valorbit:                 "VAL",
+		Vaperscoin:               "VPRC",
+		VaultCoin:                "VLTC",
+		Vcash:                    "XVC",
+		Vechain:                  "VEN",
+		Vector:                   "VEC2",
+		Vegascoin:                "VGC",
+		Veltor:                   "VLT",
+		Verge:                    "XVG",
+		Vericoin:                 "VRC",
+		Veritaseum:               "VERI",
+		Veriumreserve:            "VRM",
+		Veros:                    "VRS",
+		Version:                  "V",
+		Vertcoin:                 "VTC",
+		Viacoin:                  "VIA",
+		Vibe:                     "VIBE",
+		Viberate:                 "VIB",
+		VipTokens:                "VIP",
+		VirtaUniqueCoin:          "VUC",
+		Virtacoin:                "VTA",
+		Virtacoinplus:            "XVP",
+		Virtualcoin:              "VC",
+		Visio:                    "VISIO",
+		Vivo:                     "VIVO",
+		Voisecom:                 "VOISE",
+		Voxels:                   "VOX",
+		Voyacoin:                 "VOYA",
+		Vpncoin:                  "VASH",
+		Vslice:                   "VSL",
+		VsyncVsx:                 "VSX",
+		Vtorrent:                 "VTR",
+		Vulcano:                  "VULC",
+		WaSpace:                  "WA",
+		Wagerr:                   "WGR",
+		WalletBuildersCoin:       "WBC",
+		Walton:                   "WTC",
+		Warp:                     "WARP",
+		Waves:                    "WAVES",
+		WavesCommunityToken:      "WCT",
+		Wavesgo:                  "WGO",
+		Wayguide:                 "WAY",
+		Wearesatoshi:             "WSX",
+		Wexcoin:                  "WEX",
+		Whalecoin:                "WHL",
+		Whitecoin:                "XWC",
+		WiCoin:                   "WIC",
+		WildBeastBlock:           "WBB",
+		WildCrypto:               "WILD",
+		Wings:                    "WINGS",
+		Wink:                     "WINK",
+		Wmcoin:                   "WMC",
+		Women:                    "WOMEN",
+		Woodcoin:                 "LOG",
+		Worldcoin:                "WDC",
+		Wowcoin:                  "WOW",
+		Wowecoin:                 "WEC",
+		Wyvern:                   "WYV",
+		X2:                       "X2",
+		XCoin:                    "XCO",
+		Xaucoin:                  "XAU",
+		Xaurum:                   "XAUR",
+		Xcurrency:                "XC",
+		XdeIi:                    "XDE2",
+		Xenon:                    "XNN",
+		Xios:                     "XIOS",
+		Xonecoin:                 "XOC",
+		Xp:                       "XP",
+		Xplay:                    "XPA",
+		XtdCoin:                  "XTD",
+		Xtrabytes:                "XBY",
+		Yacoin:                   "YAC",
+		Yashcoin:                 "YASH",
+		Yescoin:                  "YES",
+		Yocoin:                   "YOC",
+		Yoyow:                    "YOYOW",
 	}
 )
