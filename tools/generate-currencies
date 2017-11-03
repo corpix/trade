@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+from json import loads as json_unmarshal
+from argparse import ArgumentParser
+from sys import stdin, stdout, stderr
+from math import inf as infinity
+
+def load(args, stream):
+    for line in stream:
+        v = json_unmarshal(line.strip())
+
+        if v["volume"] < args["min_volume"]:
+            if args["verbose"]:
+                stderr.write(
+                    "Skipping '{}' - '{}' because it have low volume '{} < {}'\n".format(
+                        v["symbol"],
+                        v["name"],
+                        v["volume"],
+                        args["min_volume"]
+                    )
+                )
+            continue
+
+        yield format(v)
+
+    for v in fiat_currencies():
+        yield format(v)
+
+def format(v):
+    alphanumeric = list(range(ord("a"), ord("z")+1)) + \
+                   list(range(ord("A"), ord("Z")+1)) + \
+                   list(range(ord("0"), ord("9")+1))
+
+    v["name"] = "".join(
+        [
+            "Coin" + v.capitalize()
+            if   v[0].isnumeric()
+            else v.capitalize()
+
+            for v in "".join(
+                    map(
+                        lambda v: v if ord(v) in alphanumeric else " ",
+                        v["name"].strip()
+                    )
+            ).split(" ")
+
+            if len(v) > 0
+        ]
+    )
+
+    return v
+
+def generate(args, v):
+    return """package currencies
+const (
+	InvalidCurrency Currency = iota
+	""" + "\n\t".join(
+            [value["name"] for value in v]
+        ) + """
+)
+var (
+	CurrencyMapping = map[Currency]string{
+		""" + "\n\t\t".join(
+                    [
+                        "{}: \"{}\",".format(value["name"], value["symbol"])
+                        for value in v
+                    ]
+                ) + """
+	}
+)
+"""
+
+def fiat_currencies():
+    volume = {"volume": infinity}
+
+    return [
+        {"name": "China Yan",            "symbol": "CNY", **volume},
+        {"name": "Japanese Yen",         "symbol": "JPY", **volume},
+        {"name": "Russian Ruble",        "symbol": "RUB", **volume},
+        {"name": "United States Dollar", "symbol": "USD", **volume},
+        {"name": "Euro",                 "symbol": "EUR", **volume},
+        {"name": "Canadian Dollar",      "symbol": "CAD", **volume}
+    ]
+
+def main(args):
+    stdout.write(
+        generate(
+            args,
+            sorted(
+                list(load(args, stdin)),
+                key=lambda v: v["name"]
+            )
+        ) + "\n"
+    )
+
+if __name__ == "__main__":
+    p = ArgumentParser()
+
+    p.add_argument(
+        "--min-volume",
+        help="Minimal volume in USD to be listed",
+        default=5000
+    )
+    p.add_argument(
+        "--verbose",
+        help="Be more verbose",
+        action="store_true"
+    )
+
+    main(
+        p.parse_args().__dict__
+    )
