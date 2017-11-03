@@ -89,9 +89,9 @@ def fiat_currencies():
 
 
 def format_name(s):
-    alphanumeric = list(range(ord("a"), ord("z"))) + \
-                   list(range(ord("A"), ord("Z"))) + \
-                   list(range(ord("0"), ord("9")))
+    alphanumeric = list(range(ord("a"), ord("z")+1)) + \
+                   list(range(ord("A"), ord("Z")+1)) + \
+                   list(range(ord("0"), ord("9")+1))
 
     return "".join(
         [
