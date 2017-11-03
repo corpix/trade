@@ -71,7 +71,7 @@ def crypto_currencies():
             continue
         yield match(
             (
-                ".*?<td.*?>.*?<img.*?alt=\"(.*?)\".*?</td>.*?"
+                ".*?<td.*?>.*?<a.*?href=\"/currencies/(.*?)\".*?</td>.*?"
                 ".*?<td.*?>(.*?)</td>.*?"
             ),
             columns[1] + columns[2]
