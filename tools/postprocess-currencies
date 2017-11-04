@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+from json import loads as json_unmarshal, dumps as json_marshal
+from argparse import ArgumentParser
+from sys import stdin, stdout, stderr
+from math import inf as infinity
+
+def load(args, stream):
+    for line in stream:
+        if not line.strip():
+            continue
+
+        v = json_unmarshal(line.strip())
+
+        if v["volume"] < args["min_volume"]:
+            if args["verbose"]:
+                stderr.write(
+                    "Skipping '{}' - '{}' because it have low volume '{} < {}'\n".format(
+                        v["symbol"],
+                        v["name"],
+                        v["volume"],
+                        args["min_volume"]
+                    )
+                )
+            continue
+
+        if not v["name"].strip():
+            continue
+
+        yield format(v)
+
+def format(v):
+    v["name"] = v["name"].strip()
+
+    del v["volume"]
+
+    return v
+
+def generate(args, v):
+    return json_marshal(v)
+
+def main(args):
+    stdout.write(
+        generate(
+            args,
+            sorted(
+                list(load(args, stdin)),
+                key=lambda v: v["name"]
+            )
+        ) + "\n"
+    )
+
+if __name__ == "__main__":
+    p = ArgumentParser()
+
+    p.add_argument(
+        "--min-volume",
+        help="Minimal volume in USD to be listed",
+        default=5000
+    )
+    p.add_argument(
+        "--verbose",
+        help="Be more verbose",
+        action="store_true"
+    )
+
+    main(
+        p.parse_args().__dict__
+    )

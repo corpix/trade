@@ -1,7 +1,7 @@
 tools := ./tools
 
-.PHONY: currencies/currencies.go
-currencies/currencies.go:
+.PHONY: currencies/currencies.json
+currencies/currencies.json:
 	# FIXME: Fiat currencies are also here, but they should be delivered from some resource
 	{                                                                                    \
 		set -e;                                                                      \
@@ -12,19 +12,15 @@ currencies/currencies.go:
 		echo '{"name": "Euro",                 "symbol": "EUR", "volume": 9999999}'; \
 		echo '{"name": "Canadian Dollar",      "symbol": "CAD", "volume": 9999999}'; \
 		go run $(tools)/coinmarketcap/coinmarketcap.go all;                          \
-	} | $(tools)/generate-currencies --package-name=currencies all > $@
-	go fmt $@
+	} | $(tools)/postprocess-currencies > $@
 
-.PHONY: markets/market/bitfinex/currency_mapping.go
-markets/market/bitfinex/currency_mapping.go:
+.PHONY: markets/market/bitfinex/currencies.json
+markets/market/bitfinex/currencies.json:
 	go run $(tools)/coinmarketcap/coinmarketcap.go  \
 		exchanges --exchange=bitfinex           \
-		| $(tools)/generate-currencies          \
-			--package-name=bitfinex         \
-			exchange                        \
+		| $(tools)/postprocess-currencies       \
 		> $@
-	go fmt $@
 
 .PHONY: generate
-generate:: currencies/currencies.go
-generate:: markets/market/bitfinex/currency_mapping.go
+generate:: currencies/currencies.json
+generate:: markets/market/bitfinex/currencies.json

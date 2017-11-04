@@ -85,6 +85,16 @@ func write(buf []byte) error {
 	return nil
 }
 
+func parseName(path string) string {
+	return strings.TrimSpace(
+		strings.SplitN(
+			path,
+			"/",
+			4,
+		)[2],
+	)
+}
+
 func parseVolume(volume string) (float64, error) {
 	if volume == "" || volume == noVolume {
 		volume = "0"
@@ -126,9 +136,10 @@ func AllAction(ctx *cli.Context) error {
 			func(_ int, s *goquery.Selection) bool {
 				// Nothing to skip here, tbody does not contain header.
 				var (
-					name      = s.Find(".currency-name > .currency-name-container").Text()
+					path, _   = s.Find(".currency-name > .currency-name-container").Attr("href")
 					symbol    = s.Find(".currency-name > .currency-symbol").Text()
 					volume, _ = s.Find("td > .volume").Attr("data-usd")
+					name      = parseName(path)
 
 					c = Currency{
 						Name:   strings.TrimSpace(name),
@@ -190,13 +201,14 @@ func ExchangesAction(ctx *cli.Context) error {
 				}
 
 				var (
-					name   = s.Find("td > a.market-name").Text()
-					symbol = strings.SplitN(
+					path, _ = s.Find("td > a.market-name").Attr("href")
+					symbol  = strings.SplitN(
 						s.Find("td:nth-child(3)").Text(),
 						"/",
 						2,
 					)[0]
 					volume, _ = s.Find("td > .volume").Attr("data-usd")
+					name      = parseName(path)
 
 					c = &Currency{
 						Name:   strings.TrimSpace(name),
