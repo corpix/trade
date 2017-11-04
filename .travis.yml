@@ -5,4 +5,6 @@ go:
   - 1.9
   - master
 
-script: make test
+script:
+  - make test
+  - make generate
