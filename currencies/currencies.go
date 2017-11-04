@@ -31,7 +31,6 @@ const (
 	Atmchain
 	Audiocoin
 	Augur
-	Aureus
 	Auroracoin
 	Authorship
 	Aventus
@@ -176,7 +175,6 @@ const (
 	Elastic
 	Electroneum
 	Elixir
-	Ellaism
 	Emercoin
 	Energycoin
 	Enigma
@@ -193,9 +191,9 @@ const (
 	EthereumLite
 	Etheroll
 	Etherparty
-	Ethgas
 	Euro
 	Europecoin
+	Eusd
 	Everex
 	Evergreencoin
 	Everus
@@ -304,7 +302,6 @@ const (
 	Mercury
 	Metal
 	MetaverseEtp
-	Mincoin
 	MinersRewar
 	Minexcoin
 	Mintcoin
@@ -420,7 +417,6 @@ const (
 	Senderon
 	Sequence
 	Sexcoin
-	ShieldCoin
 	Shift
 	Siacoin
 	Sibcoin
@@ -558,7 +554,6 @@ var (
 		Atmchain:           "ATM",
 		Audiocoin:          "ADC",
 		Augur:              "REP",
-		Aureus:             "AURS",
 		Auroracoin:         "AUR",
 		Authorship:         "ATS",
 		Aventus:            "AVT",
@@ -703,7 +698,6 @@ var (
 		Elastic:            "XEL",
 		Electroneum:        "ETN",
 		Elixir:             "ELIX",
-		Ellaism:            "ELLA",
 		Emercoin:           "EMC",
 		Energycoin:         "ENRG",
 		Enigma:             "ENG",
@@ -720,9 +714,9 @@ var (
 		EthereumLite:       "ELITE",
 		Etheroll:           "DICE",
 		Etherparty:         "FUEL",
-		Ethgas:             "EGAS",
 		Euro:               "EUR",
 		Europecoin:         "ERC",
+		Eusd:               "EUSD",
 		Everex:             "EVX",
 		Evergreencoin:      "EGC",
 		Everus:             "EVR",
@@ -831,7 +825,6 @@ var (
 		Mercury:            "MER",
 		Metal:              "MTL",
 		MetaverseEtp:       "ETP",
-		Mincoin:            "MNC",
 		MinersRewar:        "MRT",
 		Minexcoin:          "MNX",
 		Mintcoin:           "MINT",
@@ -947,7 +940,6 @@ var (
 		Senderon:           "SDRN",
 		Sequence:           "SEQ",
 		Sexcoin:            "SXC",
-		ShieldCoin:         "XSH",
 		Shift:              "SHIFT",
 		Siacoin:            "SC",
 		Sibcoin:            "SIB",

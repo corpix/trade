@@ -50,24 +50,70 @@ def format(v):
     return v
 
 def generate(args, v):
-    return """package currencies
-const (
-	InvalidCurrency Currency = iota
-	""" + "\n\t".join(
-            [value["name"] for value in v]
-        ) + """
-)
-var (
-	CurrencyMapping = map[Currency]string{
-		""" + "\n\t\t".join(
-                    [
-                        "{}: \"{}\",".format(value["name"], value["symbol"])
-                        for value in v
-                    ]
-                ) + """
-	}
-)
-"""
+
+    currency_type = ""
+    constants     = ""
+    imports       = ""
+    mappings      = ""
+
+    if args["type"] == "all":
+        currency_type = "Currency"
+        constants = """
+            const (
+	        InvalidCurrency Currency = iota
+	        {}
+            )
+        """.format(
+            "\n".join(
+                [value["name"] for value in v]
+            )
+        )
+        mappings = "\n".join(
+            [
+                "{}: \"{}\",".format(
+                    value["name"],
+                    value["symbol"]
+                )
+                for value in v
+            ]
+        )
+    elif args["type"] == "exchange":
+        currency_type = "currencies.Currency"
+        imports  = """
+            import (
+                "github.com/cryptounicorns/trade/currencies"
+            )
+        """
+        mappings = "\n".join(
+            [
+                "currencies.{}: \"{}\",".format(
+                    value["name"],
+                    value["symbol"]
+                )
+                for value in v
+            ]
+        )
+    else:
+        raise RuntimeError(
+            "Unknown type '{type}'".format(**args)
+        )
+
+    return """package {package_name}
+        {imports}
+        {constants}
+
+        var (
+            CurrencyMapping = map[{currency_type}]string{{
+                {mappings}
+            }}
+        )
+    """.format(
+        currency_type = currency_type,
+        constants     = constants,
+        imports       = imports,
+        mappings      = mappings,
+        **args
+    )
 
 def main(args):
     stdout.write(
@@ -83,6 +129,15 @@ def main(args):
 if __name__ == "__main__":
     p = ArgumentParser()
 
+    p.add_argument(
+        "type",
+        help="Data type, either 'all' or 'exchange'"
+    )
+    p.add_argument(
+        "--package-name",
+        help="Package name to use while generating code",
+        required=True
+    )
     p.add_argument(
         "--min-volume",
         help="Minimal volume in USD to be listed",

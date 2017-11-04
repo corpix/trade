@@ -1,0 +1,5 @@
+package bitfinex
+
+var (
+	CurrencyPairDelimiter = ""
+)
