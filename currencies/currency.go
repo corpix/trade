@@ -1,7 +1,6 @@
 package currencies
 
-type Currency int
-
-func (c Currency) String() string {
-	return CurrencyMapping[c]
+type Currency struct {
+	Name   string `json:"name"`
+	Symbol Symbol `json:"symbol"`
 }

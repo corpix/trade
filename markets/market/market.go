@@ -5,8 +5,7 @@ import (
 )
 
 type Market interface {
-	ID() string
-
+	Name() string
 	Connect() (io.ReadWriteCloser, error)
 	NewTickerConsumer(io.ReadWriter) TickerConsumer
 }

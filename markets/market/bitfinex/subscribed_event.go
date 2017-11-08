@@ -10,5 +10,5 @@ type SubscribedEvent struct {
 	Channel string `json:"channel"`
 	ChanID  uint   `json:"chanId"`
 	Symbol  string `json:"symbol"`
-	Pair    string `json:"pair"` // FIXME: Use CurrencyPair
+	Pair    string `json:"pair"`
 }

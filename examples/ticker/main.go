@@ -3,54 +3,102 @@ package main
 import (
 	"io"
 
+	"github.com/corpix/loggers/logger/logrus"
 	"github.com/davecgh/go-spew/spew"
+	logrusLogger "github.com/sirupsen/logrus"
 
+	"github.com/cryptounicorns/trade/assets"
 	"github.com/cryptounicorns/trade/currencies"
 	"github.com/cryptounicorns/trade/markets/market"
 	"github.com/cryptounicorns/trade/markets/market/bitfinex"
 	// XXX: Import any other market
 )
 
+func configuredLogrus() *logrusLogger.Logger {
+	var (
+		l = logrusLogger.New()
+	)
+
+	l.Level = logrusLogger.DebugLevel
+
+	return l
+}
+
 func main() {
 	var (
 		connection io.ReadWriteCloser
 		consumer   market.TickerConsumer
 		tickers    <-chan *market.Ticker
-		err        error
+
+		loader           = currencies.NewAssetLoader(assets.Asset)
+		commonCurrencies currencies.Currencies
+		marketCurrencies currencies.Currencies
+		mapper           currencies.Mapper
+		market           market.Market
+
+		bitcoin currencies.Currency
+		dollar  currencies.Currency
+
+		log = logrus.New(configuredLogrus())
+
+		err error
 	)
 
-	for _, v := range []market.Market{
-		bitfinex.Default,
-		// XXX: Append here any other market implementation
-	} {
-		connection, err = v.Connect()
-		if err != nil {
-			panic(err)
-		}
-		defer connection.Close()
+	commonCurrencies, err = loader.Common()
+	if err != nil {
+		panic(err)
+	}
+	marketCurrencies, err = loader.Market(bitfinex.Name)
+	if err != nil {
+		panic(err)
+	}
 
-		consumer = v.NewTickerConsumer(connection)
-		defer consumer.Close()
+	mapper = currencies.NewMapper(
+		commonCurrencies,
+		marketCurrencies,
+	)
 
-		tickers = consumer.Consume(
-			[]currencies.CurrencyPair{
-				currencies.NewCurrencyPair(
-					currencies.Bitcoin,
-					currencies.UnitedStatesDollar,
-				),
-				// XXX: Append here any other currency pair you want to
-				// get ticker for
-			},
+	market = bitfinex.New(
+		bitfinex.DefaultConfig,
+		mapper,
+		log,
+	)
+
+	bitcoin, err = mapper.CommonByName("bitcoin")
+	if err != nil {
+		panic(err)
+	}
+
+	dollar, err = mapper.CommonByName("united-states-dollar")
+	if err != nil {
+		panic(err)
+	}
+
+	connection, err = market.Connect()
+	if err != nil {
+		panic(err)
+	}
+	defer connection.Close()
+
+	consumer = market.NewTickerConsumer(connection)
+	defer consumer.Close()
+
+	tickers = consumer.Consume(
+		[]currencies.CurrencyPair{
+			currencies.NewCurrencyPair(
+				bitcoin,
+				dollar,
+			),
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	for ticker := range tickers {
+		spew.Dump(
+			market.Name(),
+			ticker,
 		)
-		if err != nil {
-			panic(err)
-		}
-
-		for ticker := range tickers {
-			spew.Dump(
-				v.ID(),
-				ticker,
-			)
-		}
 	}
 }

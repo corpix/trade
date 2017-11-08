@@ -1,10 +1,10 @@
 language: go
 
 go:
-  - 1.8
   - 1.9
   - master
 
 script:
-  - make test
+  # Let it fail we generators fed us some shit
   - make generate
+  - make test

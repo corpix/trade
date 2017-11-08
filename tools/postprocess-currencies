@@ -9,31 +9,69 @@ def load(args, stream):
         if not line.strip():
             continue
 
-        v = json_unmarshal(line.strip())
+        yield format(json_unmarshal(line.strip()))
 
-        if v["volume"] < args["min_volume"]:
+def filter(args, v):
+    if v["volume"] < args["min_volume"]:
+        if args["verbose"]:
+            stderr.write(
+                "Skipping '{}' because it have low volume '{} < {}'\n".format(
+                    str(v),
+                    v["volume"],
+                    args["min_volume"]
+                )
+            )
+        return True
+
+    if not v["name"].strip():
+        return True
+
+    return False
+
+def uniq(args, l):
+    seen = {}
+    res = []
+
+    for v in l:
+        if v["name"] in seen:
             if args["verbose"]:
                 stderr.write(
-                    "Skipping '{}' - '{}' because it have low volume '{} < {}'\n".format(
-                        v["symbol"],
-                        v["name"],
-                        v["volume"],
-                        args["min_volume"]
+                    "Skipping '{}' because currency '{}' is already in a list\n".format(
+                        str(v),
+                        str(seen[v["name"]])
                     )
                 )
             continue
 
-        if not v["name"].strip():
-            continue
+        res.append(v)
+        seen[v["name"]] = v
 
-        yield format(v)
+    return res
 
 def format(v):
-    v["name"] = v["name"].strip()
-
-    del v["volume"]
+    v["name"]   = v["name"].strip()
+    v["symbol"] = v["symbol"].upper()
 
     return v
+
+def sort(l):
+    return sorted(
+        l,
+        key=lambda v: v["name"]
+    )
+
+def clean(args, l):
+    res = []
+
+    for v in l:
+      res.append(
+          {
+              "name": v["name"],
+              "symbol": v["symbol"],
+          }
+      )
+
+    return res
 
 def generate(args, v):
     return json_marshal(v)
@@ -42,9 +80,18 @@ def main(args):
     stdout.write(
         generate(
             args,
-            sorted(
-                list(load(args, stdin)),
-                key=lambda v: v["name"]
+            clean(
+                args,
+                uniq(
+                    args,
+                    sort(
+                        [
+                            v
+                        for v in load(args, stdin)
+                        if not filter(args, v)
+                        ],
+                    )
+                )
             )
         ) + "\n"
     )

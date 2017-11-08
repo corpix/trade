@@ -2,9 +2,9 @@ package bitfinex
 
 import (
 	"github.com/corpix/loggers"
-	"github.com/corpix/loggers/logger/logrus"
 	"github.com/corpix/loggers/logger/prefixwrapper"
-	logrusLogger "github.com/sirupsen/logrus"
+
+	"github.com/cryptounicorns/trade/currencies"
 )
 
 const (
@@ -12,24 +12,23 @@ const (
 	Version = 2
 )
 
-var (
-	Default       = New(DefaultConfig, DefaultLogger)
-	DefaultLogger = logrus.New(logrusLogger.New())
-)
-
 type Bitfinex struct {
-	config Config
-	log    loggers.Logger
+	config     Config
+	currencies currencies.Mapper
+	log        loggers.Logger
 }
 
-func (m *Bitfinex) ID() string { return Name }
+func (m *Bitfinex) Name() string {
+	return Name
+}
 
-func New(cf Config, l loggers.Logger) *Bitfinex {
+func New(config Config, mapper currencies.Mapper, log loggers.Logger) *Bitfinex {
 	return &Bitfinex{
-		config: cf,
+		config:     config,
+		currencies: mapper,
 		log: prefixwrapper.New(
 			Name+": ",
-			l,
+			log,
 		),
 	}
 }

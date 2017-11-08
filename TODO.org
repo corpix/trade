@@ -252,10 +252,12 @@
 
 ** DONE Blueprint the websocket interface
    CLOSED: [2017-09-12 Tue 01:09]
-** TODO Implement websockets for bitfinex
+** DONE Implement websockets for bitfinex
+   CLOSED: [2017-11-04 Sat 15:00]
 ** TODO Scale websocket interface to all supported markets
 ** TODO Support first 10 markets with highest volume from coinmarketcap list
-** TODO Fix bitfinex rate limiting
+** DONE Fix bitfinex rate limiting
+   CLOSED: [2017-11-04 Sat 15:00]
    Probably this will require switching tickers to websocket API
    or authenticated API.
    In the light of this issue I think tickers and other things(that act like stream of data)

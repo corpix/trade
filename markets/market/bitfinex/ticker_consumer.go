@@ -22,14 +22,15 @@ const (
 type TickerConsumer struct {
 	*consumer.Consumer
 
-	connection            io.ReadWriter
-	channelToCurrencyPair currencyPairByChannel
-	tickers               chan *market.Ticker
-	done                  chan struct{}
-	log                   loggers.Logger
+	connection          io.ReadWriter
+	currencies          currencies.Mapper
+	channelToSymbolPair symbolPairByChannel
+	tickers             chan *market.Ticker
+	done                chan struct{}
+	log                 loggers.Logger
 }
 
-func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, iterator *Iterator) (uint, error) {
+func (c *TickerConsumer) subscribe(pair SymbolPair, iterator *Iterator) (uint, error) {
 	var (
 		event = Event{
 			Event: SubscribeEventName,
@@ -106,7 +107,7 @@ func (c *TickerConsumer) subscribe(pair currencies.CurrencyPair, iterator *Itera
 	}
 }
 
-func (c *TickerConsumer) preamble(pairs []currencies.CurrencyPair, iterator *Iterator) error {
+func (c *TickerConsumer) preamble(pairs []SymbolPair, iterator *Iterator) error {
 	var (
 		handshaker = NewHandshaker(iterator, c.log)
 
@@ -126,11 +127,14 @@ func (c *TickerConsumer) preamble(pairs []currencies.CurrencyPair, iterator *Ite
 			return err
 		}
 
-		c.channelToCurrencyPair[channelID] = pair
+		c.channelToSymbolPair[channelID] = pair
 		c.log.Debug("Subscribed ", channelID, pair)
 	}
 
-	c.log.Debug("Preamble complete")
+	c.log.Debugf(
+		"Preamble complete, channels subscribed: %#v",
+		c.channelToSymbolPair,
+	)
 
 	return nil
 }
@@ -148,7 +152,7 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 		ticker    = Ticker{}
 		channelID int
 
-		pair currencies.CurrencyPair
+		pair SymbolPair
 		err  error
 	)
 
@@ -202,7 +206,7 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 		return nil, err
 	}
 
-	pair, err = c.channelToCurrencyPair.Get(
+	pair, err = c.channelToSymbolPair.Get(
 		uint(channelID),
 	)
 	if err != nil {
@@ -210,8 +214,8 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 	}
 
 	return &pairTicker{
-		CurrencyPair: pair,
-		Ticker:       ticker,
+		SymbolPair: pair,
+		Ticker:     ticker,
 	}, nil
 }
 
@@ -234,19 +238,19 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
 	// 	]
 	// ]
 	return &market.Ticker{
-		High:         pt.Ticker[8],
-		Low:          pt.Ticker[9],
-		Vol:          pt.Ticker[7],
-		Last:         pt.Ticker[6],
-		Buy:          pt.Ticker[2],
-		Sell:         pt.Ticker[0],
-		Timestamp:    uint64(time.Now().UTC().UnixNano()),
-		CurrencyPair: pt.CurrencyPair,
-		Market:       Name,
+		High:      pt.Ticker[8],
+		Low:       pt.Ticker[9],
+		Vol:       pt.Ticker[7],
+		Last:      pt.Ticker[6],
+		Buy:       pt.Ticker[2],
+		Sell:      pt.Ticker[0],
+		Timestamp: uint64(time.Now().UTC().UnixNano()),
+		// FIXME CurrencyPair: pt.SymbolPair,
+		Market: Name,
 	}
 }
 
-func (c *TickerConsumer) worker(pairs []currencies.CurrencyPair) {
+func (c *TickerConsumer) worker(pairs []SymbolPair) {
 	var (
 		stream   = c.Consumer.Consume()
 		iterator = NewIterator(stream, c.log)
@@ -284,7 +288,18 @@ workerLoop:
 }
 
 func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
-	go c.worker(pairs)
+	var (
+		symbolPairs []SymbolPair
+		err         error
+	)
+
+	symbolPairs, err = CurrencyPairsToSymbolPairs(c.currencies, pairs)
+	if err != nil {
+		// FIXME: Thats shit, need fix
+		panic(err)
+	}
+
+	go c.worker(symbolPairs)
 
 	return c.tickers
 }
@@ -293,7 +308,7 @@ func (c *TickerConsumer) Close() error {
 	close(c.done)
 	// XXX: Not closing it, it will be GC'ed
 	// Or we could make worker a panic in case of race
-	// close(c.stream)
+	// close(c.tickers)
 	return c.Consumer.Close()
 }
 
@@ -316,14 +331,11 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 			),
 			l,
 		),
-		channelToCurrencyPair: currencyPairByChannel{},
-		connection:            c,
-		tickers:               make(chan *market.Ticker, 128),
-		done:                  make(chan struct{}),
-		log:                   l,
+		connection:          c,
+		currencies:          m.currencies,
+		channelToSymbolPair: symbolPairByChannel{},
+		tickers:             make(chan *market.Ticker, 128),
+		done:                make(chan struct{}),
+		log:                 l,
 	}
-}
-
-func NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
-	return Default.NewTickerConsumer(c)
 }

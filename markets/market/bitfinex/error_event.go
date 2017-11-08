@@ -11,5 +11,5 @@ type ErrorEvent struct {
 	Symbol  string `json:"symbol"`
 	Msg     string `json:"msg"`
 	Code    uint   `json:"code"`
-	Pair    string `json:"pair"` // FIXME: Use CurrencyPair
+	Pair    string `json:"pair"`
 }

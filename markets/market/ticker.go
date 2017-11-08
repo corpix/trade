@@ -19,7 +19,7 @@ type Ticker struct {
 
 func NewTicker(market Market, pair currencies.CurrencyPair) *Ticker {
 	return &Ticker{
-		Market:       market.ID(),
+		Market:       market.Name(),
 		CurrencyPair: pair,
 	}
 }
