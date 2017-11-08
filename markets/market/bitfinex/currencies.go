@@ -45,3 +45,39 @@ func CurrencyPairsToSymbolPairs(mapper currencies.Mapper, pairs []currencies.Cur
 
 	return symbolPairs, nil
 }
+
+func SymbolPairToCurrencyPair(mapper currencies.Mapper, symbolPair SymbolPair) (currencies.CurrencyPair, error) {
+	var (
+		marketLeft  currencies.Currency
+		marketRight currencies.Currency
+		commonLeft  currencies.Currency
+		commonRight currencies.Currency
+		pair        currencies.CurrencyPair
+		err         error
+	)
+
+	marketLeft, err = mapper.MarketBySymbol(symbolPair[0:3])
+	if err != nil {
+		return pair, err
+	}
+	marketRight, err = mapper.MarketBySymbol(symbolPair[3:])
+	if err != nil {
+		return pair, err
+	}
+
+	commonLeft, err = mapper.ToCommon(marketLeft)
+	if err != nil {
+		return pair, err
+	}
+	commonRight, err = mapper.ToCommon(marketRight)
+	if err != nil {
+		return pair, err
+	}
+
+	pair = currencies.NewCurrencyPair(
+		commonLeft,
+		commonRight,
+	)
+
+	return pair, nil
+}

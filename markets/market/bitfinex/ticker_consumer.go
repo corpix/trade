@@ -220,6 +220,20 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 }
 
 func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
+	var (
+		pair currencies.CurrencyPair
+		err  error
+	)
+
+	// FIXME: it should return an error instead of panicing!
+	pair, err = SymbolPairToCurrencyPair(
+		c.currencies,
+		pt.SymbolPair,
+	)
+	if err != nil {
+		panic(err)
+	}
+
 	// see: https://docs.bitfinex.com/v2/reference#ws-public-ticker
 	// (snapshot)
 	// [
@@ -238,15 +252,15 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
 	// 	]
 	// ]
 	return &market.Ticker{
-		High:      pt.Ticker[8],
-		Low:       pt.Ticker[9],
-		Vol:       pt.Ticker[7],
-		Last:      pt.Ticker[6],
-		Buy:       pt.Ticker[2],
-		Sell:      pt.Ticker[0],
-		Timestamp: uint64(time.Now().UTC().UnixNano()),
-		// FIXME CurrencyPair: pt.SymbolPair,
-		Market: Name,
+		High:         pt.Ticker[8],
+		Low:          pt.Ticker[9],
+		Vol:          pt.Ticker[7],
+		Last:         pt.Ticker[6],
+		Buy:          pt.Ticker[2],
+		Sell:         pt.Ticker[0],
+		Timestamp:    uint64(time.Now().UTC().UnixNano()),
+		CurrencyPair: pair,
+		Market:       Name,
 	}
 }
 
