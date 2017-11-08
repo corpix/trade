@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// FIXME: Bad for precision, thing about Big*
 type Float64String float64
 
 func (j *Float64String) MarshalJSON() ([]byte, error) {

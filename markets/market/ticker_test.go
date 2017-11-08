@@ -21,9 +21,7 @@ func TestTickerJSON(t *testing.T) {
 			`{` +
 				`"high":0,` +
 				`"low":0,` +
-				`"avg":0,` +
 				`"vol":0,` +
-				`"volCur":0,` +
 				`"last":0,` +
 				`"buy":0,` +
 				`"sell":0,` +
