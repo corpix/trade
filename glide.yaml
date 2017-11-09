@@ -1,14 +1,23 @@
 package: github.com/cryptounicorns/trade
 import:
+- package: github.com/PuerkitoBio/goquery
+- package: github.com/corpix/formats
+- package: github.com/corpix/loggers
+  subpackages:
+  - logger/logrus
+  - logger/prefixwrapper
+- package: github.com/cryptounicorns/websocket
+  subpackages:
+  - consumer
 - package: github.com/davecgh/go-spew
-  version: v1.1.0
   subpackages:
   - spew
 - package: github.com/gobwas/ws
   subpackages:
   - wsutil
+- package: github.com/sirupsen/logrus
+- package: github.com/urfave/cli
 testImport:
 - package: github.com/stretchr/testify
-  version: v1.1.4
   subpackages:
   - assert

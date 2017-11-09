@@ -1,13 +1,58 @@
-hash: 6714860f800440aadd2ba697087cc8e050defbe2223b9c2ed77cdfb183bf51bc
-updated: 2017-08-15T20:52:04.425053719Z
+hash: f5e46af94f9c7f40a98c54e4c9a769f90b298ab58c2280ee668be0c508165a5c
+updated: 2017-11-09T22:42:52.861926424Z
 imports:
+- name: github.com/andybalholm/cascadia
+  version: 349dd0209470eabd9514242c688c403c0926d266
+- name: github.com/corpix/formats
+  version: bc69a9b0a6d6f0ae857aca85288b8fceb986efc0
+- name: github.com/corpix/loggers
+  version: f9482b50a1fbacb085cb1351dec51dbf0b1b05f0
+  subpackages:
+  - logger/logrus
+  - logger/prefixwrapper
+- name: github.com/cryptounicorns/websocket
+  version: 2a9b7a82a05f11da28c71a5ffa3c6fc8e557d372
+  subpackages:
+  - consumer
 - name: github.com/davecgh/go-spew
   version: 346938d642f2ec3594ed81d874461961cd0faa76
   subpackages:
   - spew
+- name: github.com/gobwas/httphead
+  version: 01c9b01b368a438f615030bbbd5e4f9e0023e15c
+- name: github.com/gobwas/pool
+  version: 32dbaa12caca20fad12253c30591227e04f62cdd
+  subpackages:
+  - pbufio
+  - pbytes
+- name: github.com/gobwas/ws
+  version: 74f819e26000474d95bf0794a67d56642a0ec30a
+  subpackages:
+  - wsutil
+- name: github.com/naoina/go-stringutil
+  version: 6b638e95a32d0c1131db0e7fe83775cbea4a0d0b
+- name: github.com/naoina/toml
+  version: 9fafd69674167c06933b1787ae235618431ce87f
+  subpackages:
+  - ast
+- name: github.com/PuerkitoBio/goquery
+  version: 1a71cc719d0d5b9e4f14ae072bef08b576b0bab5
+- name: github.com/sirupsen/logrus
+  version: 7f976d3a76720c4c27af2ba716b85d2e0a7e38b1
+- name: github.com/urfave/cli
+  version: 44cb242eeb4d76cc813fdc69ba5c4b224677e799
+- name: golang.org/x/net
+  version: a337091b0525af65de94df2eb7e98bd9962dcbe2
+  subpackages:
+  - html
+  - html/atom
+- name: golang.org/x/sys
+  version: 4b45465282a4624cf39876842a017334f13b8aff
+  subpackages:
+  - unix
+- name: gopkg.in/yaml.v2
+  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
 testImports:
-- name: github.com/corpix/formats
-  version: db532770e3ecf9dfe31ce2f7bf30c1c26f67e417
 - name: github.com/pmezard/go-difflib
   version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
   subpackages:
@@ -16,9 +61,3 @@ testImports:
   version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
   subpackages:
   - assert
-- name: gopkg.in/yaml.v2
-  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
-- name: github.com/gobwas/ws
-  version: 68d2472c0bfbbd6f11ba77bf2c122fbf035c246b
-  subpackages:
-  - wsutil
