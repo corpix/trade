@@ -1,13 +1,5 @@
 package currencies
 
-import (
-	"github.com/corpix/formats"
-)
-
-var (
-	json, _ = formats.New(formats.JSON)
-)
-
 type Currencies []Currency
 
 func (cs Currencies) MapByName() map[string]Currency {
@@ -46,7 +38,7 @@ func NewFromJSON(buf []byte) (Currencies, error) {
 		err error
 	)
 
-	err = json.Unmarshal(buf, &res)
+	err = jsonFormat.Unmarshal(buf, &res)
 
 	return res, err
 }
