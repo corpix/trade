@@ -15,7 +15,6 @@ var (
 func (m *Bitfinex) Connect() (io.ReadWriteCloser, error) {
 	var (
 		r   io.ReadWriteCloser
-		res ws.Response
 		err error
 	)
 
@@ -25,15 +24,13 @@ func (m *Bitfinex) Connect() (io.ReadWriteCloser, error) {
 	)
 	defer cancelCtx()
 
-	r, res, err = ws.DefaultDialer.Dial(
+	r, _, _, err = ws.DefaultDialer.Dial(
 		ctx,
 		m.config.Endpoint.URL.String(),
-		m.config.Endpoint.Headers,
 	)
 	if err != nil {
 		return nil, err
 	}
-	res.Body.Close()
 
 	return r, nil
 }
