@@ -12,7 +12,7 @@ import (
 	"github.com/gobwas/ws/wsutil"
 
 	"github.com/cryptounicorns/trade/currencies"
-	"github.com/cryptounicorns/trade/markets/market"
+	"github.com/cryptounicorns/trade/markets/ticker"
 )
 
 const (
@@ -25,7 +25,7 @@ type TickerConsumer struct {
 	connection          io.ReadWriter
 	currencies          currencies.Mapper
 	channelToSymbolPair symbolPairByChannel
-	tickers             chan *market.Ticker
+	tickers             chan *ticker.Ticker
 	done                chan struct{}
 	log                 loggers.Logger
 }
@@ -219,7 +219,7 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 	}, nil
 }
 
-func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
+func (c *TickerConsumer) convertTicker(pt *pairTicker) *ticker.Ticker {
 	var (
 		pair currencies.CurrencyPair
 		err  error
@@ -251,7 +251,7 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) *market.Ticker {
 	// 	9	LOW
 	// 	]
 	// ]
-	return &market.Ticker{
+	return &ticker.Ticker{
 		High:         pt.Ticker[8],
 		Low:          pt.Ticker[9],
 		Vol:          pt.Ticker[7],
@@ -301,7 +301,7 @@ workerLoop:
 	}
 }
 
-func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *market.Ticker {
+func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *ticker.Ticker {
 	var (
 		symbolPairs []SymbolPair
 		err         error
@@ -329,7 +329,7 @@ func (c *TickerConsumer) Close() error {
 // FIXME: This is shit, consumer should receive reader by semantic,
 // but it can't ATM because consumer subscribes to channels only
 // when Consume(...) is called.
-func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
+func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) ticker.Consumer {
 	var (
 		l = prefixwrapper.New(
 			"TickerConsumer: ",
@@ -348,7 +348,7 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) market.TickerConsumer {
 		connection:          c,
 		currencies:          m.currencies,
 		channelToSymbolPair: symbolPairByChannel{},
-		tickers:             make(chan *market.Ticker, 128),
+		tickers:             make(chan *ticker.Ticker, 128),
 		done:                make(chan struct{}),
 		log:                 l,
 	}

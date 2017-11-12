@@ -1,4 +1,4 @@
-package market
+package ticker
 
 import (
 	"github.com/cryptounicorns/trade/currencies"
@@ -15,11 +15,4 @@ type Ticker struct {
 	Timestamp    uint64                  `json:"timestamp"`
 	CurrencyPair currencies.CurrencyPair `json:"currencyPair"`
 	Market       string                  `json:"market"`
-}
-
-func NewTicker(market Market, pair currencies.CurrencyPair) *Ticker {
-	return &Ticker{
-		Market:       market.Name(),
-		CurrencyPair: pair,
-	}
 }

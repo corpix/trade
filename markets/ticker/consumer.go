@@ -1,10 +1,10 @@
-package market
+package ticker
 
 import (
 	"github.com/cryptounicorns/trade/currencies"
 )
 
-type TickerConsumer interface {
+type Consumer interface {
 	Consume([]currencies.CurrencyPair) <-chan *Ticker
 	Close() error
 }

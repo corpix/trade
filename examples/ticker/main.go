@@ -9,8 +9,9 @@ import (
 
 	"github.com/cryptounicorns/trade/assets"
 	"github.com/cryptounicorns/trade/currencies"
-	"github.com/cryptounicorns/trade/markets/market"
+	"github.com/cryptounicorns/trade/markets"
 	"github.com/cryptounicorns/trade/markets/market/bitfinex"
+	"github.com/cryptounicorns/trade/markets/ticker"
 	// XXX: Import any other market
 )
 
@@ -27,14 +28,14 @@ func configuredLogrus() *logrusLogger.Logger {
 func main() {
 	var (
 		connection io.ReadWriteCloser
-		consumer   market.TickerConsumer
-		tickers    <-chan *market.Ticker
+		consumer   ticker.Consumer
+		tickers    <-chan *ticker.Ticker
 
 		loader           = currencies.NewAssetLoader(assets.Asset)
 		commonCurrencies currencies.Currencies
 		marketCurrencies currencies.Currencies
 		mapper           currencies.Mapper
-		market           market.Market
+		market           markets.Market
 
 		bitcoin currencies.Currency
 		dollar  currencies.Currency

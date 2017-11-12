@@ -7,7 +7,6 @@ import (
 
 	"github.com/cryptounicorns/trade/assets"
 	"github.com/cryptounicorns/trade/currencies"
-	"github.com/cryptounicorns/trade/markets/market"
 	"github.com/cryptounicorns/trade/markets/market/bitfinex"
 )
 
@@ -15,7 +14,7 @@ const (
 	BitfinexMarket = bitfinex.Name
 )
 
-func New(market string, config Config, logger loggers.Logger) (market.Market, error) {
+func New(market string, config Config, logger loggers.Logger) (Market, error) {
 	var (
 		loader = currencies.NewAssetLoader(assets.Asset)
 
