@@ -29,7 +29,7 @@ func main() {
 	var (
 		connection io.ReadWriteCloser
 		consumer   ticker.Consumer
-		tickers    <-chan *ticker.Ticker
+		tickers    <-chan ticker.Result
 
 		loader           = currencies.NewAssetLoader(assets.Asset)
 		commonCurrencies currencies.Currencies
@@ -84,7 +84,7 @@ func main() {
 	consumer = market.NewTickerConsumer(connection)
 	defer consumer.Close()
 
-	tickers = consumer.Consume(
+	tickers, err = consumer.Consume(
 		[]currencies.CurrencyPair{
 			currencies.NewCurrencyPair(
 				bitcoin,
@@ -97,9 +97,10 @@ func main() {
 	}
 
 	for ticker := range tickers {
-		spew.Dump(
-			market.Name(),
-			ticker,
-		)
+		spew.Dump(ticker)
+
+		if ticker.Err != nil {
+			panic(ticker.Err)
+		}
 	}
 }

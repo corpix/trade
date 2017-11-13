@@ -5,6 +5,6 @@ import (
 )
 
 type Consumer interface {
-	Consume([]currencies.CurrencyPair) <-chan *Ticker
+	Consume([]currencies.CurrencyPair) (<-chan Result, error)
 	Close() error
 }

@@ -25,7 +25,7 @@ type TickerConsumer struct {
 	connection          io.ReadWriter
 	currencies          currencies.Mapper
 	channelToSymbolPair symbolPairByChannel
-	tickers             chan *ticker.Ticker
+	tickers             chan ticker.Result
 	done                chan struct{}
 	log                 loggers.Logger
 }
@@ -219,7 +219,7 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 	}, nil
 }
 
-func (c *TickerConsumer) convertTicker(pt *pairTicker) *ticker.Ticker {
+func (c *TickerConsumer) convertTicker(pt *pairTicker) (*ticker.Ticker, error) {
 	var (
 		pair currencies.CurrencyPair
 		err  error
@@ -231,7 +231,7 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) *ticker.Ticker {
 		pt.SymbolPair,
 	)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	// see: https://docs.bitfinex.com/v2/reference#ws-public-ticker
@@ -261,7 +261,7 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) *ticker.Ticker {
 		Timestamp:    uint64(time.Now().UTC().UnixNano()),
 		CurrencyPair: pair,
 		Market:       Name,
-	}
+	}, nil
 }
 
 func (c *TickerConsumer) worker(pairs []SymbolPair) {
@@ -269,13 +269,14 @@ func (c *TickerConsumer) worker(pairs []SymbolPair) {
 		stream   = c.Consumer.Consume()
 		iterator = NewIterator(stream, c.log)
 
+		t          *ticker.Ticker
 		pairTicker *pairTicker
 		err        error
 	)
 
 	err = c.preamble(pairs, iterator)
 	if err != nil {
-		c.log.Error(err)
+		c.tickers <- ticker.Result{Err: err}
 		return
 	}
 
@@ -291,17 +292,23 @@ workerLoop:
 				case *ErrContinue:
 					continue workerLoop
 				default:
-					c.log.Error(err)
+					c.tickers <- ticker.Result{Err: err}
 					return
 				}
 			}
 
-			c.tickers <- c.convertTicker(pairTicker)
+			t, err = c.convertTicker(pairTicker)
+			if err != nil {
+				c.tickers <- ticker.Result{Err: err}
+				return
+			}
+
+			c.tickers <- ticker.Result{Value: t}
 		}
 	}
 }
 
-func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *ticker.Ticker {
+func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) (<-chan ticker.Result, error) {
 	var (
 		symbolPairs []SymbolPair
 		err         error
@@ -309,13 +316,12 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) <-chan *ticker
 
 	symbolPairs, err = CurrencyPairsToSymbolPairs(c.currencies, pairs)
 	if err != nil {
-		// FIXME: Thats shit, need fix
-		panic(err)
+		return nil, err
 	}
 
 	go c.worker(symbolPairs)
 
-	return c.tickers
+	return c.tickers, nil
 }
 
 func (c *TickerConsumer) Close() error {
@@ -347,7 +353,7 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) ticker.Consumer {
 		connection:          c,
 		currencies:          m.currencies,
 		channelToSymbolPair: symbolPairByChannel{},
-		tickers:             make(chan *ticker.Ticker, 128),
+		tickers:             make(chan ticker.Result, 128),
 		done:                make(chan struct{}),
 		log:                 l,
 	}
