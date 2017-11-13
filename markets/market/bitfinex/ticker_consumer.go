@@ -343,7 +343,6 @@ func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) ticker.Consumer {
 				c,
 				ws.StateClientSide,
 			),
-			l,
 		),
 		connection:          c,
 		currencies:          m.currencies,

@@ -1,5 +1,5 @@
 hash: f5e46af94f9c7f40a98c54e4c9a769f90b298ab58c2280ee668be0c508165a5c
-updated: 2017-11-09T22:42:52.861926424Z
+updated: 2017-11-13T05:35:48.760513247Z
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
@@ -11,11 +11,11 @@ imports:
   - logger/logrus
   - logger/prefixwrapper
 - name: github.com/cryptounicorns/websocket
-  version: 2a9b7a82a05f11da28c71a5ffa3c6fc8e557d372
+  version: e2802ecdaf96283eaaa394745fc1cdb0a9373f91
   subpackages:
   - consumer
 - name: github.com/davecgh/go-spew
-  version: 346938d642f2ec3594ed81d874461961cd0faa76
+  version: ecdeabc65495df2dec95d7c4a4c3e021903035e5
   subpackages:
   - spew
 - name: github.com/gobwas/httphead
@@ -26,7 +26,7 @@ imports:
   - pbufio
   - pbytes
 - name: github.com/gobwas/ws
-  version: 74f819e26000474d95bf0794a67d56642a0ec30a
+  version: 915eed3240022c5265584c55032ef1b8c8f84168
   subpackages:
   - wsutil
 - name: github.com/naoina/go-stringutil
@@ -47,7 +47,7 @@ imports:
   - html
   - html/atom
 - name: golang.org/x/sys
-  version: 4b45465282a4624cf39876842a017334f13b8aff
+  version: 1e2299c37cc91a509f1b12369872d27be0ce98a6
   subpackages:
   - unix
 - name: gopkg.in/yaml.v2
@@ -58,6 +58,6 @@ testImports:
   subpackages:
   - difflib
 - name: github.com/stretchr/testify
-  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  version: 2aa2c176b9dab406a6970f6a55f513e8a8c8b18f
   subpackages:
   - assert
