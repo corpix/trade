@@ -81,7 +81,10 @@ func main() {
 	}
 	defer connection.Close()
 
-	consumer = market.NewTickerConsumer(connection)
+	consumer, err = market.NewTickerConsumer(connection)
+	if err != nil {
+		panic(err)
+	}
 	defer consumer.Close()
 
 	tickers, err = consumer.Consume(

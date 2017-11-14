@@ -9,5 +9,5 @@ import (
 type Market interface {
 	Name() string
 	Connect() (io.ReadWriteCloser, error)
-	NewTickerConsumer(io.ReadWriter) ticker.Consumer
+	NewTickerConsumer(io.ReadWriter) (ticker.Consumer, error)
 }

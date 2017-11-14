@@ -7,7 +7,8 @@ import (
 
 	"github.com/corpix/loggers"
 	"github.com/corpix/loggers/logger/prefixwrapper"
-	"github.com/cryptounicorns/websocket/consumer"
+	"github.com/cryptounicorns/queues/queue/readwriter"
+	"github.com/cryptounicorns/queues/result"
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
 
@@ -20,12 +21,13 @@ const (
 )
 
 type TickerConsumer struct {
-	*consumer.Consumer
+	*readwriter.Consumer
 
 	connection          io.ReadWriter
 	currencies          currencies.Mapper
 	channelToSymbolPair symbolPairByChannel
-	tickers             chan ticker.Result
+	bufSize             uint
+	stream              chan ticker.Result
 	done                chan struct{}
 	log                 loggers.Logger
 }
@@ -266,17 +268,25 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) (*ticker.Ticker, error) {
 
 func (c *TickerConsumer) worker(pairs []SymbolPair) {
 	var (
-		stream   = c.Consumer.Consume()
-		iterator = NewIterator(stream, c.log)
+		stream   <-chan result.Result
+		iterator *Iterator
 
 		t          *ticker.Ticker
 		pairTicker *pairTicker
 		err        error
 	)
 
+	stream, err = c.Consumer.Consume()
+	if err != nil {
+		c.stream <- ticker.Result{Err: err}
+		return
+	}
+
+	iterator = NewIterator(stream, c.log)
+
 	err = c.preamble(pairs, iterator)
 	if err != nil {
-		c.tickers <- ticker.Result{Err: err}
+		c.stream <- ticker.Result{Err: err}
 		return
 	}
 
@@ -292,18 +302,18 @@ workerLoop:
 				case *ErrContinue:
 					continue workerLoop
 				default:
-					c.tickers <- ticker.Result{Err: err}
+					c.stream <- ticker.Result{Err: err}
 					return
 				}
 			}
 
 			t, err = c.convertTicker(pairTicker)
 			if err != nil {
-				c.tickers <- ticker.Result{Err: err}
+				c.stream <- ticker.Result{Err: err}
 				return
 			}
 
-			c.tickers <- ticker.Result{Value: t}
+			c.stream <- ticker.Result{Value: t}
 		}
 	}
 }
@@ -321,40 +331,51 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) (<-chan ticker
 
 	go c.worker(symbolPairs)
 
-	return c.tickers, nil
+	return c.stream, nil
 }
 
 func (c *TickerConsumer) Close() error {
 	close(c.done)
 	// XXX: Not closing it, it will be GC'ed
 	// Or we could make worker a panic in case of race
-	// close(c.tickers)
+	// close(c.stream)
 	return c.Consumer.Close()
 }
 
 // FIXME: This is shit, consumer should receive reader by semantic,
 // but it can't ATM because consumer subscribes to channels only
 // when Consume(...) is called.
-func (m *Bitfinex) NewTickerConsumer(c io.ReadWriter) ticker.Consumer {
+func (m *Bitfinex) NewTickerConsumer(connection io.ReadWriter) (ticker.Consumer, error) {
 	var (
-		l = prefixwrapper.New(
+		bufSize = uint(128)
+		l       = prefixwrapper.New(
 			"TickerConsumer: ",
 			m.log,
 		)
+		consumer *readwriter.Consumer
+		err      error
 	)
 
-	return &TickerConsumer{
-		Consumer: consumer.New(
-			wsutil.NewReader(
-				c,
-				ws.StateClientSide,
-			),
+	consumer, err = readwriter.NewConsumer(
+		wsutil.NewReader(
+			connection,
+			ws.StateClientSide,
 		),
-		connection:          c,
+		readwriter.Config{ConsumerBufferSize: bufSize},
+		l,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &TickerConsumer{
+		Consumer:            consumer,
+		connection:          connection,
 		currencies:          m.currencies,
 		channelToSymbolPair: symbolPairByChannel{},
-		tickers:             make(chan ticker.Result, 128),
+		bufSize:             bufSize,
+		stream:              make(chan ticker.Result, bufSize),
 		done:                make(chan struct{}),
 		log:                 l,
-	}
+	}, nil
 }

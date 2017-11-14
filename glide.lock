@@ -1,19 +1,23 @@
-hash: f5e46af94f9c7f40a98c54e4c9a769f90b298ab58c2280ee668be0c508165a5c
-updated: 2017-11-13T05:35:48.760513247Z
+hash: 270e9a2e26f119bc0d62b2fda80db894c23d94dfd7a10e80cd006ecc190e3d7c
+updated: 2017-11-14T04:08:31.425810751Z
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
 - name: github.com/corpix/formats
   version: bc69a9b0a6d6f0ae857aca85288b8fceb986efc0
 - name: github.com/corpix/loggers
-  version: f9482b50a1fbacb085cb1351dec51dbf0b1b05f0
+  version: 69c4a7d3244f0509086d4080e8898376aeb95e09
   subpackages:
   - logger/logrus
   - logger/prefixwrapper
-- name: github.com/cryptounicorns/websocket
-  version: e2802ecdaf96283eaaa394745fc1cdb0a9373f91
+- name: github.com/cryptounicorns/queues
+  version: 29e60a3c72a26c54a238373020fdcca763a0741d
   subpackages:
   - consumer
+  - message
+  - producer
+  - queue/readwriter
+  - result
 - name: github.com/davecgh/go-spew
   version: ecdeabc65495df2dec95d7c4a4c3e021903035e5
   subpackages:
@@ -38,18 +42,23 @@ imports:
 - name: github.com/PuerkitoBio/goquery
   version: 1a71cc719d0d5b9e4f14ae072bef08b576b0bab5
 - name: github.com/sirupsen/logrus
-  version: 7f976d3a76720c4c27af2ba716b85d2e0a7e38b1
+  version: 89742aefa4b206dcf400792f3bd35b542998eb3b
 - name: github.com/urfave/cli
   version: 44cb242eeb4d76cc813fdc69ba5c4b224677e799
+- name: golang.org/x/crypto
+  version: 9f005a07e0d31d45e6656d241bb5c0f2efd4bc94
+  subpackages:
+  - ssh/terminal
 - name: golang.org/x/net
   version: a337091b0525af65de94df2eb7e98bd9962dcbe2
   subpackages:
   - html
   - html/atom
 - name: golang.org/x/sys
-  version: 1e2299c37cc91a509f1b12369872d27be0ce98a6
+  version: 665f6529cca930e27b831a0d1dafffbe1c172924
   subpackages:
   - unix
+  - windows
 - name: gopkg.in/yaml.v2
   version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
 testImports:

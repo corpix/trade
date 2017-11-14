@@ -6,9 +6,10 @@ import:
   subpackages:
   - logger/logrus
   - logger/prefixwrapper
-- package: github.com/cryptounicorns/websocket
+- package: github.com/cryptounicorns/queues
   subpackages:
-  - consumer
+  - queue/readwriter
+  - result
 - package: github.com/davecgh/go-spew
   subpackages:
   - spew

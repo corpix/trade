@@ -3,7 +3,7 @@ package bitfinex
 import (
 	"github.com/corpix/loggers"
 	"github.com/corpix/loggers/logger/prefixwrapper"
-	"github.com/cryptounicorns/websocket/consumer"
+	"github.com/cryptounicorns/queues/result"
 )
 
 // This Iterator thing exists because bitfinex API is inconsistent
@@ -13,13 +13,13 @@ import (
 // shit.
 
 type Iterator struct {
-	stream <-chan consumer.Result
+	stream <-chan result.Result
 	log    loggers.Logger
 }
 
 func (i *Iterator) NextEvent() ([]byte, error) {
 	var (
-		event consumer.Result
+		event result.Result
 	)
 
 streamLoop:
@@ -60,7 +60,7 @@ streamLoop:
 
 func (i *Iterator) NextData() ([]byte, error) {
 	var (
-		data consumer.Result
+		data result.Result
 	)
 
 streamLoop:
@@ -99,7 +99,7 @@ streamLoop:
 	return data.Value, nil
 }
 
-func NewIterator(s <-chan consumer.Result, l loggers.Logger) *Iterator {
+func NewIterator(s <-chan result.Result, l loggers.Logger) *Iterator {
 	return &Iterator{
 		stream: s,
 		log: prefixwrapper.New(
