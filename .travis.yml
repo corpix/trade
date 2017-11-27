@@ -6,6 +6,6 @@ go:
 
 script:
   - make
-    # Let it fail we generators fed us some shit
+  # Let it fail we generators fed us some shit
   - make generate
   - make test
