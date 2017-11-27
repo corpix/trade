@@ -4,4 +4,4 @@ go:
   - 1.9
   - master
 
-script: make all tools && make generate && make test
+script: make && make generate && make test
