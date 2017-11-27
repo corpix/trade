@@ -11,7 +11,7 @@ type ErrUnsupportedAPIVersion struct {
 
 func (e *ErrUnsupportedAPIVersion) Error() string {
 	return fmt.Sprintf(
-		"Unsupported API version, want '%d', got '%d'",
+		"Unsupported API version, want '%g', got '%g'",
 		e.Want,
 		e.Got,
 	)
