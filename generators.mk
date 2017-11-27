@@ -19,7 +19,7 @@ $(all_currencies):
 		echo '{"name": "euro",                 "symbol": "EUR", "volume": 9999999}'; \
 		echo '{"name": "canadian-dollar",      "symbol": "CAD", "volume": 9999999}'; \
 		go run $(tools_root)/coinmarketcap/coinmarketcap.go all;                     \
-	} | $(tools_root)/postprocess-currencies --verbose > $@
+	} | $(tools_root)/postprocess-currencies --verbose | jq . > $@
 
 .PHONY: $(markets_currencies)
 $(markets_currencies):
@@ -29,7 +29,7 @@ $(markets_currencies):
 		echo '{"name": "united-states-dollar", "symbol": "USD", "volume": 9999999}'; \
 		go run $(tools_root)/coinmarketcap/coinmarketcap.go                          \
 			exchanges --exchange=$(shell basename $(@:%/currencies.json=%));     \
-	} | $(tools_root)/postprocess-currencies --verbose > $@
+	} | $(tools_root)/postprocess-currencies --verbose | jq . > $@
 
 .PHONY: generate
 generate:: $(all_currencies)
