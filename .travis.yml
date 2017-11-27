@@ -4,8 +4,4 @@ go:
   - 1.9
   - master
 
-script:
-  - make
-  # Let it fail we generators fed us some shit
-  - make generate
-  - make test
+script: make && make generate && make test
