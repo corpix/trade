@@ -5,6 +5,7 @@ go:
   - master
 
 script:
-  # Let it fail we generators fed us some shit
+  - make
+    # Let it fail we generators fed us some shit
   - make generate
   - make test
