@@ -2,7 +2,6 @@
 from json import loads as json_unmarshal, dumps as json_marshal
 from argparse import ArgumentParser
 from sys import stdin, stdout, stderr
-from math import inf as infinity
 
 def load(args, stream):
     for line in stream:
