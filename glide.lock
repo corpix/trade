@@ -1,17 +1,17 @@
 hash: 270e9a2e26f119bc0d62b2fda80db894c23d94dfd7a10e80cd006ecc190e3d7c
-updated: 2017-11-14T04:08:31.425810751Z
+updated: 2017-11-27T20:24:29.611050685Z
 imports:
 - name: github.com/andybalholm/cascadia
   version: 349dd0209470eabd9514242c688c403c0926d266
 - name: github.com/corpix/formats
-  version: bc69a9b0a6d6f0ae857aca85288b8fceb986efc0
+  version: 51b943f6b7f3875db4d193665b6c968d96c3198b
 - name: github.com/corpix/loggers
   version: 69c4a7d3244f0509086d4080e8898376aeb95e09
   subpackages:
   - logger/logrus
   - logger/prefixwrapper
 - name: github.com/cryptounicorns/queues
-  version: 29e60a3c72a26c54a238373020fdcca763a0741d
+  version: 0908cfebdca0a2ed7fedec7769ab74dda26f51b2
   subpackages:
   - consumer
   - message
@@ -44,13 +44,13 @@ imports:
 - name: github.com/sirupsen/logrus
   version: 89742aefa4b206dcf400792f3bd35b542998eb3b
 - name: github.com/urfave/cli
-  version: 44cb242eeb4d76cc813fdc69ba5c4b224677e799
+  version: 7ace96b43d4bdc46f81d0d1219742b2469874cf6
 - name: golang.org/x/crypto
   version: 9f005a07e0d31d45e6656d241bb5c0f2efd4bc94
   subpackages:
   - ssh/terminal
 - name: golang.org/x/net
-  version: a337091b0525af65de94df2eb7e98bd9962dcbe2
+  version: c7086645de248775cbf2373cf5ca4d2fa664b8c1
   subpackages:
   - html
   - html/atom
@@ -60,7 +60,7 @@ imports:
   - unix
   - windows
 - name: gopkg.in/yaml.v2
-  version: eb3733d160e74a9c7e442f435eb3bea458e1d19f
+  version: 287cf08546ab5e7e37d55a84f7ed3fd1db036de5
 testImports:
 - name: github.com/pmezard/go-difflib
   version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
