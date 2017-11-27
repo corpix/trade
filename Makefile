@@ -19,6 +19,7 @@ tools::
 	@if [ ! -e "$(GOPATH)"/bin/gometalinter ]; then go get github.com/alecthomas/gometalinter && gometalinter --install; fi
 	@if [ ! -e "$(GOPATH)"/src/github.com/stretchr/testify/assert ]; then go get github.com/stretchr/testify/assert; fi
 	@if [ ! -e "$(GOPATH)"/bin/go-bindata ]; then go get github.com/jteeuwen/go-bindata; fi
+	ls -la "$(GOPATH)"/bin/
 
 .PHONY: dependencies
 dependencies:: tools
