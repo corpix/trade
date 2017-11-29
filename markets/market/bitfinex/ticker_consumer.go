@@ -54,6 +54,12 @@ func (c *TickerConsumer) subscribe(pair SymbolPair, iterator *Iterator) (uint, e
 		return 0, err
 	}
 
+	c.log.Debugf(
+		"Subscribing to '%+v' on '%s'",
+		pair,
+		Name,
+	)
+
 	err = wsutil.WriteClientText(
 		c.connection,
 		e,
@@ -130,7 +136,7 @@ func (c *TickerConsumer) preamble(pairs []SymbolPair, iterator *Iterator) error 
 		}
 
 		c.channelToSymbolPair[channelID] = pair
-		c.log.Debug("Subscribed ", channelID, pair)
+		c.log.Debugf("Subscribed to '%s' with channel id '%+v'", pair, channelID)
 	}
 
 	c.log.Debugf(
