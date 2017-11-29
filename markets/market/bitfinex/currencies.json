@@ -17,7 +17,7 @@
   },
   {
     "name": "bitcoin-unlimited",
-    "symbol": "BTU"
+    "symbol": "BCU"
   },
   {
     "name": "bt1-cst",
@@ -29,7 +29,7 @@
   },
   {
     "name": "dash",
-    "symbol": "DASH"
+    "symbol": "DSH"
   },
   {
     "name": "eidoo",
@@ -49,7 +49,7 @@
   },
   {
     "name": "iota",
-    "symbol": "MIOTA"
+    "symbol": "IOT"
   },
   {
     "name": "litecoin",
@@ -73,7 +73,7 @@
   },
   {
     "name": "qtum",
-    "symbol": "QTUM"
+    "symbol": "QTM"
   },
   {
     "name": "ripple",
@@ -85,7 +85,7 @@
   },
   {
     "name": "streamr-datacoin",
-    "symbol": "DATA"
+    "symbol": "DAT"
   },
   {
     "name": "tether",
