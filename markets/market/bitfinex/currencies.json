@@ -48,6 +48,10 @@
     "symbol": "ETC"
   },
   {
+    "name": "euro",
+    "symbol": "EUR"
+  },
+  {
     "name": "iota",
     "symbol": "IOT"
   },
