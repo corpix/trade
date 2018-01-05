@@ -34,22 +34,20 @@ type TickerConsumer struct {
 
 func (c *TickerConsumer) subscribe(pair SymbolPair, iterator *Iterator) (uint, error) {
 	var (
-		event = Event{
-			Event: SubscribeEventName,
+		event          = Event{Event: SubscribeEventName}
+		subscribeEvent = SubscribeEvent{
+			Event:   event,
+			Channel: TickerChannelName,
+		}
+		subscribeTickerEvent = SubscribeTickerEvent{
+			SubscribeEvent: subscribeEvent,
+			Pair:           pair,
 		}
 		e   []byte
 		err error
 	)
 
-	e, err = Format.Marshal(
-		&SubscribeTickerEvent{
-			SubscribeEvent: SubscribeEvent{
-				Event:   event,
-				Channel: TickerChannelName,
-			},
-			Pair: pair,
-		},
-	)
+	e, err = Format.Marshal(&subscribeTickerEvent)
 	if err != nil {
 		return 0, err
 	}
@@ -105,6 +103,7 @@ func (c *TickerConsumer) subscribe(pair SymbolPair, iterator *Iterator) (uint, e
 
 		return 0, NewErrSubscription(
 			errorEvent.Channel,
+			subscribeTickerEvent,
 			errorEvent.Msg,
 		)
 	default:

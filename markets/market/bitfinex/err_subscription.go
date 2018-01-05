@@ -5,21 +5,24 @@ import (
 )
 
 type ErrSubscription struct {
-	Channel string
-	Err     string
+	Channel    string
+	Parameters interface{}
+	Err        string
 }
 
 func (e *ErrSubscription) Error() string {
 	return fmt.Sprintf(
-		"Got an error while trying to subscribe to channel '%s': '%s'",
-		e.Channel,
+		"Got an error '%s' while trying to subscribe to channel '%s' with parameters '%#v'",
 		e.Err,
+		e.Channel,
+		e.Parameters,
 	)
 }
 
-func NewErrSubscription(channel string, error string) *ErrSubscription {
+func NewErrSubscription(channel string, parameters interface{}, error string) *ErrSubscription {
 	return &ErrSubscription{
-		Channel: channel,
-		Err:     error,
+		Channel:    channel,
+		Parameters: parameters,
+		Err:        error,
 	}
 }
