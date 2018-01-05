@@ -16,18 +16,6 @@
     "symbol": "BTG"
   },
   {
-    "name": "bitcoin-unlimited",
-    "symbol": "BCU"
-  },
-  {
-    "name": "bt1-cst",
-    "symbol": "BT1"
-  },
-  {
-    "name": "bt2-cst",
-    "symbol": "BT2"
-  },
-  {
     "name": "dash",
     "symbol": "DSH"
   },
@@ -86,6 +74,10 @@
   {
     "name": "santiment",
     "symbol": "SAN"
+  },
+  {
+    "name": "status",
+    "symbol": "SNT"
   },
   {
     "name": "streamr-datacoin",
