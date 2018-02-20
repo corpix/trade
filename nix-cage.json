@@ -1,18 +1,12 @@
 {
     "mounts": {
-        "rw": [
-            ["~/projects/cache", "~"],
-            ["~/.emacs.d",       "~/.emacs.d"],
-            [".",                "."]
-        ],
+        "rw": ["."],
         "ro": [
-            ["~/.bashrc",        "~/.bashrc"],
-            ["~/.profile",       "~/.profile"],
-            ["~/.config/fish",   "~/.config/fish"],
-            ["~/.config/xonsh",  "~/.config/xonsh"],
-            ["~/.xonshrc",       "~/.xonshrc"],
-            ["~/.gitconfig",     "~/.gitconfig"]
-        ]
+            "~/.emacs.d",
+            "~/.spacemacs",
+            "~/.gitconfig"
+        ],
+        "tmpfs": ["~", "~/.emacs.d/.cache"]
     },
     "environment": {
         "PATH":     "$HOME/.local/bin:$HOME/projects/bin:$PATH",
