@@ -40,7 +40,7 @@ $(markets_currencies):
 # Autodownload was disabled because coinmarketcap
 # does not report market specific pair names now.
 # Was: https://web.archive.org/web/20171122224625/https://coinmarketcap.com/exchanges/bitfinex/
-# At the time of writing: https://coinmarketcap.com/exchanges/bitfinex/
+# Now: https://coinmarketcap.com/exchanges/bitfinex/
 #generate:: $(all_currencies)
 #generate:: $(markets_currencies)
 generate::

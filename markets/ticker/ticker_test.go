@@ -27,7 +27,8 @@ func TestTickerJSON(t *testing.T) {
 				`"sell":0,` +
 				`"timestamp":0,` +
 				`"currencyPair":[{"name":"","symbol":""},{"name":"","symbol":""}],` +
-				`"market":""` +
+				`"market":"",` +
+				`"tags":null` +
 				`}`,
 			nil,
 		},
