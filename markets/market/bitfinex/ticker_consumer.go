@@ -228,12 +228,11 @@ func (c *TickerConsumer) consume(iterator *Iterator) (*pairTicker, error) {
 
 func (c *TickerConsumer) convertTicker(pt *pairTicker) (*ticker.Ticker, error) {
 	var (
-		pair currencies.CurrencyPair
+		pair currencies.SymbolPair
 		err  error
 	)
 
-	// FIXME: it should return an error instead of panicing!
-	pair, err = SymbolPairToCurrencyPair(
+	pair, err = SymbolPairToCommonSymbolPair(
 		c.currencies,
 		pt.SymbolPair,
 	)
@@ -259,15 +258,15 @@ func (c *TickerConsumer) convertTicker(pt *pairTicker) (*ticker.Ticker, error) {
 	// 	]
 	// ]
 	return &ticker.Ticker{
-		High:         pt.Ticker[8],
-		Low:          pt.Ticker[9],
-		Vol:          pt.Ticker[7],
-		Last:         pt.Ticker[6],
-		Buy:          pt.Ticker[2],
-		Sell:         pt.Ticker[0],
-		Timestamp:    uint64(time.Now().UTC().UnixNano()),
-		CurrencyPair: pair,
-		Market:       Name,
+		High:       pt.Ticker[8],
+		Low:        pt.Ticker[9],
+		Vol:        pt.Ticker[7],
+		Last:       pt.Ticker[6],
+		Buy:        pt.Ticker[2],
+		Sell:       pt.Ticker[0],
+		Timestamp:  uint64(time.Now().UTC().UnixNano()),
+		SymbolPair: pair,
+		Market:     Name,
 	}, nil
 }
 
@@ -329,7 +328,7 @@ func (c *TickerConsumer) Consume(pairs []currencies.CurrencyPair) (<-chan ticker
 		err         error
 	)
 
-	symbolPairs, err = CurrencyPairsToSymbolPairs(c.currencies, pairs)
+	symbolPairs, err = CurrencyPairsToMarketSymbolPairs(c.currencies, pairs)
 	if err != nil {
 		return nil, err
 	}

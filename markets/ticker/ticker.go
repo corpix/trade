@@ -27,8 +27,8 @@ type Ticker struct {
 	// Timestamp is a unix-nano timestamp.
 	Timestamp uint64 `json:"timestamp"`
 
-	// CurrencyPair in the common representation.
-	CurrencyPair currencies.CurrencyPair `json:"currencyPair"`
+	// SymbolPair in the common representation.
+	SymbolPair currencies.SymbolPair `json:"symbolPair"`
 
 	// Market is a cryptocurrency exchange(market) name.
 	Market string `json:"market"`

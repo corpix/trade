@@ -16,13 +16,13 @@ func (c CurrencyPair) MarshalJSON() ([]byte, error) {
 	)
 }
 
-func (c CurrencyPair) UnmarshalJSON(buf []byte) error {
+func (c *CurrencyPair) UnmarshalJSON(buf []byte) error {
 	var (
 		pair = currencyPairJSON{}
 		err  error
 	)
 
-	err = jsonFormat.Unmarshal(buf, pair)
+	err = jsonFormat.Unmarshal(buf, &pair)
 	if err != nil {
 		return err
 	}
