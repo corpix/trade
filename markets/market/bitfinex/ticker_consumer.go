@@ -346,7 +346,7 @@ func (c *TickerConsumer) Close() error {
 	return c.Consumer.Close()
 }
 
-// FIXME: This is shit, consumer should receive reader by semantic,
+// XXX: This is shit, consumer should receive reader by semantic,
 // but it can't ATM because consumer subscribes to channels only
 // when Consume(...) is called.
 func (m *Bitfinex) NewTickerConsumer(connection io.ReadWriter) (ticker.Consumer, error) {
